@@ -6,15 +6,19 @@
 
     <!-- 스프링 MVC 어노테이션 자동 스캔 -->
     <context:component-scan base-package="com.projectteam.coop" />
-
-
-    <!-- system.properties에서 시스템 관련 값 참조하도록 propertyConfigurer 설정  -->
-    <context:property-placeholder location="classpath:/props/system.properties" />
+    <!-- system.properties에서 시스템 관련 값 참조하도록 propertyConfigurer 설정. -->
+    <context:property-placeholder location="classpath:/props/system/*.properties" />
 
     <!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/views/" />
         <property name="suffix" value=".jsp" />
     </bean>
-
+    <!-- DBCP(HikariCP) -->
+    <bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+        <property name="driverClassName" value="${spring.datasource.hikari.driverClassName}" />
+        <property name="jdbcUrl" value="${spring.datasource.hikari.jdbcUrl}" />
+        <property name="username" value="${spring.datasource.hikari.username}" />
+        <property name="password" value="${spring.datasource.hikari.password}" />
+    </bean>
 </beans>

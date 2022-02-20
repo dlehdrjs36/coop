@@ -11,6 +11,11 @@
     <title>$Title$</title>
   </head>
   <body>
-  Hello
+    ${sample}
+    <p>Hello</p>
+    <p>SEQ : ${sample.sampleSeq}</p>
+    <p>ID : ${sample.id}</p>
+    <p>NAME : ${sample.name}</p>
+    <p>AGE : ${sample.age}</p>
   </body>
 </html>

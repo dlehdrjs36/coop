@@ -2,12 +2,15 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd   http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
     <!-- 스프링 MVC 어노테이션 자동 스캔 -->
     <context:component-scan base-package="com.projectteam.coop" />
     <!-- system.properties에서 시스템 관련 값 참조하도록 propertyConfigurer 설정. -->
     <context:property-placeholder location="classpath:props/system/*.properties" />
+    <!-- 트랜잭션 어노테이션이 선언된 메소드는 transactionManager 라는 Bean 객체가 처리할 수 있도록 해준다.(@Transactional 어노테이션 처리) -->
+    <tx:annotation-driven transaction-manager="txManager" />
 
     <!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -16,7 +19,6 @@
         <property name="order" value="2" />
         <!-- <property name="viewNames" value="*jsp" /> -->
     </bean>
-
     <!-- DBCP(HikariCP) -->
     <bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
         <property name="driverClassName" value="${spring.datasource.hikari.driverClassName}" />
@@ -34,4 +36,19 @@
     <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
         <constructor-arg index="0" ref="sqlSessionFactory" />
     </bean>
+    <!-- 스프링 트랜잭션 관리 객체 등록 -->
+    <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <constructor-arg ref="dataSource" />
+    </bean>
+    <!-- 트랜잭션 AOP 설정(특정 메소드가 호출되는 경우 자동으로 트랜잭션 처리) -->
+    <tx:advice id="txAdvice" transaction-manager="txManager">
+        <tx:attributes>
+            <tx:method name="get*" read-only="true" />
+            <tx:method name="*" />
+        </tx:attributes>
+    </tx:advice>
+    <aop:config>
+        <aop:pointcut id="allpointcut" expression="execution(* com.projectteam..*Impl.*(..))" />
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="allpointcut" />
+    </aop:config>
 </beans>

@@ -1,8 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+    <!-- Web layer -->
+    <!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <!--    <property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />-->
+        <property name="prefix" value="/WEB-INF/views/" />
+        <property name="suffix" value=".jsp" />
+        <property name="order" value="2" />
+        <!-- 마지막 문자 jsp의 경우만 jsp 뷰리졸버 동작 -->
+        <property name="viewNames" value="*Jsp" />
+    </bean>
+    <!-- thymeleaf 설정 -->
+    <bean id="templateResolver" class="org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver">
+        <property name="prefix" value="classpath:" />
+        <property name="suffix" value=".html" />
+        <!-- HTML is the default value, added here for the sake of clarity.          -->
+        <property name="templateMode" value="HTML" />
+        <!-- Template cache is true by default. Set to false if you want             -->
+        <!-- templates to be automatically updated when modified.                    -->
+        <property name="cacheable" value="true" />
+        <property name="characterEncoding" value="UTF-8" />
+    </bean>
+    <bean id="templateEngine" class="org.thymeleaf.spring5.SpringTemplateEngine">
+        <property name="templateResolver" ref="templateResolver" />
+        <property name="enableSpringELCompiler" value="true" />
+    </bean>
+    <bean class="org.thymeleaf.spring5.view.ThymeleafViewResolver">
+        <property name="templateEngine" ref="templateEngine" />
+        <property name="characterEncoding" value="UTF-8" />
+        <property name="order" value="1" />
+        <property name="viewNames" value="/templates/*" />
+    </bean>
+    <!-- //thymeleaf 설정 -->
 
 </beans>

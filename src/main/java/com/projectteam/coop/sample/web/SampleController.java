@@ -4,6 +4,7 @@ import com.projectteam.coop.sample.domain.SampleDTO;
 import com.projectteam.coop.sample.repository.SampleDAO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -12,6 +13,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @Controller
+@CrossOrigin(origins = "*")
 public class SampleController {
 
     private final SampleDAO sampleDAO;

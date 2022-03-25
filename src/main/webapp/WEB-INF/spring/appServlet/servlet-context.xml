@@ -15,6 +15,9 @@
     <!-- Spring MVC 구성 요소를 활성화하는 데 사용됩니다.
         참고 : https://javabeat.net/spring-mvc-component-scan-annotations/
     -->
+    <!-- mvc 리소스 경로 지정 -->
+    <mvc:resources mapping="/img/**" location="classpath:img/" />
+    <!--  -->
     <mvc:annotation-driven />
 <!--<mvc:resources mapping="/**" location="/resources/templates/" />-->
 

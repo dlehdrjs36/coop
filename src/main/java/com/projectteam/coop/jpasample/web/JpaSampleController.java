@@ -4,6 +4,7 @@ import com.projectteam.coop.jpasample.domain.Member;
 import com.projectteam.coop.jpasample.service.JpaSampleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.Optional;
 
 @Controller
+@CrossOrigin(origins = "*")
 public class JpaSampleController {
 
     private final JpaSampleService jpaSampleService;

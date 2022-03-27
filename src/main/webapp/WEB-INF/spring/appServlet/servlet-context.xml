@@ -16,9 +16,9 @@
         참고 : https://javabeat.net/spring-mvc-component-scan-annotations/
     -->
     <!-- mvc 리소스 경로 지정 -->
-    <mvc:resources mapping="/img/**" location="classpath:img/" />
-    <mvc:resources mapping="/css/**" location="classpath:css/" />
-    <mvc:resources mapping="/js/**" location="classpath:js/" />
+    <mvc:resources mapping="/img/**" location="classpath:/static/img/" />
+    <mvc:resources mapping="/css/**" location="classpath:/static/css/" />
+    <mvc:resources mapping="/js/**" location="classpath:/static/js/" />
     <mvc:annotation-driven />
 
     <!-- DBCP(HikariCP) -->

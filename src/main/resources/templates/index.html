@@ -1,13 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Thymeleaf Sample</title>
-    <link th:href="@{/css/bootstrap/bootstrap.min.css}" rel="stylesheet">
-    <script th:src="@{/js/bootstrap/bootstrap.bundle.js}"></script>
-</head>
-<div th:replace="templates/fragments/header :: header"></div>
+<head th:replace="templates/fragments/header.html :: header"></head>
 <body>
-
+    <header th:replace="templates/fragments/bodyHeader.html :: bodyHeader"></header>
 </body>
 </html>

@@ -1,37 +1,4 @@
-<header style="margin-bottom: 0px; padding: 0px;">
-    <style>
-        @media ( max-width: 1200px ) {
-        }
-        @media ( max-width: 1000px ) {
-            .Search-Summoner{
-                margin-left: 10px;
-                margin-bottom: 10px;
-                margin-top: 10px;
-            }
-            .Search-Champion{
-                margin-bottom: 10px;
-            }
-        }
-        .header {
-            background-repeat: no-repeat;
-            background-position: center;
-            background-size: cover;
-            height: 100px;
-            background-image: url('/img/header.jpg');
-        }
-        .header-nav {
-            margin-top: 20px
-        }
-        .header-search-button {
-            font-size: 1rem
-        }
-        .nav-link:hover {
-            border-bottom: 1px solid #000000;
-        }
-        .Search-Champion{
-            margin-left: 10px
-        }
-    </style>
+<header th:fragment="bodyHeader">
     <div class="header">
         <div class="container d-flex flex-wrap  justify-content-center justify-content-lg-start">
             <nav class="header-nav container navbar navbar-expand-md navbar-dark fixed-top">

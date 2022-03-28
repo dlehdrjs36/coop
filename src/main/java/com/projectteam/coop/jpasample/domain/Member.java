@@ -15,7 +15,6 @@ import javax.persistence.Table;
 @Getter @Setter
 public class Member {
 
-
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "SAMPLE_SEQ")
     private Long sampleSeq;

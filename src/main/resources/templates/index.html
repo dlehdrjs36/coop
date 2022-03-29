@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymleaf.org">
-<head th:replace="templates/fragments/header.html :: header"></head>
+<head th:replace="templates/fragments/header.html :: header">
+    <link th:href="@{/css/fragments/layoutIndexPage.css}" rel="stylesheet">
+</head>
 <body>
     <header th:replace="templates/fragments/bodyHeader.html :: bodyHeader"></header>
     <div id="main-background">

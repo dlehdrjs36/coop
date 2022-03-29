@@ -1,7 +1,50 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymleaf.org">
 <head th:replace="templates/fragments/header.html :: header"></head>
+<link th:href="@{/css/fragments/layoutIndexPage.css}" rel="stylesheet">
 <body>
     <header th:replace="templates/fragments/bodyHeader.html :: bodyHeader"></header>
+    <div id="main-background">
+        <form class="text-center container main-contentsAtt">
+            <div>
+                <input class="main-championSearchBox main-searchArea-Height" placeholder="소환사 검색">
+                <input class="btn btn-primary main-searchArea-Height" type="submit" value="검색">
+            </div>
+        </form>
+        <div class="container main-contentsAtt">
+            <table class="container main-community-tableAtt">
+                <tbody>
+                <tr class="bg-white">
+                    <td>&nbsp;커뮤니티 인기글</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="main-community-tableRow col-md-4">&nbsp;<a href="#">1.xxxxxxxxxxxxxxxxxxxxxxxxxxx</a></td>
+                    <td class="main-community-tableRow col-md-4">&nbsp;<a href="#">1.xxxxxxxxxxxxxxxxxxxxxxxxxxx</a></td>
+                </tr>
+                <tr>
+                    <td class="main-community-tableRow col-md-4">&nbsp;<a href="#">1.xxxxxxxxxxxxxxxxxxxxxxxxxxx</a></td>
+                    <td class="main-community-tableRow col-md-4">&nbsp;<a href="#">1.xxxxxxxxxxxxxxxxxxxxxxxxxxx</a></td>
+                </tr>
+                <tr>
+                    <td class="main-community-tableRow col-md-4">&nbsp;<a href="#">1.xxxxxxxxxxxxxxxxxxxxxxxxxxx</a></td>
+                    <td class="main-community-tableRow col-md-4">&nbsp;<a href="#">1.xxxxxxxxxxxxxxxxxxxxxxxxxxx</a></td>
+                </tr>
+                <tr>
+                    <td class="main-community-tableRow col-md-4">&nbsp;<a href="#">1.xxxxxxxxxxxxxxxxxxxxxxxxxxx</a></td>
+                    <td class="main-community-tableRow col-md-4">&nbsp;<a href="#">1.xxxxxxxxxxxxxxxxxxxxxxxxxxx</a></td>
+                </tr>
+                <tr>
+                    <td class="main-community-tableRow col-md-4">&nbsp;<a href="#">1.xxxxxxxxxxxxxxxxxxxxxxxxxxx</a></td>
+                    <td class="main-community-tableRow col-md-4">&nbsp;<a href="#">1.xxxxxxxxxxxxxxxxxxxxxxxxxxx</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </body>
+<script>
+    // 해당부분은 백그라운드에 데이터를 넣는 방법중 하나 이후 비슷하게 사용할 가능성 있음
+    document.getElementById("main-background").style.backgroundImage = "url('" + "/img/shop/mainbackground_Mok.jpg" +"')";
+</script>
 </html>

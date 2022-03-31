@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymleaf.org">
+<head th:replace="templates/fragments/header.html :: header"></head>
+<link th:href="@{/css/fragments/layoutAugmentsListPage.css}" rel="stylesheet">
+<body>
+    <header th:replace="templates/fragments/bodyHeader.html :: bodyHeader"></header>
+    <div id="backgroundImage">
+        <div class="container augmentContentsAtt">
+            <div class="row">
+                <div class="col-sm-6 btn-group justify-content-start" role="group" aria-label="Basic radio toggle button group">
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
+                    <label class="btn btn-primary" for="btnradio1">티어 1</label>
+
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+                    <label class="btn btn-primary" for="btnradio2">티어 2</label>
+
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
+                    <label class="btn btn-primary" for="btnradio3">티어 3</label>
+                </div>
+                <div class="col-sm-5 offset-1">
+                    <input type="search" class="form-control" name="searchAugment" id="searchAugment" placeholder="증강체 검색" aria-label="Search">
+                </div>
+            </div>
+            <div class="container bg-dark">
+                <div class="augmentsList" id="augmentsList"></div>
+            </div>
+        </div>
+    </div>
+</body>
+<script th:src="@{/js/tft/augment/augmentsList.js}"></script>
+</html>

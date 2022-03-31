@@ -37,3 +37,10 @@
 .Search-Champion{
     margin-left: 10px
 }
+
+#backgroundImage{
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    padding-bottom: 140px;
+}

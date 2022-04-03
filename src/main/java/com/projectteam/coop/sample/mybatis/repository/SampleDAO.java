@@ -1,6 +1,6 @@
-package com.projectteam.coop.sample.repository;
+package com.projectteam.coop.sample.mybatis.repository;
 
-import com.projectteam.coop.sample.domain.SampleDTO;
+import com.projectteam.coop.sample.mybatis.domain.SampleDTO;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 

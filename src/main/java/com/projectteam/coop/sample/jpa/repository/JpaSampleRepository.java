@@ -1,6 +1,6 @@
-package com.projectteam.coop.jpasample.repository;
+package com.projectteam.coop.sample.jpa.repository;
 
-import com.projectteam.coop.jpasample.domain.Member;
+import com.projectteam.coop.sample.jpa.domain.JpaSample;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -16,13 +16,13 @@ public class JpaSampleRepository {
     private EntityManager em;
     //EntityManagerFactory emf = Persistence.createEntityManagerFactory("memoryJpa"); //스프링 없이 사용하려면 직접 팩토리 만들어서 생성필요
 
-    public Long addMember(Member member) {
+    public Long addMember(JpaSample member) {
         em.persist(member);
         return member.getSampleSeq();
     }
 
     public Long deleteMember(Long id) {
-        Member findMember = em.find(Member.class, id);
+        JpaSample findMember = em.find(JpaSample.class, id);
         if(findMember != null) {
             em.remove(findMember);
             return findMember.getSampleSeq();
@@ -30,21 +30,21 @@ public class JpaSampleRepository {
         throw new IllegalArgumentException("해당하는 회원이 존재하지 않습니다.");
     }
 
-    public Long updateMember(Long id, Member member) {
-        Member findMember = em.find(Member.class, id);
+    public Long updateMember(Long id, JpaSample member) {
+        JpaSample findMember = em.find(JpaSample.class, id);
         findMember.setId(member.getId());
         findMember.setName(member.getName());
         findMember.setAge(member.getAge());
         return findMember.getSampleSeq();
     }
 
-    public Optional<Member> findById(Long id) {
-        Member member = em.find(Member.class, id);
+    public Optional<JpaSample> findById(Long id) {
+        JpaSample member = em.find(JpaSample.class, id);
         return Optional.ofNullable(member);
     }
 
-    public List<Member> findAll() {
-        return em.createQuery("select m from Member m", Member.class)
+    public List<JpaSample> findAll() {
+        return em.createQuery("select m from JpaSample m", JpaSample.class)
                 .getResultList();
     }
 
@@ -54,15 +54,13 @@ public class JpaSampleRepository {
         tx.begin();
 
         try {
-            Member findMember = em.find(Member.class, 1L);
-            System.out.println(findMember.getId());
-            System.out.println(findMember.getName());
+            JpaSample findMember = em.find(JpaSample.class, 1L);
 
             /* 기존 데이터 수정*/
             findMember.setName("sampleB");
 
             /* 회원 여러 명 조회 */
-            em.createQuery("select m from Member m", Member.class)
+            em.createQuery("select m from JpaSample m", JpaSample.class)
                     .setFirstResult(1)
                     .setMaxResults(5)
                     .getResultList();

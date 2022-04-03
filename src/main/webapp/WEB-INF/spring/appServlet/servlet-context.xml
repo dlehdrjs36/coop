@@ -43,16 +43,16 @@
         <constructor-arg ref="mybatisDataSource" />
     </bean>
     <!-- 트랜잭션 AOP 설정(특정 메소드가 호출되는 경우 자동으로 트랜잭션 처리) -->
-    <tx:advice id="txAdvice" transaction-manager="mybatisTxManager">
-        <tx:attributes>
-            <tx:method name="get*" read-only="true" />
-            <tx:method name="*" />
-        </tx:attributes>
-    </tx:advice>
-    <aop:config>
-        <aop:pointcut id="allpointcut" expression="execution(* com.projectteam..*Impl.*(..))" />
-        <aop:advisor advice-ref="txAdvice" pointcut-ref="allpointcut" />
-    </aop:config>
+<!--    <tx:advice id="txAdvice" transaction-manager="mybatisTxManager">-->
+<!--        <tx:attributes>-->
+<!--            <tx:method name="get*" read-only="true" />-->
+<!--            <tx:method name="*" />-->
+<!--        </tx:attributes>-->
+<!--    </tx:advice>-->
+<!--    <aop:config>-->
+<!--        <aop:pointcut id="allpointcut" expression="execution(* com.projectteam..*Impl.*(..))" />-->
+<!--        <aop:advisor advice-ref="txAdvice" pointcut-ref="allpointcut" />-->
+<!--    </aop:config>-->
 
     <!-- hibernate 설정 -->
     <!-- Jpa 예외 변환 AOP 설정. 이 AOP는 Jpa 예외를 스프링 프레임워크가 추상화한 예외로 변환해준다  -->
@@ -72,6 +72,7 @@
         <property name="jdbcUrl" value="${spring.h2datasource.hikari.jdbcUrl}" />
         <property name="username" value="${spring.h2datasource.hikari.username}" />
         <property name="password" value="${spring.h2datasource.hikari.password}" />
+<!--        <property name="schema" value="classpath*:db/h2/schema.sql" />-->
     </bean>
 
     <!-- mysql JPA 트랜잭션 관리자 설정  -->
@@ -105,7 +106,7 @@
                 <prop key="hibernate.format_sql">true</prop> <!-- SQL 보기 좋게 정리해서 출력 -->
                 <prop key="hibernate.use_sql_comments">true</prop> <!-- SQL 코멘트 보기 -->
                 <prop key="hibernate.id.new_generator_mappings">true</prop> <!-- JPA 표준에 맞춘 키 생성 전략여부 -->
-                <!--<property name="hibernate.hbm2ddl.auto" value="create" /> //DDL 자동 생성 -->
+<!--                <prop key="hibernate.hbm2ddl.auto">create</prop> &lt;!&ndash; DDL 자동생성 &ndash;&gt;-->
             </props>
         </property>
     </bean>

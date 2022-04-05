@@ -1,4 +1,4 @@
-package com.projectteam.coop.jpasample.domain;
+package com.projectteam.coop.sample.jpa.domain;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -11,9 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "SAMPLE")
 @Getter @Setter
-public class Member {
+public class JpaSample {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "SAMPLE_SEQ")

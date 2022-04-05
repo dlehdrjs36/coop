@@ -1,7 +1,7 @@
-package com.projectteam.coop.sample.service;
+package com.projectteam.coop.sample.mybatis.service;
 
-import com.projectteam.coop.sample.domain.SampleDTO;
-import com.projectteam.coop.sample.repository.SampleDAO;
+import com.projectteam.coop.sample.mybatis.domain.SampleDTO;
+import com.projectteam.coop.sample.mybatis.repository.SampleDAO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

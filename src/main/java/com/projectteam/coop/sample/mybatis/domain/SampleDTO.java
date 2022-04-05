@@ -1,4 +1,4 @@
-package com.projectteam.coop.sample.domain;
+package com.projectteam.coop.sample.mybatis.domain;
 
 public class SampleDTO {
     private int sampleSeq;

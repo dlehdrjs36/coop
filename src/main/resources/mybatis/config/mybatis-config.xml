@@ -8,6 +8,6 @@
         <setting name="mapUnderscoreToCamelCase" value="true" />
     </settings>
     <typeAliases>
-        <typeAlias alias="sample" type="com.projectteam.coop.sample.domain.SampleDTO" />
+        <typeAlias alias="sample" type="com.projectteam.coop.sample.mybatis.domain.SampleDTO" />
     </typeAliases>
 </configuration>

@@ -1,6 +1,6 @@
-package com.projectteam.coop.sample.service;
+package com.projectteam.coop.sample.mybatis.service;
 
-import com.projectteam.coop.sample.domain.SampleDTO;
+import com.projectteam.coop.sample.mybatis.domain.SampleDTO;
 
 import java.util.List;
 import java.util.Optional;

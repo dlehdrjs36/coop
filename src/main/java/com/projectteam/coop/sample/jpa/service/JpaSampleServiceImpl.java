@@ -1,7 +1,7 @@
-package com.projectteam.coop.jpasample.service;
+package com.projectteam.coop.sample.jpa.service;
 
-import com.projectteam.coop.jpasample.domain.Member;
-import com.projectteam.coop.jpasample.repository.JpaSampleRepository;
+import com.projectteam.coop.sample.jpa.domain.JpaSample;
+import com.projectteam.coop.sample.jpa.repository.JpaSampleRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class JpaSampleServiceImpl implements JpaSampleService {
     }
 
     @Override
-    public Long addMember(Member member) {
+    public Long addMember(JpaSample member) {
         return jpaSampleRepository.addMember(member);
     }
 
@@ -36,19 +36,19 @@ public class JpaSampleServiceImpl implements JpaSampleService {
     }
 
     @Override
-    public Long updateMember(Long id, Member member) {
+    public Long updateMember(Long id, JpaSample member) {
         return jpaSampleRepository.updateMember(id, member);
     }
 
     @Override
     @Transactional(value = "h2TxManager", readOnly = true)
-    public Optional<Member> findMember(Long id) {
+    public Optional<JpaSample> findMember(Long id) {
         return jpaSampleRepository.findById(id);
     }
 
     @Override
     @Transactional(value = "h2TxManager", readOnly = true)
-    public List<Member> findMembers() {
+    public List<JpaSample> findMembers() {
         return jpaSampleRepository.findAll();
     }
 }

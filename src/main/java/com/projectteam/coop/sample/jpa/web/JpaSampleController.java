@@ -1,17 +1,11 @@
-package com.projectteam.coop.jpasample.web;
+package com.projectteam.coop.sample.jpa.web;
 
-import com.projectteam.coop.jpasample.domain.Member;
-import com.projectteam.coop.jpasample.service.JpaSampleService;
+import com.projectteam.coop.sample.jpa.domain.JpaSample;
+import com.projectteam.coop.sample.jpa.service.JpaSampleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,7 +21,7 @@ public class JpaSampleController {
     @PutMapping("/jpaSample")
     @ResponseBody
     public String jpaSample() {
-        Member member = new Member();
+        JpaSample member = new JpaSample();
         member.setId("asdf");
         member.setName("testName");
         member.setAge("23");
@@ -39,7 +33,7 @@ public class JpaSampleController {
     @ResponseStatus(HttpStatus.OK)
     @PatchMapping("/jpaSample/{id}")
     @ResponseBody
-    public String jpaSample(@PathVariable Long id, Member member) {
+    public String jpaSample(@PathVariable Long id, JpaSample member) {
         Long updateId = jpaSampleService.updateMember(id, member);
         return "update Id : " + updateId;
     }
@@ -57,8 +51,8 @@ public class JpaSampleController {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/jpaSample/{id}")
     @ResponseBody
-    public Member jpaSample2(@PathVariable Long id) {
-        Optional<Member> member = jpaSampleService.findMember(id);
+    public JpaSample jpaSample2(@PathVariable Long id) {
+        Optional<JpaSample> member = jpaSampleService.findMember(id);
         return member.orElse(null);
     }
 
@@ -66,8 +60,8 @@ public class JpaSampleController {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/jpaSample")
     @ResponseBody
-    public List<Member> jpaSampleList() {
-        List<Member> members = jpaSampleService.findMembers();
+    public List<JpaSample> jpaSampleList() {
+        List<JpaSample> members = jpaSampleService.findMembers();
         return members;
     }
 }

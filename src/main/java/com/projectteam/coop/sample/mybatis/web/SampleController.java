@@ -1,7 +1,7 @@
-package com.projectteam.coop.sample.web;
+package com.projectteam.coop.sample.mybatis.web;
 
-import com.projectteam.coop.sample.domain.SampleDTO;
-import com.projectteam.coop.sample.repository.SampleDAO;
+import com.projectteam.coop.sample.mybatis.repository.SampleDAO;
+import com.projectteam.coop.sample.mybatis.domain.SampleDTO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymleaf.org">
+<head th:replace="templates/fragments/header.html :: header"></head>
+<link th:href="@{/css/fragments/layoutChampionListPage.css}" rel="stylesheet">
+<body>
+<header th:replace="templates/fragments/bodyHeader.html :: bodyHeader"></header>
+<div id="backgroundImage">
+    <div class="container">
+        <div class="championContentsAtt">
+            <div class="col-sm-4 offset-8">
+                <input type="search" class="form-control" name="searchChampionList" id="searchChampionList" placeholder="챔피언 검색" aria-label="Search">
+            </div>
+            <div class="championListField">
+                <div id="championList"></div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="championViewer">
+            <div class="championViewerHeader">
+                <div name="championViewerHeader" id="championViewerHeader"></div>
+            </div>
+        </div>
+        <div class="championViewer">
+            <div name="championAbility" id="championAbility"></div>
+            <div name="synergyDesc" id="synergyDesc"></div>
+        </div>
+    </div>
+</div>
+</body>
+    <script th:src="@{/js/tft/champion/championList.js}"></script>
+</html>

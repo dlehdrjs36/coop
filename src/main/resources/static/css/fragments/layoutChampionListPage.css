@@ -1,0 +1,78 @@
+.championContentsAtt{
+    padding-top: 70px;
+}
+.championListField{
+    background-color: #000000;
+    max-height: 280px;
+    overflow-y: auto;
+}
+.championList{
+    display: inline-block;
+}
+.championListImage{
+    width: 60px;
+    height: 60px;
+    margin-left: 5px;
+    margin-top: 5px;
+    border: 0;
+    display: flex;
+}
+.championListName{
+    font-size: 10px;
+    text-align: center;
+    text-overflow: ellipsis;
+    color: white;
+    cursor:pointer;
+}
+.championViewer{
+    padding-top: 35px;
+}
+.championViewerHeader{
+    height: 150px;
+    position: relative;
+    z-index: 1;
+}
+.championName{
+    top: 51px;
+    left: 10%;
+    position: absolute;
+    font-family: 궁서;
+    color: white;
+    background-color: black;
+    font-size: 32px;
+    font-weight: 700;
+    z-index: 3;
+}
+.championBackground{
+    height: 150px;
+    align-items: center;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    z-index: 2;
+}
+.synergyHeader{
+    background: linear-gradient(lightCyan, #6abbe0, deepSkyBlue);
+    height: 70px;
+    padding-top: 10px;
+    padding-left: 50px;
+    font-size: 32px;
+    font-weight: 700;
+    color: #1b2120;
+}
+.sameSynergyChampionList{
+    background-color: #000000;
+}
+.synergy{
+    height: 70px;
+
+}
+.synergyName{
+    font-family: 바탕;
+    font-size: 30px;
+    font-weight: 700;
+    padding-left: 10px;
+}
+.synergyDesc{
+    padding-top: 20px;
+}

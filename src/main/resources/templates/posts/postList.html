@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="templates/fragments/header.html :: header"></head>
+<body>
+    <header th:replace="templates/fragments/bodyHeader.html :: bodyHeader"></header>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">First</th>
+            <th scope="col">Last</th>
+            <th scope="col">Handle</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th scope="row">1</th>
+            <td>Mark</td>
+            <td>Otto</td>
+            <td>@mdo</td>
+        </tr>
+        <tr>
+            <th scope="row">2</th>
+            <td>Jacob</td>
+            <td>Thornton</td>
+            <td>@fat</td>
+        </tr>
+        <tr>
+            <th scope="row">3</th>
+            <td colspan="2">Larry the Bird</td>
+            <td>@twitter</td>
+        </tr>
+
+        <tr th:each="post : ${posts}">
+            <td th:text="${post.postId}"></td>
+            <td th:text="${post.title}"></td>
+            <td th:text="${post.content}"></td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+    <a href="/posts/new">게시물 등록</a>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li class="page-item" th:each="num : ${#numbers.sequence(0, paging.endPage-1)}">
+                <a class="page-link" href="/posts?page=1" th:href="${'/posts?page=' + numStat.count}" th:text="${numStat.count}">1</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <footer th:replace="templates/fragments/footer.html :: footer"></footer>
+</body>
+</html>

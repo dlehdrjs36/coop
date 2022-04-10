@@ -6,9 +6,7 @@ import com.projectteam.coop.util.Paging;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -48,4 +46,36 @@ public class PostController {
 
         return "/templates/posts/postList";
     }
+
+    @GetMapping("/posts/{postId}")
+    public String info(@PathVariable Long postId, Model model) {
+        Post post = postService.findPost(postId);
+        model.addAttribute("post", post);
+
+        return "/templates/posts/postInfo";
+    }
+
+    @GetMapping("/posts/{postId}/edit")
+    public String updateForm(@PathVariable Long postId, Model model) {
+        Post post = postService.findPost(postId);
+
+        PostForm postForm = new PostForm();
+        postForm.setPostId(post.getPostId());
+        postForm.setTitle(post.getTitle());
+        postForm.setPassword(post.getPassword());
+        postForm.setContent(post.getContent());
+
+        model.addAttribute("postForm", postForm);
+
+        return "/templates/posts/updatePostForm";
+    }
+
+    @PostMapping("/posts/{postId}/edit")
+    public String updateForm(@ModelAttribute("postForm") PostForm postForm, Model model) {
+
+        Long postId = postService.updatePost(postForm);
+
+        return "redirect:/posts/" + postId;
+    }
+
 }

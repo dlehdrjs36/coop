@@ -1,5 +1,6 @@
 package com.projectteam.coop.repository;
 
+import com.projectteam.coop.controller.PostForm;
 import com.projectteam.coop.domain.Post;
 import org.springframework.stereotype.Repository;
 
@@ -25,10 +26,10 @@ public class PostRepository {
     }
 
     //수정
-    public Long updatePost(Post post) {
-        Post findPost = em.find(Post.class, post.getPostId());
-        findPost.changePost(post.getBoard(), post.getPostStatus(), post.getUpperPostId(), post.getPassword(), post.getTitle(), post.getContent(), post.getViewCount(), post.getRecommendCount());
-        return post.getPostId();
+    public Long updatePost(PostForm postForm) {
+        Post findPost = em.find(Post.class, postForm.getPostId());
+        findPost.changePost(null, null, null, postForm.getPassword(), postForm.getTitle(), postForm.getContent(), null, null);
+        return findPost.getPostId();
     }
 
     //목록 조회
@@ -47,5 +48,11 @@ public class PostRepository {
                 .getResultList().size();
 
         return size;
+    }
+
+    //단건 조회
+    public Post findPost(Long id) {
+        Post post = em.find(Post.class, id);
+        return post;
     }
 }

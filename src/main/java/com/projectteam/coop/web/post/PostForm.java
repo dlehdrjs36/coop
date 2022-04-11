@@ -1,4 +1,4 @@
-package com.projectteam.coop.controller;
+package com.projectteam.coop.web.post;
 
 import lombok.Getter;
 import lombok.Setter;

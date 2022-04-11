@@ -1,5 +1,6 @@
 package com.projectteam.coop.service;
 
+import com.projectteam.coop.controller.PostForm;
 import com.projectteam.coop.domain.Post;
 import com.projectteam.coop.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,8 +20,18 @@ public class PostService {
         return postRepository.addPost(post);
     }
 
+    @Transactional(transactionManager = "h2TxManager", readOnly = true)
     public List<Post> findPosts(int offset, int size) {
         return postRepository.findPosts(offset, size);
+    }
+
+    @Transactional(transactionManager = "h2TxManager", readOnly = true)
+    public Post findPost(Long id) {
+        return postRepository.findPost(id);
+    }
+
+    public Long updatePost(PostForm postForm) {
+        return postRepository.updatePost(postForm);
     }
 
     public int totalSize() {

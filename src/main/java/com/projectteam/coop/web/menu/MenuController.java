@@ -1,4 +1,4 @@
-package com.projectteam.coop.tft.web;
+package com.projectteam.coop.web.menu;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

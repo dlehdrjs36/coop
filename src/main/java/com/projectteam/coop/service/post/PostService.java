@@ -1,8 +1,8 @@
-package com.projectteam.coop.service;
+package com.projectteam.coop.service.post;
 
-import com.projectteam.coop.controller.PostForm;
+import com.projectteam.coop.web.post.PostForm;
 import com.projectteam.coop.domain.Post;
-import com.projectteam.coop.repository.PostRepository;
+import com.projectteam.coop.repository.post.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

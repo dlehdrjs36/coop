@@ -1,7 +1,7 @@
-package com.projectteam.coop.controller;
+package com.projectteam.coop.web.post;
 
 import com.projectteam.coop.domain.Post;
-import com.projectteam.coop.service.PostService;
+import com.projectteam.coop.service.post.PostService;
 import com.projectteam.coop.util.Paging;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;

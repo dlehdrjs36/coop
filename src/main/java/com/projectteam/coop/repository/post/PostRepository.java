@@ -1,6 +1,6 @@
-package com.projectteam.coop.repository;
+package com.projectteam.coop.repository.post;
 
-import com.projectteam.coop.controller.PostForm;
+import com.projectteam.coop.web.post.PostForm;
 import com.projectteam.coop.domain.Post;
 import org.springframework.stereotype.Repository;
 

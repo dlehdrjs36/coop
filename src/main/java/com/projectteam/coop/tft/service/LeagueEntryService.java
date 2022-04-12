@@ -16,8 +16,8 @@ public class LeagueEntryService {
     private final LeagueEntryRepository leagueEntryRepository;
 
     public void addTftLeagueEntry(List<LeagueEntry> LeagueEntryData) {
-        for(int i=0; i<LeagueEntryData.size(); i++) {
-            leagueEntryRepository.addTftLeagueEntry(LeagueEntryData.get(i));
+        for (LeagueEntry leagueEntryDatum : LeagueEntryData) {
+            leagueEntryRepository.addTftLeagueEntry(leagueEntryDatum);
         }
     }
 

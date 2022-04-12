@@ -1,13 +1,12 @@
 package com.projectteam.coop.tft.domain;
 
 import lombok.Getter;
-import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
-@Getter @Setter
+@Getter
 public class LeagueEntry {
     private String leagueId;
     private String queueType;

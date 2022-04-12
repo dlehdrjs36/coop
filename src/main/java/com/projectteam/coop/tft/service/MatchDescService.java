@@ -23,14 +23,14 @@ public class MatchDescService {
     public void addMatchDesc(String puuid, String apikey) {
         List<MatchDesc> matchDesc;
         List<String> matchId = tftUtil.getTftMatchId(puuid, 1,apikey);
-        for(int i=0; i<matchId.size(); i++) {
+        for (String s : matchId) {
             try {
-                MatchDescDTO matchDescDTO = tftUtil.getTftMatchDesc(matchId.get(i), apikey);
-                if(matchDescDTO.getInfo().getGameVersion().indexOf(tftVersion) != -1) {
-                    if(matchDescRepository.searchTftMatchIdData(matchDescDTO.getMetadata().getMatchId()) == true) {
+                MatchDescDTO matchDescDTO = tftUtil.getTftMatchDesc(s, apikey);
+                if (matchDescDTO.getInfo().getGameVersion().contains(tftVersion)) {
+                    if (matchDescRepository.searchTftMatchIdData(matchDescDTO.getMetadata().getMatchId())) {
                         matchDesc = makeMatchDesc(matchDescDTO);
-                        for (int j = 0; j < matchDesc.size(); j++) {
-                            matchDescRepository.addTftDescData(matchDesc.get(j));
+                        for (MatchDesc desc : matchDesc) {
+                            matchDescRepository.addTftDescData(desc);
                         }
                     }
                 }
@@ -42,37 +42,23 @@ public class MatchDescService {
 
     public List<MatchDesc> makeMatchDesc(MatchDescDTO matchData){
         List<MatchDesc> matchDescList = new ArrayList<>();
-        int i=0, j=0, k=0;
-        String tmp="", traitsName="", traitsUnits="", traitsStyle="", tierCurrent="", tierTotal="";
-        String character_id="", itemNames="", itemNames2="", name="", rarity="", tier="";
+        int i, j, k;
+        String augments, traitsName, traitsUnits, traitsStyle, tierCurrent, tierTotal;
+        String characterId, itemNames, itemNames2, name, rarity, tier;
 
         for(i=0; i<matchData.getMetadata().getParticipants().size(); i++){
             MatchDesc matchDesc = new MatchDesc();
-            matchDesc.setMetadataParticipants(matchData.getMetadata().getParticipants().get(i));
-            matchDesc.setMetadateMatchId(matchData.getMetadata().getMatchId());
-
-            matchDesc.setGameLength(matchData.getInfo().getGameLength());
-            matchDesc.setGameVersion(matchData.getInfo().getGameVersion());
-
-            tmp="";
+            augments="";
             for(j=0; j<matchData.getInfo().getParticipants().get(i).getAugments().size(); j++) {
-                tmp += matchData.getInfo().getParticipants().get(i).getAugments().get(j) + "|";
+                augments += matchData.getInfo().getParticipants().get(i).getAugments().get(j) + "|";
             }
-            tmp = tmp.substring(0, tmp.length() - 1);
-            matchDesc.setAugments(tmp);
-
-            matchDesc.setCompanionContentId(matchData.getInfo().getParticipants().get(i).getCompanion().getContentId());
-            matchDesc.setCompanionSkinId(matchData.getInfo().getParticipants().get(i).getCompanion().getSkinId());
-            matchDesc.setCompanionSpecies(matchData.getInfo().getParticipants().get(i).getCompanion().getSpecies());
-
-            matchDesc.setPlacement(matchData.getInfo().getParticipants().get(i).getPlacement());
-            matchDesc.setPuuid(matchData.getInfo().getParticipants().get(i).getPuuid());
-
+            augments = augments.substring(0, augments.length() - 1);
             traitsName="";
             traitsUnits="";
             traitsStyle="";
             tierCurrent="";
             tierTotal="";
+
             for(j=0; j<matchData.getInfo().getParticipants().get(i).getTraits().size(); j++) {
                 traitsName += matchData.getInfo().getParticipants().get(i).getTraits().get(j).getName() + "|";
                 traitsUnits += matchData.getInfo().getParticipants().get(i).getTraits().get(j).getNumUnits() + "|";
@@ -87,24 +73,18 @@ public class MatchDescService {
             tierCurrent = tierCurrent.substring(0,tierCurrent.length()-1);
             tierTotal = tierTotal.substring(0,tierTotal.length()-1);
 
-            matchDesc.setTraitsName(traitsName);
-            matchDesc.setTraitsNumUnits(traitsUnits);
-            matchDesc.setTraitsStyle(traitsStyle);
-            matchDesc.setTraitsTierCurrent(tierCurrent);
-            matchDesc.setTraitsTierTotal(tierTotal);
-
-            character_id="";
+            characterId="";
             itemNames="";
             name="";
             rarity="";
             tier="";
             for(j=0; j<matchData.getInfo().getParticipants().get(i).getUnits().size(); j++) {
-                character_id += matchData.getInfo().getParticipants().get(i).getUnits().get(j).getCharacterId() + "|";
+                characterId += matchData.getInfo().getParticipants().get(i).getUnits().get(j).getCharacterId() + "|";
                 itemNames2 = "";
                 for(k=0; k<matchData.getInfo().getParticipants().get(i).getUnits().get(j).getItemNames().size(); k++){
                     itemNames2 += matchData.getInfo().getParticipants().get(i).getUnits().get(j).getItemNames().get(k) + "$";
                 }
-                if(itemNames2.isEmpty() != true) {
+                if(!itemNames2.isEmpty()) {
                     itemNames2 = itemNames2.substring(0, itemNames2.length() - 1);
                 }
                 itemNames += itemNames2 + "|";
@@ -113,22 +93,38 @@ public class MatchDescService {
                 tier += matchData.getInfo().getParticipants().get(i).getUnits().get(j).getTier() + "|";
             }
 
-            character_id = character_id.substring(0,character_id.length()-1);
+            characterId = characterId.substring(0,characterId.length()-1);
             itemNames = itemNames.substring(0,itemNames.length()-1);
             name = name.substring(0,name.length()-1);
             rarity = rarity.substring(0,rarity.length()-1);
             tier = tier.substring(0,tier.length()-1);
 
-            matchDesc.setUnitsCharacterId(character_id);
-            matchDesc.setUnitsItemNames(itemNames);
-            matchDesc.setUnitsName(name);
-            matchDesc.setUnitsRarity(rarity);
-            matchDesc.setUnitstier(tier);
-
-            matchDesc.setTftGameType(matchData.getInfo().getTftGameType());
-            matchDesc.setTftSetNumber(matchData.getInfo().getTftSetNumber());
-
-            matchDescList.add(matchDesc);
+            matchDescList.add(
+                    matchDesc.createMatchDesc(
+                            matchData.getMetadata().getParticipants().get(i),
+                            matchData.getMetadata().getMatchId(),
+                            matchData.getInfo().getGameLength(),
+                            matchData.getInfo().getGameVersion(),
+                            augments,
+                            matchData.getInfo().getParticipants().get(i).getCompanion().getContentId(),
+                            matchData.getInfo().getParticipants().get(i).getCompanion().getSkinId(),
+                            matchData.getInfo().getParticipants().get(i).getCompanion().getSpecies(),
+                            matchData.getInfo().getParticipants().get(i).getPlacement(),
+                            matchData.getInfo().getParticipants().get(i).getPuuid(),
+                            traitsName,
+                            traitsUnits,
+                            traitsStyle,
+                            tierCurrent,
+                            tierTotal,
+                            characterId,
+                            itemNames,
+                            name,
+                            rarity,
+                            tier,
+                            matchData.getInfo().getTftGameType(),
+                            matchData.getInfo().getTftSetNumber()
+                    )
+            );
         }
         return matchDescList;
     }

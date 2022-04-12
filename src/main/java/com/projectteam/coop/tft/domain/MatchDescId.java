@@ -13,5 +13,5 @@ public class MatchDescId implements Serializable {
     @EqualsAndHashCode.Include
     public String metadataParticipants;
     @EqualsAndHashCode.Include
-    public String metaDateMatchId;
+    public String metadateMatchId;
 }

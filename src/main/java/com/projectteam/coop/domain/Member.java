@@ -11,9 +11,11 @@ import java.util.List;
 @Getter
 public class Member {
 
-    @Id
+    @Id @GeneratedValue
     @Column(name = "MEMBER_ID")
-    private String id;
+    private Long id;
+
+    private String email;
 
     private String name;
 
@@ -42,4 +44,22 @@ public class Member {
 //        purchaseList.addMember(this);
 //    }
 
+    //회원가입
+    public static Member createMember(String email, String name, String password, Boolean emailReceptionType) {
+        Member member = new Member();
+        member.email = email;
+        member.name = name;
+        member.password = password;
+        member.type = MemberType.COMMON;
+        member.status = MemberStatus.ACTIVE;
+        member.point = 0;
+        member.createDate = LocalDateTime.now();
+        member.emailReceptionType = emailReceptionType;
+
+        return member;
+    }
+
+    public void changeMember(String name, String password, Boolean emailReceptionType) {
+
+    }
 }

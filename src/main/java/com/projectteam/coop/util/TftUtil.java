@@ -1,7 +1,7 @@
 package com.projectteam.coop.util;
 
 import com.projectteam.coop.tft.domain.LeagueEntry;
-import com.projectteam.coop.tft.domain.MatchDescDTO;
+import com.projectteam.coop.tft.domain.MatchDescDTO.MatchDescDTO;
 import com.projectteam.coop.tft.domain.Summoner;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;

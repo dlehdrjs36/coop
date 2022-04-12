@@ -15,11 +15,11 @@ public class MatchDescRepository {
 
     public String addTftDescData(MatchDesc matchDesc) {
         em.persist(matchDesc);
-        return matchDesc.getMetaDateMatchId();
+        return matchDesc.getMetadateMatchId();
     }
 
     public boolean searchTftMatchIdData(String matchId){
-        int size = em.createQuery("select m from MatchDesc m where m.metaDateMatchId = '" + matchId +"'", MatchDesc.class).getResultList().size();
+        int size = em.createQuery("select m from MatchDesc m where m.metadateMatchId = '" + matchId +"'", MatchDesc.class).getResultList().size();
         if (size > 0) {
             return false;
         }

@@ -1,7 +1,5 @@
 package com.projectteam.coop.tft.repository;
 
-import com.projectteam.coop.sample.jpa.domain.JpaSample;
-import com.projectteam.coop.tft.domain.Summoner;
 import com.projectteam.coop.tft.domain.Synergy;
 import org.springframework.stereotype.Repository;
 

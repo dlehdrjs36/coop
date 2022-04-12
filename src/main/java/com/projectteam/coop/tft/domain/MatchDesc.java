@@ -15,15 +15,15 @@ public class MatchDesc {
     @Id
     private String metadataParticipants;
     @Id
-    private String metaDateMatchId;
+    private String metadateMatchId;
     //전체 게임 시간
     private long gameLength;
     private String gameVersion;
     // $ 혹은 | 를 입력해서 데이터화 시킬 예정 List 대부분 그럴예정
     private String augments;
 
-    private String companionContentID;
-    private int companionSkinID;
+    private String companionContentId;
+    private int companionSkinId;
     private String companionSpecies;
 
     private int placement;

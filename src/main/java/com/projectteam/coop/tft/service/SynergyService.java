@@ -73,7 +73,7 @@ public class SynergyService {
             umuFlg = false;
             for (UsedUnit unit : usedUnitList) {
                 if (unit.getUsedAnotherUnit().equals(s)) {
-                    unit.setCount(unit.getCount() + 1);
+                    unit.unitCounting(unit);
                     umuFlg = true;
                 }
             }
@@ -82,9 +82,7 @@ public class SynergyService {
             }
 
             UsedUnit usedUnits = new UsedUnit();
-            usedUnits.setUsedAnotherUnit(s);
-            usedUnits.setCount(1);
-            usedUnitList.add(usedUnits);
+            usedUnitList.add(usedUnits.createUsedUnit(s));
         }
         return usedUnitList;
     }
@@ -97,7 +95,7 @@ public class SynergyService {
             umuFlg = false;
             for (UsedAugment unit : usedAugmentsList) {
                 if (unit.getUsedAnotherAugment().equals(s)) {
-                    unit.setCount(unit.getCount() + 1);
+                    unit.augmentCounting(unit);
                     umuFlg = true;
                 }
             }
@@ -106,9 +104,7 @@ public class SynergyService {
             }
 
             UsedAugment usedAugments = new UsedAugment();
-            usedAugments.setUsedAnotherAugment(s);
-            usedAugments.setCount(1);
-            usedAugmentsList.add(usedAugments);
+            usedAugmentsList.add(usedAugments.createUsedAugment(s));
         }
         return usedAugmentsList;
     }

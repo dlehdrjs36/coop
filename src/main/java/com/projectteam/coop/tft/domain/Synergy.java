@@ -1,14 +1,13 @@
 package com.projectteam.coop.tft.domain;
 
 import lombok.Getter;
-import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
-@Getter @Setter
+@Getter
 public class Synergy {
     @Id
     private String traitsName;
@@ -23,4 +22,10 @@ public class Synergy {
     private String winRate;
     private String usedAnotherUnit;
     private String usedAugments;
+
+    public void changeSynergy(Synergy synergy, String winRate, String usedAnotherUnit, String usedAugments) {
+        synergy.winRate = winRate;
+        synergy.usedAnotherUnit = usedAnotherUnit;
+        synergy.usedAugments = usedAugments;
+    }
 }

@@ -1,14 +1,11 @@
 package com.projectteam.coop.tft.domain;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
-@NoArgsConstructor
-@Getter @Setter
+@Getter
 @IdClass(MatchDescId.class)
 public class MatchDesc {
 
@@ -46,8 +43,40 @@ public class MatchDesc {
     // 희귀도 0 ~ 4 까지 1골드 ~ 5골드
     private String unitsRarity;
     // 1 ~ 3 티어
-    private String unitstier;
+    private String unitsTier;
 
     private String tftGameType;
     private int tftSetNumber;
+
+    public MatchDesc createMatchDesc(String metadataParticipants, String metaDateMatchId, Long gameLength, String gameVersion, String augments,
+                                     String companionContentID, int companionSkinID, String companionSpecies, int placement, String puuid,
+                                     String traitsName, String traitsNumUnits, String traitsStyle, String traitsTierCurrent, String traitsTierTotal,
+                                     String unitsCharacterId, String unitsItemNames, String unitsName, String unitsRarity, String unitsTier,
+                                     String tftGameType, int tftSetNumber) {
+        MatchDesc matchDesc = new MatchDesc();
+        matchDesc.metadataParticipants = metadataParticipants;
+        matchDesc.metadateMatchId = metaDateMatchId;
+        matchDesc.gameLength = gameLength;
+        matchDesc.gameVersion = gameVersion;
+        matchDesc.augments = augments;
+        matchDesc.companionContentId = companionContentID;
+        matchDesc.companionSkinId = companionSkinID;
+        matchDesc.companionSpecies = companionSpecies;
+        matchDesc.placement = placement;
+        matchDesc.puuid = puuid;
+        matchDesc.traitsName = traitsName;
+        matchDesc.traitsNumUnits = traitsNumUnits;
+        matchDesc.traitsStyle = traitsStyle;
+        matchDesc.traitsTierCurrent = traitsTierCurrent;
+        matchDesc.traitsTierTotal = traitsTierTotal;
+        matchDesc.unitsCharacterId = unitsCharacterId;
+        matchDesc.unitsItemNames = unitsItemNames;
+        matchDesc.unitsName = unitsName;
+        matchDesc.unitsRarity = unitsRarity;
+        matchDesc.unitsTier = unitsTier;
+        matchDesc.tftGameType = tftGameType;
+        matchDesc.tftSetNumber = tftSetNumber;
+
+        return matchDesc;
+    }
 }

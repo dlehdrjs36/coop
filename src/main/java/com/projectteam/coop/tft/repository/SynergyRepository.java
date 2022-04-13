@@ -26,11 +26,9 @@ public class SynergyRepository {
                 .getResultList();
     }
 
-    public String updateWinRateUnits(String winRate, String units, String Augments,String traitsName){
+    public String updateWinRateUnits(String winRate, String units, String augments,String traitsName){
         Synergy synergy = em.find(Synergy.class, traitsName);
-        synergy.setWinRate(winRate);
-        synergy.setUsedAugments(Augments);
-        synergy.setUsedAnotherUnit(units);
+        synergy.changeSynergy(synergy, winRate, augments, units);
         return synergy.getTraitsName();
     }
 }

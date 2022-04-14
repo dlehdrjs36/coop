@@ -60,7 +60,7 @@ function viewChampionData(){
     innerHtml = "";
     for(i=0; i<initUsedAugments.length; i++) {
         innerHtml += "<div class='contentsListName'>";
-        innerHtml += "<img src='/img/tft/augment/"+augmentsTier[i]+"/";
+        innerHtml += "<img src='/img/tft/augment/tier"+augmentsTier[i]+"/";
         innerHtml += initUsedAugments[i].substring(13,initUsedAugments[i].value);
         innerHtml += ".png' class='synergyContentsImage' alt=''>";
         innerHtml += initUsedAugments[i].substring(13,initUsedAugments[i].value);

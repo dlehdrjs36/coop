@@ -65,6 +65,26 @@ public class SynergyService {
         }
     }
 
+    @Transactional(transactionManager = "h2TxManager", readOnly = true)
+    public Synergy findSynergyData(String synergyName){
+        return synergyRepository.findSynergy(synergyName);
+    }
+
+    @Transactional(transactionManager = "h2TxManager", readOnly = true)
+    public List<Synergy> findAllSynergyData(){
+        return synergyRepository.findAll();
+    }
+
+    @Transactional(transactionManager = "h2TxManager", readOnly = true)
+    public List<String> findAllSynergyName(){
+        return synergyRepository.findAllSynergyName();
+    }
+
+    @Transactional(transactionManager = "h2TxManager", readOnly = true)
+    public List<String> findAllSynergyNameKr(){
+        return synergyRepository.findAllSynergyNameKr();
+    }
+
     public List<UsedUnit> usedSynergyUnitCount(List<UsedUnit> usedUnitList, String usedUnit){
         String[] usedUnitArray = usedUnit.split("\\|");
         boolean umuFlg;

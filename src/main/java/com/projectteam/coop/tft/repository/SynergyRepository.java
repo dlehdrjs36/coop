@@ -17,12 +17,27 @@ public class SynergyRepository {
         return synergy.getTraitsName();
     }
 
-    public List<Synergy> findSynergy(String synergyName) {
-        return em.createQuery("select m from Synergy m where m.traitsName = '" + synergyName +"'", Synergy.class).getResultList();
+    public Synergy findSynergy(String synergyName) {
+        return em.createQuery("select m from Synergy m where m.traitsName = :traitsName", Synergy.class)
+                .setParameter("traitsName", synergyName)
+                .getResultList()
+                .stream()
+                .findAny()
+                .orElse(null);
     }
 
     public List<Synergy> findAll() {
         return em.createQuery("select m from Synergy m", Synergy.class)
+                .getResultList();
+    }
+
+    public List<String> findAllSynergyName(){
+        return em.createQuery("select m.traitsName from Synergy m order by m.traitsNameKr", String.class)
+                .getResultList();
+    }
+
+    public List<String> findAllSynergyNameKr(){
+        return em.createQuery("select m.traitsNameKr from Synergy m order by m.traitsNameKr", String.class)
                 .getResultList();
     }
 

@@ -43,14 +43,13 @@ function viewChampionData(){
     }
     document.getElementById("traitsNumUnits").innerHTML = innerHtml;
 
-
     innerHtml = "";
     for(i=0; i<initUsedAnotherUnit.length; i++) {
         innerHtml += "<div class='contentsListName'>";
         innerHtml += "<img src='/img/tft/champion/";
-        innerHtml += initUsedAnotherUnit[i].substring(5,document.getElementById("initTraitsName").value.length);
+        innerHtml += initUsedAnotherUnit[i].substring(5,initUsedAnotherUnit[i].length);
         innerHtml += ".png' class='synergyContentsImage' alt=''>";
-        innerHtml += initUsedAnotherUnit[i].substring(5,document.getElementById("initTraitsName").value.length);
+        innerHtml += initUsedAnotherUnit[i].substring(5,initUsedAnotherUnit[i].length);
         innerHtml += "</div>";
     }
     document.getElementById("usedAnotherUnit").innerHTML = innerHtml;
@@ -67,7 +66,39 @@ function viewChampionData(){
         innerHtml += "</div>";
     }
     document.getElementById("usedAugments").innerHTML = innerHtml;
-    let button = document.getElementById("button_"+ document.getElementById("initTraitsName").value);
+    let button = document.getElementById(document.getElementById("initTraitsName").value);
     button.checked = true;
+}
+
+let overlapCheck = "Set6_Enchanter";
+function getSynergyData ( synergyName ){
+    if(overlapCheck === synergyName){
+    }else{
+        overlapCheck = synergyName;
+        const xhr = new XMLHttpRequest();
+        const method = "GET";
+        const url = "/synergyList/" + synergyName;
+        xhr.open(method, url);
+        xhr.send();
+        xhr.onload = function() {
+            if (xhr.status >= 200 && xhr.status < 300) {
+                const synergyData = JSON.parse(xhr.response);
+                document.getElementById("initTraitsName").value = synergyData.initSynergy.traitsName;
+                document.getElementById("initTraitsNameKr").value = synergyData.initSynergy.traitsNameKr;
+                document.getElementById("initTraitsDesc").value = synergyData.initSynergy.traitsDesc;
+                document.getElementById("initTraitsTier").value = synergyData.initSynergy.traitsTier;
+                document.getElementById("initTraitsTierDesc").value = synergyData.initSynergy.traitsTierDesc;
+                document.getElementById("initTraitsNumUnits").value = synergyData.initSynergy.traitsNumUnits;
+                document.getElementById("initTraitsNumUnitsKr").value = synergyData.initSynergy.traitsNumUnitsKr;
+                document.getElementById("initWinRate").value = synergyData.initSynergy.winRate;
+                document.getElementById("initUsedAnotherUnit").value = synergyData.initSynergy.usedAnotherUnit;
+                document.getElementById("initUsedAugments").value = synergyData.initSynergy.usedAugments;
+                document.getElementById("augmentTier").value = synergyData.augmentTier;
+                viewChampionData();
+            } else {
+                console.log('failed');
+            }
+        }
+    }
 }
 viewChampionData();

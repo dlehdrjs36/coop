@@ -43,7 +43,7 @@ public class SynergyRepository {
 
     public String updateWinRateUnits(String winRate, String units, String augments,String traitsName){
         Synergy synergy = em.find(Synergy.class, traitsName);
-        synergy.changeSynergy(synergy, winRate, augments, units);
+        synergy.changeSynergy(synergy, winRate, units, augments);
         return synergy.getTraitsName();
     }
 }

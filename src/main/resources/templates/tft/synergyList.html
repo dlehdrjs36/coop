@@ -10,8 +10,8 @@
             <div class="row container">
                 <div class="btn-group-synergy col-sm-2">
                     <div th:each="synergyNameForm : ${synergyNameForm}">
-                        <input type="radio" class="btn-check" name="btnradio" th:id="'button_'+ ${synergyNameForm.traitsName}" autocomplete="off" checked>
-                        <label class="btn btn-primary col-sm-12" th:for="'button_'+ ${synergyNameForm.traitsName}"><span th:text="${synergyNameForm.traitsNameKr}"></span></label>
+                        <input type="radio" class="btn-check" name="btnradio" th:id="${synergyNameForm.traitsName}" onclick=getSynergyData(this.id) autocomplete="off" checked>
+                        <label class="btn btn-primary col-sm-12" th:for="${synergyNameForm.traitsName}"><span th:text="${synergyNameForm.traitsNameKr}"></span></label>
                     </div>
                 </div>
                 <div class="col-sm-8 container">

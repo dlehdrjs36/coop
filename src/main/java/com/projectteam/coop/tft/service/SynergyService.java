@@ -6,6 +6,7 @@ import com.projectteam.coop.tft.domain.UsedAugment;
 import com.projectteam.coop.tft.domain.UsedUnit;
 import com.projectteam.coop.tft.repository.MatchDescRepository;
 import com.projectteam.coop.tft.repository.SynergyRepository;
+import com.projectteam.coop.web.menu.SynergyNameForm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -127,5 +128,21 @@ public class SynergyService {
             usedAugmentsList.add(usedAugments.createUsedAugment(s));
         }
         return usedAugmentsList;
+    }
+
+    public List<SynergyNameForm> getSynergyNameList(){
+        List<SynergyNameForm> synergyName = new ArrayList<>();
+        List<String> synergyListName = findAllSynergyName();
+        List<String> synergyListNameKr = findAllSynergyNameKr();
+        int i;
+
+        for(i=0; i<synergyListName.size(); i++){
+            SynergyNameForm SynergyNameForm = new SynergyNameForm();
+            SynergyNameForm.setTraitsName(synergyListName.get(i));
+            SynergyNameForm.setTraitsNameKr(synergyListNameKr.get(i));
+            synergyName.add(SynergyNameForm);
+        }
+
+        return synergyName;
     }
 }

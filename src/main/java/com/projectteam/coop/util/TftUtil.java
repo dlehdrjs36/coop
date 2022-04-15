@@ -4,6 +4,9 @@ import com.projectteam.coop.tft.domain.LeagueEntry;
 import com.projectteam.coop.tft.domain.MatchDescDTO.MatchDescDTO;
 import com.projectteam.coop.tft.domain.Summoner;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.core.io.DefaultResourceLoader;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.*;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.web.client.DefaultResponseErrorHandler;
@@ -12,6 +15,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.List;
@@ -126,5 +130,37 @@ public class TftUtil {
         ResponseEntity<List<LeagueEntry>> LeagueEntryData = restTemplate.exchange(uriComponents.toUriString(), HttpMethod.GET, null, new ParameterizedTypeReference<List<LeagueEntry>>() {});
 
         return LeagueEntryData.getBody();
+    }
+
+    /*
+    * Riot Api상에서는 증강체는 구분을 해주지 않기 때문에 티어별 패키지를 구분해서 사용할 경우 체크하는 함수는 필요
+    * */
+    public String getAugmentTier(String[] augments){
+        final ResourceLoader resourceLoader = new DefaultResourceLoader();
+        Resource resource = resourceLoader.getResource("classpath:/static/img/tft/augment/");
+        String augmentTier = "";
+        String augmentPath = "";
+        int i, j;
+
+        try {
+            augmentPath = resource.getURL().getPath();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        for(i=0; i<3; i++){
+            for(j=1; j<4; j++){
+                File file1 = new File(augmentPath + "tier" + j + "/" + augments[i].substring(13)+".png");
+                if(file1.exists()){
+                    augmentTier += String.valueOf(j) + '|';
+                }
+            }
+        }
+
+        if(!augmentTier.equals("")) {
+            augmentTier = augmentTier.substring(0, augmentTier.length() - 1);
+        }
+
+        return augmentTier;
     }
 }

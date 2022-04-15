@@ -4,6 +4,9 @@ import com.projectteam.coop.tft.domain.LeagueEntry;
 import com.projectteam.coop.tft.domain.MatchDescDTO.MatchDescDTO;
 import com.projectteam.coop.tft.domain.Summoner;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.core.io.DefaultResourceLoader;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.*;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.web.client.DefaultResponseErrorHandler;
@@ -133,13 +136,21 @@ public class TftUtil {
     * Riot Api상에서는 증강체는 구분을 해주지 않기 때문에 티어별 패키지를 구분해서 사용할 경우 체크하는 함수는 필요
     * */
     public String getAugmentTier(String[] augments){
+        final ResourceLoader resourceLoader = new DefaultResourceLoader();
+        Resource resource = resourceLoader.getResource("classpath:/static/img/tft/augment/");
         String augmentTier = "";
-        String augmentPath = "D:/project/origin/coop/src/main/resources/static/img/tft/augment/tier";
+        String augmentPath = "";
         int i, j;
+
+        try {
+            augmentPath = resource.getURL().getPath();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         for(i=0; i<3; i++){
             for(j=1; j<4; j++){
-                File file1 = new File(augmentPath + j + "/" + augments[i].substring(13)+".png");
+                File file1 = new File(augmentPath + "tier" + j + "/" + augments[i].substring(13)+".png");
                 if(file1.exists()){
                     augmentTier += String.valueOf(j) + '|';
                 }

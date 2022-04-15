@@ -1,13 +1,12 @@
 package com.projectteam.coop.web.member;
 
 import com.projectteam.coop.domain.Member;
-import com.projectteam.coop.domain.Post;
 import com.projectteam.coop.service.member.MemberService;
-import com.projectteam.coop.web.post.PostForm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 @RequiredArgsConstructor

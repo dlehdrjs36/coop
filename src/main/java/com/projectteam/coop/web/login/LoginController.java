@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import static com.projectteam.coop.web.session.SessionConst.ADMIN_LOGIN_MEMBER;
 import static com.projectteam.coop.web.session.SessionConst.LOGIN_MEMBER;
 
 
@@ -37,10 +38,33 @@ public class LoginController {
             if (findMember != null) {
                 HttpSession session = request.getSession();
                 session.setAttribute(LOGIN_MEMBER, findMember);
+                findMember.addPoint();//포인트 추가. 로그인 1회시에만 추가되도록 필요
+
                 return "redirect:/";
             }
         }
         return "/templates/login/loginForm";
+    }
+
+    @GetMapping("/adminLogin")
+    public String adminLoginForm(Model model) {
+        model.addAttribute("memberForm", new MemberForm());
+        return "/templates/login/adminLoginForm";
+    }
+
+    @PostMapping("/adminLogin")
+    public String adminLogin(@ModelAttribute("memberForm") MemberForm memberForm, HttpServletRequest request) {
+        //추후 validate로 입력 폼 검증 예정
+        if (memberForm != null) {
+            Member findMember = memberService.findMember(memberForm.getEmail(), memberForm.getPassword());
+            if (findMember != null) {
+                HttpSession session = request.getSession();
+                session.setAttribute(ADMIN_LOGIN_MEMBER, findMember);
+
+                return "/templates/admin/main";
+            }
+        }
+        return "/templates/login/adminLoginForm";
     }
 
     @PostMapping("/logout")

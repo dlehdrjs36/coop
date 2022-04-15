@@ -62,4 +62,8 @@ public class Member {
     public void changeMember(String name, String password, Boolean emailReceptionType) {
 
     }
+
+    public void addPoint() {
+        this.point += 10;
+    }
 }

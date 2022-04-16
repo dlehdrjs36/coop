@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="templates/fragments/header.html :: header"></head>
+<body>
+    <header th:replace="templates/fragments/bodyHeader.html :: bodyHeader"></header>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">번호</th>
+            <th scope="col">상품명</th>
+            <th scope="col">상품구매일</th>
+            <th scope="col">상품가격</th>
+            <th scope="col">적용여부</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="order : ${purchaseList}">
+            <td th:text="${order.id}"></td>
+            <td th:text="${order.product.name}"></td>
+            <td th:text="${order.productPurchaseDate}"></td>
+            <td th:text="${order.product.price}"></td>
+            <td th:text="${order.status}"></td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li class="page-item" th:each="num : ${#numbers.sequence(0, paging.endPage-1)}">
+                <a class="page-link" href="/orders?page=1" th:href="${'/orders?page=' + numStat.count}" th:text="${numStat.count}">1</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <footer th:replace="templates/fragments/footer.html :: footer"></footer>
+</body>
+</html>

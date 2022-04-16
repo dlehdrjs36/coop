@@ -18,7 +18,7 @@
         <td th:text="${product.name}"></td>
         <td><img th:src="${product.path}" /></td>
         <td th:text="${product.price}"></td>
-        <td><a th:href="'javascript:infoGet(\'products\',' + ${product.id} + ')'" href="#">구매</a></td>
+        <td><a th:href="'javascript:buyProduct(' + ${product.id} + ')'" href="#">구매</a></td>
     </tr>
     </tbody>
 </table>

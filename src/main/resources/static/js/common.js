@@ -21,3 +21,11 @@ function logout() {
     document.body.appendChild(form);
     form.submit();
 }
+
+function buyProduct(id) {
+    var form = document.createElement("form");
+    form.setAttribute("method", "post");
+    form.setAttribute("action", "/orders/" + id);
+    document.body.appendChild(form);
+    form.submit();
+}

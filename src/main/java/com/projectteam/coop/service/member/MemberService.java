@@ -7,8 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 
 @Service
 @Transactional(transactionManager = "h2TxManager")
@@ -23,6 +21,10 @@ public class MemberService {
 
     public Long updateMember(MemberForm memberForm) {
         return memberRepository.updateMember(memberForm);
+    }
+
+    public Long updateMember(Member member) {
+        return memberRepository.updateMember(member);
     }
 
     @Transactional(transactionManager = "h2TxManager", readOnly = true)

@@ -26,6 +26,12 @@ public class MemberRepository {
         return findMember.getId();
     }
 
+    //수정
+    public Long updateMember(Member member) {
+        em.merge(member);
+        return member.getId();
+    }
+
     //단건 조회
     public Member findMember(String email, String password) {
 
@@ -38,5 +44,12 @@ public class MemberRepository {
                 .orElse(null);
 
         return findMember;
+    }
+
+    //등록
+    public Long addPoint(Member member) {
+        member.addPoint();
+        em.merge(member);
+        return member.getId();
     }
 }

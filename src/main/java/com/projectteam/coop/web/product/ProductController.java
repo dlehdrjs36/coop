@@ -1,6 +1,7 @@
 package com.projectteam.coop.web.product;
 
 import com.projectteam.coop.domain.Product;
+import com.projectteam.coop.service.member.MemberService;
 import com.projectteam.coop.service.product.ProductService;
 import com.projectteam.coop.util.Paging;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductController {
     private final ProductService productService;
+    private final MemberService memberService;
 
     @GetMapping("/products")
     public String productList(@RequestParam(value = "page", required = false) Integer page, Model model) {

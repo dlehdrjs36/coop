@@ -1,7 +1,9 @@
 package com.projectteam.coop.web;
 
 import com.projectteam.coop.domain.Member;
+import com.projectteam.coop.service.member.MemberService;
 import com.projectteam.coop.web.session.SessionConst;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,7 +13,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Controller
+@RequiredArgsConstructor
 public class HomeController {
+
+    private final MemberService memberService;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String home(Model model, HttpServletRequest request) {
@@ -27,7 +32,8 @@ public class HomeController {
         }
 
         //세션에 회원 데이터 있는 경우
-        model.addAttribute("member", loginMember);
+        Member member = memberService.findMember(loginMember.getEmail(), loginMember.getPassword());
+        model.addAttribute("member", member);
         return "/templates/loginIndex";
     }
 }

@@ -1,9 +1,9 @@
 package com.projectteam.coop.web.login;
 
 import com.projectteam.coop.domain.Member;
+import com.projectteam.coop.service.login.LoginService;
 import com.projectteam.coop.service.member.MemberService;
 import com.projectteam.coop.web.member.MemberForm;
-import com.projectteam.coop.web.post.PostForm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +23,7 @@ import static com.projectteam.coop.web.session.SessionConst.LOGIN_MEMBER;
 public class LoginController {
 
     private final MemberService memberService;
+    private final LoginService loginService;
 
     @GetMapping("/login")
     public String loginForm(Model model) {
@@ -38,8 +39,7 @@ public class LoginController {
             if (findMember != null) {
                 HttpSession session = request.getSession();
                 session.setAttribute(LOGIN_MEMBER, findMember);
-                findMember.addPoint();//포인트 추가. 로그인 1회시에만 추가되도록 필요
-
+                loginService.addPoint(findMember);//포인트 추가. 로그인 1회시에만 추가되도록 필요
                 return "redirect:/";
             }
         }

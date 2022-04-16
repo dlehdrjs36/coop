@@ -63,7 +63,21 @@ public class Member {
 
     }
 
+    public void minusPoint(int point) {
+        this.point -= point;
+    }
+
     public void addPoint() {
         this.point += 10;
     }
+
+    //상품 구매
+    public boolean buyProduct(int price) {
+        if(this.point - price >= 0) {
+            this.point -= price;
+            return true;
+        }
+        return false;
+    }
+
 }

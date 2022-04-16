@@ -35,9 +35,15 @@ public class PurchaseList {
     @Enumerated(EnumType.STRING)
     private PurchaseListStatus status;
 
-    //연관관계 편의 메서드용 Setter
-//    public void addMember(Member member) {
-//        this.member = member;
-//    }
+    //연관관계 편의 메서드용
+    public static PurchaseList addPurchaseList(Product product, Member member) {
+        PurchaseList purchaseList = new PurchaseList();
+        purchaseList.product = product;
+        purchaseList.member = member;
+        purchaseList.productPurchaseDate = LocalDateTime.now();
+        purchaseList.status = PurchaseListStatus.ORDER;
+
+        return purchaseList;
+    }
 
 }

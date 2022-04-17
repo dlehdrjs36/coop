@@ -31,14 +31,23 @@ public class MenuController {
 
     @GetMapping(value = "/synergyList")
     public String getSynergyListPage(Model model) {
-        List<SynergyNameForm> SynergyNameForm = synergyService.getSynergyNameList();
-        Synergy initSynergy = synergyService.findSynergyData("Set6_Enchanter");
-        String[] augments = initSynergy.getUsedAugments().split("\\|");
-        String augmentTier = tftUtil.getAugmentTier(augments);
+        List<SynergyNameForm> SynergyNameForm = null;
+        Synergy initSynergy = null;
+        String[] augments;
+        String augmentTier = null;
 
-        model.addAttribute("synergyNameForm", SynergyNameForm);
-        model.addAttribute("initSynergy", initSynergy);
-        model.addAttribute("augmentTier", augmentTier);
+        try {
+            SynergyNameForm = synergyService.getSynergyNameList();
+            initSynergy = synergyService.findSynergyData("Set6_Enchanter");
+            augments = initSynergy.getUsedAugments().split("\\|");
+            augmentTier = tftUtil.getAugmentTier(augments);
+        }catch(Exception e){
+        }finally {
+            model.addAttribute("synergyNameForm", SynergyNameForm);
+            model.addAttribute("initSynergy", initSynergy);
+            model.addAttribute("augmentTier", augmentTier);
+        }
+
         return "/templates/tft/synergyList";
     }
 
@@ -52,5 +61,10 @@ public class MenuController {
         SynergyData.put("initSynergy", initSynergy);
         SynergyData.put("augmentTier",augmentTier);
         return SynergyData;
+    }
+
+    @GetMapping("/combination")
+    public String getCombinationPage(Model model){
+        return "/templates/tft/combination";
     }
 }

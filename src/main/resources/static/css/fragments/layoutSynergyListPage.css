@@ -3,12 +3,14 @@
     padding-bottom: 20px;
     padding-left: 40px;
 }
+/* 공용으로 사용할만 해서 따로 뺌 */
 .contentsPadding{
     padding: 15px 20px 16px 20px;
 }
 .contentsMargin{
     margin-top :10px;
 }
+/* 공용으로 사용할만 해서 따로 뺌 이후 수정 예정 */
 .contentsTextSize{
     font-size: 20px;
 }

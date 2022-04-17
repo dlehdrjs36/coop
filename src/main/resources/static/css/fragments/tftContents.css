@@ -1,0 +1,27 @@
+.contentsPadding{
+    padding: 15px 20px 16px 20px;
+}
+.contentsMargin{
+    margin-top :10px;
+}
+.synergyStyleNoStyle{
+    background-image: url("/img/tft/synergy/hollow/style/No_style.png");
+    background-repeat: no-repeat;
+    opacity: 0.5;
+}
+.synergyStyleBronze{
+    background-image: url("/img/tft/synergy/hollow/style/Bronze.png");
+    background-repeat: no-repeat;
+}
+.synergyStyleSilver{
+    background-image: url("/img/tft/synergy/hollow/style/Silver.png");
+    background-repeat: no-repeat;
+}
+.synergyStyleGold{
+    background-image: url("/img/tft/synergy/hollow/style/Gold.png");
+    background-repeat: no-repeat;
+}
+.synergyStyleChromatic{
+    background-image: url("/img/tft/synergy/hollow/style/Chromatic.png");
+    background-repeat: no-repeat;
+}

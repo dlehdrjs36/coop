@@ -60,6 +60,7 @@
     font-weight: 700;
     color: #1b2120;
 }
+/* bg-black 이랑 다를게 없어 보이는데 필요 없는 부분으로 보임 */
 .sameSynergyChampionList{
     background-color: #000000;
 }

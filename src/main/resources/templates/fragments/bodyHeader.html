@@ -14,12 +14,17 @@
                             <button class="btn btn-outline-success" type="submit">Search</button>
                         </form>
                         <form class="searchChampion d-flex bg-dark" name="searchChampion" type="GET">
-                            <input type="search" class="form-control" id="searchChampionName" placeholder="챔피언 검색" aria-label="Search">
+                            <input type="text" class="form-control" id="searchChampionName" placeholder="챔피언 검색" aria-label="Search">
                             <button class="btn btn-outline-success" onclick="championSearch()">Search</button>
                         </form>
                     </div>
                 </div>
             </nav>
+            <div class="container d-flex flex-wrap justify-content-center justify-content-lg-start">
+                <div class="header-nav container navbar navbar-expand-md navbar-dark sticky-top">
+                    <div class="form-control championKeywords hide"></div>
+                </div>
+            </div>
         </div>
     </div>
     <nav class="navbar navbar-expand-sm navbar-light bg-light">

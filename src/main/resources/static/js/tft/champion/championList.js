@@ -16,6 +16,15 @@ function championListInit(){
         innerHtml += '</div>';
     }
     document.getElementById("championList").innerHTML += innerHtml;
+
+    let searchChampionName = document.getElementById("championName").value;
+    if(searchChampionName !== ""){
+        for( let i=0; i<championNameList.length; i++){
+            if(searchChampionName === championNameList[i]){
+                viewChampionData(championNameList[i], championNameKrList[i]);
+            }
+        }
+    }
 }
 function viewChampionData( championName,  championNameKr ){
     viewChampionImage( championName,  championNameKr );

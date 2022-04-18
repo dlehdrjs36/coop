@@ -31,11 +31,7 @@ public class PostController {
     }
 
     @GetMapping("/posts")
-    public String postList(@RequestParam(value = "page", required = false) Integer page, Model model) {
-        if (page == null) {
-            page = 1;
-        }
-
+    public String postList(@RequestParam(value = "page", defaultValue = "1") Integer page, Model model) {
         Paging paging = new Paging();
         paging.calculateTotalPage(postService.totalSize());
 

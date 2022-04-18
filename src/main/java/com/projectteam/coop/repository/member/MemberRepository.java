@@ -35,7 +35,7 @@ public class MemberRepository {
     //단건 조회
     public Member findMember(String email, String password) {
 
-        Member findMember = em.createQuery("SELECT m FROM Member m WHERE m.email = :email and m.password = :password", Member.class)
+        Member findMember = em.createQuery("SELECT m FROM Member m left join fetch m.purchaseLists WHERE m.email = :email and m.password = :password", Member.class)
                 .setParameter("email", email)
                 .setParameter("password", password)
                 .getResultList()

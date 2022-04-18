@@ -1,7 +1,11 @@
 package com.projectteam.coop.web;
 
 import com.projectteam.coop.domain.Member;
+import com.projectteam.coop.domain.ProductType;
+import com.projectteam.coop.domain.PurchaseList;
+import com.projectteam.coop.domain.PurchaseListStatus;
 import com.projectteam.coop.service.member.MemberService;
+import com.projectteam.coop.service.purchaselist.PurchaseListService;
 import com.projectteam.coop.web.session.SessionConst;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -17,9 +21,12 @@ import javax.servlet.http.HttpSession;
 public class HomeController {
 
     private final MemberService memberService;
+    private final PurchaseListService purchaseListService;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String home(Model model, HttpServletRequest request) {
+
+
         HttpSession session = request.getSession(false);
         if (session == null) {
             return "/templates/index";
@@ -33,7 +40,21 @@ public class HomeController {
 
         //세션에 회원 데이터 있는 경우
         Member member = memberService.findMember(loginMember.getEmail(), loginMember.getPassword());
+
+        PurchaseList memberPurchaseList = purchaseListService.memberPurchaseList(member.getEmail())
+                .stream()
+                .filter(purchaseList -> purchaseList.getProduct().getType() == ProductType.BACKGROUND)
+                .filter(purchaseList -> purchaseList.getStatus() == PurchaseListStatus.APPLY)
+                .findAny()
+                .orElse(null);
+
+        if (memberPurchaseList != null) {
+            model.addAttribute("memberPurchaseProduct", memberPurchaseList.getProduct());
+        }
+
+
         model.addAttribute("member", member);
+
         return "/templates/loginIndex";
     }
 }

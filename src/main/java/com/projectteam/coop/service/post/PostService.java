@@ -25,9 +25,10 @@ public class PostService {
         return postRepository.findPosts(offset, size);
     }
 
-    @Transactional(transactionManager = "h2TxManager", readOnly = true)
     public Post findPost(Long id) {
-        return postRepository.findPost(id);
+        Post post = postRepository.findPost(id);
+        post.addViewCount();
+        return post;
     }
 
     public Long updatePost(PostForm postForm) {

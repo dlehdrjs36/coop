@@ -2,61 +2,49 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="templates/fragments/header.html :: header"></head>
 <body>
-    <header th:replace="templates/fragments/bodyHeader.html :: bodyHeader"></header>
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">First</th>
-            <th scope="col">Last</th>
-            <th scope="col">Handle</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-        </tr>
-        <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-        </tr>
-        <tr>
-            <th scope="row">3</th>
-            <td colspan="2">Larry the Bird</td>
-            <td>@twitter</td>
-        </tr>
-
-        <tr th:each="post : ${posts}">
-            <td th:text="${post.postId}"></td>
-            <td><a th:text="${post.title}" th:href="'javascript:infoGet(\'posts\',' + ${post.postId} + ')'" href="#"></a></td>
-            <td th:text="${post.content}"></td>
-            <td></td>
-        </tr>
-        </tbody>
-    </table>
-    <a href="/posts/new">게시물 등록</a>
-    <nav aria-label="Page navigation example">
-        <ul class="pagination">
-            <li class="page-item">
-                <a class="page-link" href="#" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-            </li>
-            <li class="page-item" th:each="num : ${#numbers.sequence(0, paging.endPage-1)}">
-                <a class="page-link" href="/posts?page=1" th:href="${'/posts?page=' + numStat.count}" th:text="${numStat.count}">1</a>
-            </li>
-            <li class="page-item">
-                <a class="page-link" href="#" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
+    <div>
+        <header th:replace="templates/fragments/bodyHeader.html :: bodyHeader"></header>
+    </div>
+    <div class="mt-5">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">번호</th>
+                    <th scope="col">제목</th>
+                    <th scope="col">조회수</th>
+                    <th scope="col">추천수</th>
+<!--                    <th scope="col">작성자</th>-->
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="post : ${posts}">
+                    <td th:text="${post.postId}"></td>
+                    <td><a th:text="${post.title}" th:href="'javascript:infoGet(\'posts\',' + ${post.postId} + ')'" href="#"></a></td>
+                    <td th:text="${post.viewCount}"></td>
+                    <td th:text="${post.recommendCount}"></td>
+<!--                    <td th:text="${post.createMember.name}"></td>-->
+                </tr>
+            </tbody>
+        </table>
+        <button class="btn btn-info" type="button" onclick="location.href='/posts/new'">게시물 등록</button>
+        <nav aria-label="Page navigation example m-3">
+            <ul class="pagination">
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item" th:each="num : ${#numbers.sequence(0, paging.endPage-1)}">
+                    <a class="page-link" href="/posts?page=1" th:href="${'/posts?page=' + numStat.count}" th:text="${numStat.count}">1</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
     <footer th:replace="templates/fragments/footer.html :: footer"></footer>
 </body>
 </html>

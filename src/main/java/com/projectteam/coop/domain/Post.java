@@ -4,7 +4,7 @@ import lombok.Getter;
 
 import javax.persistence.*;
 
-import static javax.persistence.FetchType.*;
+import static javax.persistence.FetchType.LAZY;
 
 @Entity
 @Getter
@@ -22,6 +22,7 @@ public class Post extends BaseEntity {
     @Column(name = "STATUS")
     private PostStatus postStatus;
 
+    @Column(name = "UPPER_POST_ID")
     private Long upperPostId;
 
     private String password;
@@ -31,14 +32,17 @@ public class Post extends BaseEntity {
     @Lob
     private String content;
 
+    @Column(name = "VIEW_COUNT")
     private Integer viewCount;
 
+    @Column(name = "RECOMMEND_COUNT")
     private Integer recommendCount;
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "CREATE_MEMBER_ID")
     private Member createMember;
 
+    @Column(name = "UPDATE_MEMBER_ID")
     private String updateMemberId;
 
 
@@ -46,7 +50,10 @@ public class Post extends BaseEntity {
         Post post = new Post();
         post.title = title;
         post.password = password;
+        post.postStatus = PostStatus.Y;
         post.content = content;
+        post.viewCount = 0;
+        post.recommendCount = 0;
 
         return post;
     }
@@ -60,6 +67,10 @@ public class Post extends BaseEntity {
         this.content = content;
         this.viewCount = viewCount;
         this.recommendCount = recommendCount;
+    }
+
+    public void addViewCount() {
+        this.viewCount = this.viewCount + 1;
     }
 
 }

@@ -1,6 +1,8 @@
 package com.projectteam.coop.service.login;
 
 import com.projectteam.coop.domain.Member;
+import com.projectteam.coop.domain.log.LoginLog;
+import com.projectteam.coop.repository.log.LoginRepository;
 import com.projectteam.coop.repository.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,8 +14,16 @@ import org.springframework.transaction.annotation.Transactional;
 public class LoginService {
 
     private final MemberRepository memberRepository;
+    private final LoginRepository loginRepository;
 
-    public Long addPoint(Member member) {
-        return memberRepository.addPoint(member);
+    public void addLoginLog(LoginLog login) {
+        loginRepository.addLoginLog(login);
     }
+
+    public void addPoint(Member member) {
+        if (loginRepository.findLoginLog() == 1) {
+            memberRepository.addPoint(member);
+        }
+    }
+
 }

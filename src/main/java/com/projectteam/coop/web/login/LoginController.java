@@ -1,6 +1,7 @@
 package com.projectteam.coop.web.login;
 
 import com.projectteam.coop.domain.Member;
+import com.projectteam.coop.domain.log.LoginLog;
 import com.projectteam.coop.service.login.LoginService;
 import com.projectteam.coop.service.member.MemberService;
 import com.projectteam.coop.web.member.MemberForm;
@@ -39,6 +40,7 @@ public class LoginController {
             if (findMember != null) {
                 HttpSession session = request.getSession();
                 session.setAttribute(LOGIN_MEMBER, findMember);
+                loginService.addLoginLog(LoginLog.createLoginLog(findMember.getEmail()));
                 loginService.addPoint(findMember);//포인트 추가. 로그인 1회시에만 추가되도록 필요
                 return "redirect:/";
             }

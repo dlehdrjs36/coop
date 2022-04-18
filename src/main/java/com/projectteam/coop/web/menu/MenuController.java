@@ -29,6 +29,16 @@ public class MenuController {
         return "/templates/tft/championList";
     }
 
+    @GetMapping(value = "/championList/{championName}")
+    public String searchChampion(@PathVariable String championName, Model model) {
+        if(championName != "") {
+            model.addAttribute(championName, championName);
+        } else {
+            model.addAttribute(championName, "");
+        }
+        return "/templates/tft/championList";
+    }
+
     @GetMapping(value = "/synergyList")
     public String getSynergyListPage(Model model) {
         List<SynergyNameForm> SynergyNameForm = null;
@@ -66,5 +76,10 @@ public class MenuController {
     @GetMapping("/combination")
     public String getCombinationPage(Model model){
         return "/templates/tft/combination";
+    }
+
+    @GetMapping("/guide")
+    public String getGuidePage(Model model){
+        return "/templates/tft/guide";
     }
 }

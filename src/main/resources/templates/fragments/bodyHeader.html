@@ -13,9 +13,9 @@
                             <input type="search" class="form-control" placeholder="소환사 검색" aria-label="Search">
                             <button class="btn btn-outline-success" type="submit">Search</button>
                         </form>
-                        <form class="Search-Champion d-flex bg-dark">
-                            <input type="search" class="form-control" placeholder="챔피언 검색" aria-label="Search">
-                            <button class="btn btn-outline-success" type="submit">Search</button>
+                        <form class="searchChampion d-flex bg-dark" name="searchChampion" type="GET">
+                            <input type="search" class="form-control" id="searchChampionName" placeholder="챔피언 검색" aria-label="Search">
+                            <button class="btn btn-outline-success" onclick="championSearch()">Search</button>
                         </form>
                     </div>
                 </div>
@@ -33,7 +33,7 @@
                     <li><a class="nav-link" href="/championList">챔피언</a></li>
                     <li><a class="nav-link" href="/synergyList">시너지</a></li>
                     <li><a class="nav-link" href="/combination">조합</a></li>
-                    <li><a class="nav-link" href="#">가이드</a></li>
+                    <li><a class="nav-link" href="/guide">가이드</a></li>
                     <li><a class="nav-link" href="/posts">커뮤니티</a></li>
                     <li><a class="nav-link" href="/shop">상점</a></li>
                 </ul>

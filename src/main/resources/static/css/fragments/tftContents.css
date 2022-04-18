@@ -4,6 +4,11 @@
 .contentsMargin{
     margin-top :10px;
 }
+.contentsBox{
+    word-wrap: break-word;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
 .synergyStyleNoStyle{
     background-image: url("/img/tft/synergy/hollow/style/No_style.png");
     background-repeat: no-repeat;

@@ -43,8 +43,8 @@
         </div>
     </div>
 </body>
-<script>
-    // 해당부분은 백그라운드에 데이터를 넣는 방법중 하나 이후 비슷하게 사용할 가능성 있음
-    document.getElementById("main-background").style.backgroundImage = "url('" + "/img/shop/mainbackground_Mok.jpg" +"')";
+<script th:inline="javascript">
+    let path = [[${memberPurchaseProduct.path}]];
+    document.getElementById("main-background").style.backgroundImage = "url('" + "/img/product/"+path+"')";
 </script>
 </html>

@@ -1,5 +1,5 @@
 package com.projectteam.coop.domain;
 
 public enum PurchaseListStatus {
-    ORDER
+    ORDER, APPLY, UNAPPLY
 }

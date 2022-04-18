@@ -46,4 +46,13 @@ public class PurchaseList {
         return purchaseList;
     }
 
+    //상품 적용
+    public void apply() {
+        this.status = PurchaseListStatus.APPLY;
+    }
+
+    //상품 미적용
+    public void unapply() {
+        this.status = PurchaseListStatus.UNAPPLY;
+    }
 }

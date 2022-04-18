@@ -34,6 +34,29 @@ public class PurchaseListRepository {
         return findPurchaseList;
     }
 
+    //회원 구매목록 조회
+    public List<PurchaseList> memberPurchaseList(String email) {
+        List<PurchaseList> memberPurchaseList = em.createQuery("select p from PurchaseList p join fetch p.product join fetch p.member where p.member.email = :email", PurchaseList.class)
+                .setParameter("email", email)
+                .getResultList();
+
+        return memberPurchaseList;
+    }
+    //단건 조회
+    public Long orderApply(Long id) {
+        PurchaseList purchaseList = em.find(PurchaseList.class, id);
+        purchaseList.apply();
+
+        return purchaseList.getId();
+    }
+
+    public Long orderUnApply(Long id) {
+        PurchaseList purchaseList = em.find(PurchaseList.class, id);
+        purchaseList.unapply();
+
+        return purchaseList.getId();
+    }
+
     //전체 개수
     public int getTotalSize() {
         int size = em.createQuery("select p from PurchaseList p", PurchaseList.class)

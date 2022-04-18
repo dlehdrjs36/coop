@@ -11,10 +11,7 @@ import com.projectteam.coop.web.session.SessionConst;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -55,10 +52,7 @@ public class OrderController {
     }
 
     @GetMapping("/orders")
-    public String list(@RequestParam(value = "page", required = false) Integer page, Model model) {
-        if (page == null) {
-            page = 1;
-        }
+    public String list(@RequestParam(value = "page", defaultValue = "1") Integer page, Model model) {
 
         Paging paging = new Paging();
         paging.calculateTotalPage(purchaseListService.totalSize());
@@ -70,4 +64,17 @@ public class OrderController {
 
         return "/templates/orders/orderList";
     }
+
+    @PostMapping("/orders/{orderId}/apply")
+    public String orderApply(@PathVariable("orderId") Long orderId) {
+        purchaseListService.orderApply(orderId);
+        return "redirect:/orders";
+    }
+
+    @PostMapping("/orders/{orderId}/unapply")
+    public String orderUnApply(@PathVariable("orderId") Long orderId) {
+        purchaseListService.orderUnApply(orderId);
+        return "redirect:/orders";
+    }
+
 }

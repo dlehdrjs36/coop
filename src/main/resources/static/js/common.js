@@ -29,3 +29,19 @@ function buyProduct(id) {
     document.body.appendChild(form);
     form.submit();
 }
+
+function orderApply(id) {
+    var form = document.createElement("form");
+    form.setAttribute("method", "post");
+    form.setAttribute("action", "/orders/" + id + "/apply");
+    document.body.appendChild(form);
+    form.submit();
+}
+
+function orderUnApply(id) {
+    var form = document.createElement("form");
+    form.setAttribute("method", "post");
+    form.setAttribute("action", "/orders/" + id + "/unapply");
+    document.body.appendChild(form);
+    form.submit();
+}

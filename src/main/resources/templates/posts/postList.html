@@ -5,7 +5,7 @@
     <div>
         <header th:replace="templates/fragments/bodyHeader.html :: bodyHeader"></header>
     </div>
-    <div class="mt-5">
+    <div class="container mt-5">
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -35,7 +35,7 @@
                     </a>
                 </li>
                 <li class="page-item" th:each="num : ${#numbers.sequence(0, paging.endPage-1)}">
-                    <a class="page-link" href="/posts?page=1" th:href="${'/posts?page=' + numStat.count}" th:text="${numStat.count}">1</a>
+                    <a class="page-link" href="/posts" th:href="${'/posts?page=' + numStat.count}" th:text="${numStat.count}">1</a>
                 </li>
                 <li class="page-item">
                     <a class="page-link" href="#" aria-label="Next">

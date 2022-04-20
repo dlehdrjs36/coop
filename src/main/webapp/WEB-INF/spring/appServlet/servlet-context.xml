@@ -136,5 +136,15 @@
 <!--        <property name="defaultErrorView" value="classpath:/templates/error/error.html"/>-->
 <!--        <property name="defaultStatusCode" value="200"/>-->
 <!--    </bean>-->
-
+    <!-- 스프링 메시지 -->
+    <bean id="messageSource"
+          class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basenames">
+            <list>
+                <value>classpath:/props/message/error</value>
+            </list>
+        </property>
+        <property name="defaultEncoding" value="utf-8" />
+        <property name="cacheSeconds" value="60" />
+    </bean>
 </beans>

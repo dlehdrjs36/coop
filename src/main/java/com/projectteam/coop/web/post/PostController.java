@@ -1,14 +1,21 @@
 package com.projectteam.coop.web.post;
 
+import com.projectteam.coop.domain.Member;
 import com.projectteam.coop.domain.Post;
 import com.projectteam.coop.service.post.PostService;
 import com.projectteam.coop.util.Paging;
+import com.projectteam.coop.web.session.SessionConst;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -23,7 +30,25 @@ public class PostController {
     }
 
     @PostMapping("/posts/new")
-    public String create(PostForm postForm) {
+    public String create(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member member, @ModelAttribute PostForm postForm, BindingResult bindingResult) {
+
+        //검증 로직
+        if (!StringUtils.hasText(postForm.getTitle())) {
+            bindingResult.addError(new FieldError("postForm", "title", postForm.getTitle(), false, new String[]{"required.post.title"}, null, null));
+        }
+
+        if (member == null) {
+            if(!StringUtils.hasText(postForm.getPassword())) {
+                bindingResult.addError(new FieldError("postForm", "password", postForm.getPassword(), false, new String[]{"required.post.password"}, null, null));
+            } else if (postForm.getPassword().length() != 4) {
+                bindingResult.addError(new FieldError("postForm", "password", postForm.getPassword(), false, new String[]{"length.post.password"}, null, null));
+            }
+        }
+
+        if (bindingResult.hasErrors()) {
+            return "/templates/posts/createPostForm";
+        }
+
         Post post = Post.createPost(postForm.getTitle(), postForm.getPassword(), postForm.getContent());
         postService.addPost(post);
 
@@ -67,7 +92,20 @@ public class PostController {
     }
 
     @PostMapping("/posts/{postId}/edit")
-    public String updateForm(@ModelAttribute("postForm") PostForm postForm, Model model) {
+    public String updateForm(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member member, @ModelAttribute("postForm") PostForm postForm, BindingResult bindingResult, Model model) {
+
+        //검증 로직
+        if (!StringUtils.hasText(postForm.getTitle())) {
+            bindingResult.addError(new FieldError("postForm", "title", postForm.getTitle(), false, new String[]{"required.post.title"}, null, null));
+        }
+
+        if (member == null) {
+            if(!StringUtils.hasText(postForm.getPassword())) {
+                bindingResult.addError(new FieldError("postForm", "password", postForm.getPassword(), false, new String[]{"required.post.password"}, null, null));
+            } else if (postForm.getPassword().length() != 4) {
+                bindingResult.addError(new FieldError("postForm", "password", postForm.getPassword(), false, new String[]{"length.post.password"}, null, null));
+            }
+        }
 
         Long postId = postService.updatePost(postForm);
 

@@ -12,9 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 @Controller
 @RequiredArgsConstructor
@@ -24,15 +22,10 @@ public class HomeController {
     private final PurchaseListService purchaseListService;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String home(Model model, HttpServletRequest request) {
+    public String home(
+            @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
+            Model model) {
 
-
-        HttpSession session = request.getSession(false);
-        if (session == null) {
-            return "/templates/index";
-        }
-
-        Member loginMember = (Member)session.getAttribute(SessionConst.LOGIN_MEMBER);
         //세션에 회원 데이터 없는 경우
         if (loginMember == null) {
             return "/templates/index";
@@ -51,7 +44,6 @@ public class HomeController {
         if (memberPurchaseList != null) {
             model.addAttribute("memberPurchaseProduct", memberPurchaseList.getProduct());
         }
-
 
         model.addAttribute("member", member);
 

@@ -5,38 +5,42 @@
 <header th:replace="templates/fragments/bodyHeader.html :: bodyHeader"></header>
 
 <div class="container">
-    <div class="row justify-content-start">
-        <div class="col-6 align-self-start mt-4" th:each="product : ${products}">
-            <div class="card m-auto">
-                <img class="card-img-top" th:src="'/img/product/' + ${product.path}" alt="..." th:width="192px" th:height="108px">
-                <div class="card-body">
-                    <h5 class="card-title" th:text="${product.name}"></h5>
-                    <h6 class="card-subtitle mb-2 text-muted" th:text="|가격: ${product.price}|"></h6>
-                    <div>
-                        <button type="button" class="btn btn-success" th:onclick="'buyProduct(' + ${product.id} + ')'">구매</button>
+    <div th:if="${#lists.size(products) > 0}">
+        <div class="row justify-content-start">
+            <div class="col-6 align-self-start mt-4" th:each="product : ${products}">
+                <div class="card m-auto">
+                    <img class="card-img-top" th:src="'/img/product/' + ${product.path}" alt="..." th:width="192px" th:height="108px">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${product.name}"></h5>
+                        <h6 class="card-subtitle mb-2 text-muted" th:text="|가격: ${product.price}|"></h6>
+                        <div>
+                            <button type="button" class="btn btn-success" th:onclick="'buyProduct(' + ${product.id} + ')'">구매</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item" th:each="num : ${#numbers.sequence(0, paging.endPage-1)}">
+                    <a class="page-link" href="/products?page=1" th:href="${'/shop?page=' + numStat.count}" th:text="${numStat.count}">1</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
     </div>
-
-    <nav aria-label="Page navigation example">
-        <ul class="pagination">
-            <li class="page-item">
-                <a class="page-link" href="#" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-            </li>
-            <li class="page-item" th:each="num : ${#numbers.sequence(0, paging.endPage-1)}">
-                <a class="page-link" href="/products?page=1" th:href="${'/shop?page=' + numStat.count}" th:text="${numStat.count}">1</a>
-            </li>
-            <li class="page-item">
-                <a class="page-link" href="#" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
+    <div class="row justify-content-start" th:unless="${#lists.size(products) > 0}">
+        <h3>현재 상품이 등록되어 있지 않습니다.</h3>
+    </div>
 </div>
 <footer th:replace="templates/fragments/footer.html :: footer"></footer>
 </body>

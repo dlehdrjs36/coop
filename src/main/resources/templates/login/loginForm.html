@@ -1,21 +1,31 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="templates/fragments/header.html :: header"></head>
-<body>
+<body class="text-center">
 <header th:replace="templates/fragments/bodyHeader.html :: bodyHeader"></header>
 
-<form th:action="@{/login}" th:object="${memberForm}" method="post">
-    <div class="form-group">
-        <label th:for="email">ID</label>
-        <input type="text" th:field="*{email}" class="form-control" placeholder="아이디를 입력하세요">
-    </div>
-    <div class="form-group">
-        <label th:for="password">비밀번호</label>
-        <input type="password" th:field="*{password}" class="form-control" placeholder="비밀번호를 입력하세요">
-    </div>
-    <button type="submit" class="btn btn-primary">로그인</button>
-</form>
-<a href="/members/new">회원가입</a>
+<div class="form-signin">
+    <form th:action="@{/login}" th:object="${memberForm}" method="post">
+        <img class="mb-4" src="/img/login/logo.png" alt="" width="72" height="57">
+
+        <div class="form-floating">
+            <input type="email" class="form-control" th:field="*{email}" placeholder="name@example.com">
+            <label th:for="email">Email address</label>
+        </div>
+        <div class="form-floating">
+            <input type="password" class="form-control" th:field="*{password}" placeholder="비밀번호를 입력하세요">
+            <label th:for="password">Password</label>
+        </div>
+
+        <div class="checkbox mb-3">
+            <label>
+                <input type="checkbox" value="remember-me"> Remember me
+            </label>
+        </div>
+        <button class="w-100 mb-1 btn btn-lg btn-primary" type="submit">로그인</button>
+        <button class="w-100 btn btn-lg btn-dark" type="button" onclick="location.href='/members/new'">회원가입</button>
+    </form>
+</div>
 <br/>
 <footer th:replace="templates/fragments/footer.html :: footer"></footer>
 </body>

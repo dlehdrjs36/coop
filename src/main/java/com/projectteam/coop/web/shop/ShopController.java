@@ -18,10 +18,7 @@ public class ShopController {
     private final ProductService productService;
 
     @GetMapping("/shop")
-    public String shop(@RequestParam(value = "page", required = false) Integer page, Model model) {
-        if (page == null) {
-            page = 1;
-        }
+    public String shop(@RequestParam(value = "page", defaultValue = "1") Integer page, Model model) {
 
         Paging paging = new Paging();
         paging.calculateTotalPage(productService.totalSize());

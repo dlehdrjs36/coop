@@ -27,7 +27,7 @@ public class TftUtil {
      * */
     public Summoner getTftSummoner(String summonerId, String apikey) {
 
-        String uri = "https://kr.api.riotgames.com/tft/summoner/v1/summoners/" + summonerId;
+        String uri = "https://kr.api.riotgames.com/tft/summoner/v1/summoners/by-name/" + summonerId;
         UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(uri)
                 .queryParam("api_key", apikey)
                 .build(false);
@@ -132,6 +132,63 @@ public class TftUtil {
         return LeagueEntryData.getBody();
     }
 
+    public List<LeagueEntry> getTftSummonerEntry(String summonerId, String apikey) {
+        String uri = "https://kr.api.riotgames.com/tft/league/v1/entries/by-summoner/" + summonerId;
+        UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(uri)
+                .queryParam("api_key", apikey)
+                .build(false);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(new MediaType("application", "json", Charset.forName("utf-8")));
+
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.setErrorHandler(new DefaultResponseErrorHandler() {
+            public boolean hasError(ClientHttpResponse response) throws IOException {
+                HttpStatus code = response.getStatusCode();
+                if (code == HttpStatus.UNAUTHORIZED) {
+                    throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED);
+                }
+                return false;
+            }
+        });
+
+        ResponseEntity<List<LeagueEntry>> LeagueEntryData = restTemplate.exchange(uriComponents.toUriString(), HttpMethod.GET, null, new ParameterizedTypeReference<List<LeagueEntry>>() {});
+
+        return LeagueEntryData.getBody();
+    }
+
+    /*
+    * 
+    * puiid 를 사용해서 일반 닉네임 리턴이 필요한 경우
+    * 
+    * */
+    public String getTftPuiidToNameList(String puuid, String apikey){
+
+        String uri = "https://kr.api.riotgames.com/tft/summoner/v1/summoners/by-puuid/" + puuid;
+        UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(uri)
+                .queryParam("api_key", apikey)
+                .build(false);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(new MediaType("application", "json", Charset.forName("utf-8")));
+
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.setErrorHandler(new DefaultResponseErrorHandler() {
+            public boolean hasError(ClientHttpResponse response) throws IOException {
+                HttpStatus code = response.getStatusCode();
+                if (code == HttpStatus.UNAUTHORIZED) {
+                    throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED);
+                }
+                return false;
+            }
+        });
+
+        ResponseEntity<Summoner> SummonerData = restTemplate.exchange(uriComponents.toUriString(), HttpMethod.GET, new HttpEntity<>(headers), Summoner.class);
+
+        return SummonerData.getBody().getName();
+    }
+
+
     /*
     * Riot Api상에서는 증강체는 구분을 해주지 않기 때문에 티어별 패키지를 구분해서 사용할 경우 체크하는 함수는 필요
     * */
@@ -162,5 +219,27 @@ public class TftUtil {
         }
 
         return augmentTier;
+    }
+
+    public String getTftItemMappingName(String itemName){
+        if(itemName.equals("TFT_Item_TitanicHydra")){
+            return "Zz'rot Portal";
+        }else if(itemName.equals("TFT_Item_SeraphsEmbrace")){
+            return "BlueBuff";
+        }else if(itemName.equals("TFT_Item_RedBuff")){
+            return "SunfireCape";
+        }else if(itemName.equals("TFT_Item_PowerGauntlet")){
+            return "BansheesClaw";
+        }else if(itemName.equals("TFT_Item_GuardianAngel")){
+            return "EdgeofNight";
+        }else if(itemName.equals("TFT_Item_MadredsBloodrazor")){
+            return "GiantSlayer";
+        }else if(itemName.indexOf("EmblemItem") != -1){
+            return itemName.substring(10, itemName.length()-4);
+        }else if(itemName.indexOf("TFT4_Item_Ornn") != -1){
+            return itemName.substring(14);
+        }else{
+            return itemName.substring(9);
+        }
     }
 }

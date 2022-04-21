@@ -45,14 +45,14 @@ public class MatchDesc {
     // 1 ~ 3 티어
     private String unitsTier;
 
+    private int queueId;
     private String tftGameType;
-    private int tftSetNumber;
 
     public MatchDesc createMatchDesc(String metadataParticipants, String metaDateMatchId, Long gameLength, String gameVersion, String augments,
                                      String companionContentID, int companionSkinID, String companionSpecies, int placement, String puuid,
                                      String traitsName, String traitsNumUnits, String traitsStyle, String traitsTierCurrent, String traitsTierTotal,
                                      String unitsCharacterId, String unitsItemNames, String unitsName, String unitsRarity, String unitsTier,
-                                     String tftGameType, int tftSetNumber) {
+                                     int queueId,String tftGameType) {
         MatchDesc matchDesc = new MatchDesc();
         matchDesc.metadataParticipants = metadataParticipants;
         matchDesc.metadateMatchId = metaDateMatchId;
@@ -74,8 +74,8 @@ public class MatchDesc {
         matchDesc.unitsName = unitsName;
         matchDesc.unitsRarity = unitsRarity;
         matchDesc.unitsTier = unitsTier;
+        matchDesc.queueId = queueId;
         matchDesc.tftGameType = tftGameType;
-        matchDesc.tftSetNumber = tftSetNumber;
 
         return matchDesc;
     }

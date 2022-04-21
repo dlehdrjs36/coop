@@ -8,7 +8,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -18,26 +20,40 @@ public class MatchDescService {
 
     private final MatchDescRepository matchDescRepository;
     private final TftUtil tftUtil = new TftUtil();
-    private final String tftVersion = "Version 12.6";
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     public void addMatchDesc(String puuid, String apikey) {
         List<MatchDesc> matchDesc;
-        List<String> matchId = tftUtil.getTftMatchId(puuid, 1,apikey);
-        for (String s : matchId) {
-            try {
+        List<String> matchId = tftUtil.getTftMatchId(puuid, 20,apikey);
+        String gameDateString = "";
+        Date gameDate;
+
+        try {
+            Date comparisonDate = dateFormat.parse("2022-02-16");
+            for (String s : matchId) {
                 MatchDescDTO matchDescDTO = tftUtil.getTftMatchDesc(s, apikey);
-                if (matchDescDTO.getInfo().getGameVersion().contains(tftVersion)) {
-                    if (matchDescRepository.searchTftMatchIdData(matchDescDTO.getMetadata().getMatchId())) {
+                gameDateString = dateFormat.format(matchDescDTO.getInfo().getGameDatetime());
+                gameDate = dateFormat.parse(gameDateString);
+                if (comparisonDate.before(gameDate)) {
+                    if (matchDescRepository.isTftMatchIdData(matchDescDTO.getMetadata().getMatchId())) {
                         matchDesc = makeMatchDesc(matchDescDTO);
                         for (MatchDesc desc : matchDesc) {
                             matchDescRepository.addTftDescData(desc);
                         }
                     }
                 }
-            } catch (Exception e) {
-                System.out.println("데이터 수집에 문제가 되는 버전입니다.");
             }
+        }catch (Exception e) {
+            System.out.println("데이터 수집에 문제가 되는 버전입니다.");
         }
+    }
+
+    public List<MatchDesc> getMatchDescDataPuuid(String puuid){
+        return matchDescRepository.searchTftPuuidData(puuid);
+    }
+
+    public List<MatchDesc> getMatchDescDataMatchId(String matchid){
+        return matchDescRepository.searchTftMatchIdData(matchid);
     }
 
     public List<MatchDesc> makeMatchDesc(MatchDescDTO matchData){
@@ -121,8 +137,9 @@ public class MatchDescService {
                             name,
                             rarity,
                             tier,
-                            matchData.getInfo().getTftGameType(),
-                            matchData.getInfo().getTftSetNumber()
+                            matchData.getInfo().getQueueId(),
+                            matchData.getInfo().getTftGameType()
+
                     )
             );
         }

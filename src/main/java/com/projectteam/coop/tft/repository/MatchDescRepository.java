@@ -18,7 +18,7 @@ public class MatchDescRepository {
         return matchDesc.getMetadateMatchId();
     }
 
-    public boolean searchTftMatchIdData(String matchId){
+    public boolean isTftMatchIdData(String matchId){
         int size = em.createQuery("select m from MatchDesc m where m.metadateMatchId = '" + matchId +"'", MatchDesc.class).getResultList().size();
         if (size > 0) {
             return false;
@@ -26,7 +26,15 @@ public class MatchDescRepository {
         return true;
     }
 
+    public List<MatchDesc> searchTftMatchIdData(String matchId){
+        return em.createQuery("select m from MatchDesc m where m.metadateMatchId = '" + matchId +"' order by m.placement", MatchDesc.class).getResultList();
+    }
+
     public List<MatchDesc> searchTftPlacementData(int placement){
         return em.createQuery("select m from MatchDesc m where m.placement = '" + placement + "'", MatchDesc.class).getResultList();
+    }
+
+    public List<MatchDesc> searchTftPuuidData(String puuid){
+        return em.createQuery("select m from MatchDesc m where m.puuid = '" + puuid + "' order by m.metadateMatchId desc ", MatchDesc.class).getResultList();
     }
 }

@@ -1,8 +1,14 @@
 package com.projectteam.coop.web.menu;
 
+import com.projectteam.coop.tft.domain.LeagueEntry;
+import com.projectteam.coop.tft.domain.MatchDesc;
+import com.projectteam.coop.tft.domain.Summoner;
 import com.projectteam.coop.tft.domain.Synergy;
+import com.projectteam.coop.tft.service.MatchDescService;
 import com.projectteam.coop.tft.service.SynergyService;
 import com.projectteam.coop.util.TftUtil;
+import com.projectteam.coop.web.menu.summonerPageForm.MatchDescForm;
+import com.projectteam.coop.web.menu.summonerPageForm.SummonerForm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -17,7 +24,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MenuController {
     private final SynergyService synergyService;
+    private final MatchDescService matchDescService;
     private final TftUtil tftUtil = new TftUtil();
+    private final String apkKey = "RGAPI-fbabcaa2-430f-4104-abb1-7863a9c18878";
 
     @GetMapping(value = "/augmentsList")
     public String getAugmentsListPage(Model model) {
@@ -81,5 +90,51 @@ public class MenuController {
     @GetMapping("/guide")
     public String getGuidePage(Model model){
         return "/templates/tft/guide";
+    }
+
+    @GetMapping("/summoner/{summonerName}")
+    public String getSummonerPage(@PathVariable String summonerName, Model model) {
+        Summoner summoner = tftUtil.getTftSummoner(summonerName, apkKey);
+        SummonerForm summonerForm = new SummonerForm();
+        List<LeagueEntry> leagueEntry = tftUtil.getTftSummonerEntry(summoner.getId(), apkKey);
+
+        List<MatchDesc> matchDescs;
+        List<MatchDesc> sommonerMatchDescs = new ArrayList<>();
+        List<String> matchPlayerNameList = new ArrayList<>();
+        MatchDescForm matchDescForm = new MatchDescForm();
+
+        int i;
+
+        summonerForm.setProfileIconId(summoner.getProfileIconId());
+        summonerForm.setName(summoner.getName());
+        summonerForm.setPuuid(summoner.getPuuid());
+        summonerForm.setSummonerLevel(summoner.getSummonerLevel());
+
+        summonerForm.setTier(leagueEntry.get(0).getTier());
+        summonerForm.setRank(leagueEntry.get(0).getRank());
+        summonerForm.setLeaguePoints(leagueEntry.get(0).getLeaguePoints());
+        summonerForm.setWins(leagueEntry.get(0).getWins());
+        summonerForm.setLosses(leagueEntry.get(0).getLosses());
+
+        model.addAttribute("summonerForm", summonerForm);
+
+        try {
+            sommonerMatchDescs = matchDescService.getMatchDescDataPuuid(summoner.getPuuid());
+        }catch(Exception e){
+        }finally{
+            if(sommonerMatchDescs.size() == 0){
+            }else{
+                matchDescs = matchDescService.getMatchDescDataMatchId(sommonerMatchDescs.get(0).getMetadateMatchId());
+                for(i=0; i<matchDescs.size(); i++){
+                    matchPlayerNameList.add(tftUtil.getTftPuiidToNameList(matchDescs.get(i).getPuuid(),apkKey));
+                }
+                matchDescForm = matchDescForm.createMatchDescForm(matchDescs, matchPlayerNameList);
+            }
+        }
+
+        model.addAttribute("sommonerMatchDescs", sommonerMatchDescs);
+        model.addAttribute("matchDescForm", matchDescForm);
+
+        return "/templates/tft/summoner";
     }
 }

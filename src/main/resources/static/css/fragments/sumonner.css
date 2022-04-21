@@ -1,0 +1,23 @@
+.profileImg{
+    height: 100px;
+    max-width: 130px;
+}
+.gameIndex{
+    height: 60px;
+}
+.descImg{
+    height: 40px;
+    width: 40px;
+    background-position: center;
+    display: inline-block;
+    padding: 0px 0px 0px 0px;
+}
+.itemImg{
+    height: 15px;
+    width: 15px;
+    padding: 0px 0px 0px 0px;
+    align-content: center;
+}
+.tierHeight{
+    height: 15px;
+}

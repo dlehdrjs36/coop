@@ -6,6 +6,7 @@ import com.projectteam.coop.domain.PurchaseList;
 import com.projectteam.coop.domain.PurchaseListStatus;
 import com.projectteam.coop.service.member.MemberService;
 import com.projectteam.coop.service.purchaselist.PurchaseListService;
+import com.projectteam.coop.web.session.MemberSessionDto;
 import com.projectteam.coop.web.session.SessionConst;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -23,30 +24,24 @@ public class HomeController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String home(
-            @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
+            @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) MemberSessionDto loginMember,
             Model model) {
 
-        //세션에 회원 데이터 없는 경우
-        if (loginMember == null) {
-            return "/templates/index";
-        }
-
         //세션에 회원 데이터 있는 경우
-        Member member = memberService.findMember(loginMember.getEmail(), loginMember.getPassword());
+        if (loginMember != null) {
+            Member member = memberService.findMember(loginMember.getId());
+            PurchaseList memberPurchaseList = purchaseListService.memberPurchaseList(member.getEmail())
+                    .stream()
+                    .filter(purchaseList -> purchaseList.getProduct().getType() == ProductType.BACKGROUND)
+                    .filter(purchaseList -> purchaseList.getStatus() == PurchaseListStatus.APPLY)
+                    .findAny()
+                    .orElse(null);
 
-        PurchaseList memberPurchaseList = purchaseListService.memberPurchaseList(member.getEmail())
-                .stream()
-                .filter(purchaseList -> purchaseList.getProduct().getType() == ProductType.BACKGROUND)
-                .filter(purchaseList -> purchaseList.getStatus() == PurchaseListStatus.APPLY)
-                .findAny()
-                .orElse(null);
-
-        if (memberPurchaseList != null) {
-            model.addAttribute("memberPurchaseProduct", memberPurchaseList.getProduct());
+            if (memberPurchaseList != null) {
+                model.addAttribute("memberPurchaseProduct", memberPurchaseList.getProduct());
+            }
         }
 
-        model.addAttribute("member", member);
-
-        return "/templates/loginIndex";
+        return "/templates/index";
     }
 }

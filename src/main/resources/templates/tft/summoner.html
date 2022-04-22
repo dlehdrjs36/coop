@@ -18,16 +18,33 @@
                             <span class="text-white" th:text="@{Lv} + *{summonerLevel}"></span>
                             <span class="text-white"> )</span>
                             <button onclick="recordUpdate()" class="btn btn-primary">전적 갱신</button>
-                            <input type="hidden" name="name" th:value="*{name}">
-                            <input type="hidden" name="puuid" th:value="*{puuid}">
+                            <input type="hidden" name="name" id="name" th:value="*{name}">
+                            <input type="hidden" name="puuid" id="puuid" th:value="*{puuid}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row bg-light">
+                <div class="contentsPadding">
+                    <div class="contentsPadding bg-primary bg-opacity-75 row">
+                        <div class="profileImg">
+                            <img class="profileImg" th:src='@{/img/tft/tierEmblem/} + *{tier} + @{.png}'>
+                        </div>
+                        <div class="col-sm-10 align-self-md-center">
+                            <span class="text-white" th:text="*{tier} + @{&nbsp} +*{rank} + @{( }"></span>
+                            <span class="text-white" th:text="*{leaguePoints } + @{pt}"></span>
+                            <span class="text-white"> )</span>
+                            <span class="text-white" th:text="*{wins} + @{승 }"></span>
+                            <span class="text-white" th:text="*{losses} + @{패}"></span>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="row bg-light contentsMargin">
-                <div class="contentsPadding btn-group-synergy col-sm-2">
-                    <div th:if="${sommonerMatchDescs.size() != 0}" th:each="matchData : ${sommonerMatchDescs}">
-                        <input type="radio" class="btn-check" name="btnradio" th:id="${matchData.metadateMatchId}" onclick="" autocomplete="off" checked>
+                <div th:if="${sommonerMatchDescs.size() != 0}" id="tftRecordArea" class="contentsPadding btn-group-synergy col-sm-2">
+                    <input type="hidden" name="initMatchId" id="initMatchId" th:value="${sommonerMatchDescs[0].metadateMatchId}">
+                    <div th:each="matchData : ${sommonerMatchDescs}">
+                        <input type="radio" class="btn-check" name="btnradio" th:id="${matchData.metadateMatchId}" onclick="changeViewRecord(this.id)" autocomplete="off" checked>
                         <label class="btn btn-primary col-sm-12 gameIndex" th:for="${matchData.metadateMatchId}">
                             <div th:if="${matchData.queueId} == 1090">일반 게임( <span th:text="${matchData.placement}"></span><span> 등 )</span></div>
                             <div th:if="${matchData.queueId} == 1100">랭크 게임( <span th:text="${matchData.placement}"></span><span> 등 )</span></div>
@@ -40,56 +57,11 @@
                         </label>
                     </div>
                 </div>
-                <div class="contentsPadding col-sm-10 border border-dark border-5" th:if="${matchDescForm.gameLength > 0}">
-                    <div class="row" th:each="matchDesc : ${matchDescForm.usersData}">
-                        <div th:if="${matchDesc.name} == *{name}">
-                            <div class="contentsPadding bg-primary bg-opacity-75 row text-white">
-                                <div class="col-sm-2 contentsBox text-center align-self-md-center">
-                                    <div th:text="${matchDesc.name}"></div>
-                                    <div th:text="${matchDesc.placement} + @{등}"></div>
-                                    <div><span th:text="${matchDescForm.gameLength/60}"></span>:<span th:text="${matchDescForm.gameLength%60}"></span></div>
-                                </div>
-                                <div class="col-sm-1 contentsBox text-center align-self-md-center">
-                                    <img class="descImg" th:each="augments : ${matchDesc.augments}" th:src="@{/img/tft/augment/tier} + ${augments.tier} + @{/} + ${augments.augment} + @{.png}">
-                                </div>
-                                <div class="row col-sm-2 contentsBox text-center align-self-md-center">
-                                    <div class="col-sm-6 descImg" th:each="traits : ${matchDesc.traits}" th:unless="${traits.style} == @{0}">
-                                        <div class="synergyStyleBronze descImg" th:if="${traits.style} == @{1}">
-                                            <img class="descImg" th:src="@{/img/tft/synergy/hollow/} + ${traits.name} + @{.png}" alt="">
-                                        </div>
-                                        <div class="synergyStyleSilver descImg" th:if="${traits.style} == @{2}">
-                                            <img class="descImg" th:src="@{/img/tft/synergy/hollow/} + ${traits.name} + @{.png}" alt="">
-                                        </div>
-                                        <div class="synergyStyleGold descImg" th:if="${traits.style} == @{3}">
-                                            <img class="descImg" th:src="@{/img/tft/synergy/hollow/} + ${traits.name} + @{.png}" alt="">
-                                        </div>
-                                        <div class="synergyStyleChromatic descImg" th:if="${traits.style} == @{4}">
-                                            <img class="descImg" th:src="@{/img/tft/synergy/hollow/} + ${traits.name} + @{.png}" alt="">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row col-sm-7">
-                                    <div class="col-sm-2 text-center" th:each="units : ${matchDesc.units}">
-                                        <div class="tierHeight" th:if="${units.tier} == @{'1'}">*</div>
-                                        <div class="tierHeight" th:if="${units.tier} == @{'2'}">**</div>
-                                        <div class="tierHeight" th:if="${units.tier} == @{'3'}">***</div>
-                                        <div>
-                                            <img class="descImg" th:src="@{/img/tft/champion/} + ${units.characterId} + @{.png}" alt="">
-                                        </div>
-                                        <div>
-                                            <span th:each="itemNames : ${units.itemNames}">
-                                                <img class="itemImg" th:if="${itemNames.indexOf('Emblem') != -1}" th:src="@{/img/tft/item/emblem/} + ${itemNames} + @{.png}" th:unless="${itemNames == ''}" alt="">
-                                                <img class="itemImg" th:unless="${itemNames.indexOf('Emblem') != -1}" th:if="${itemNames != ''}" th:src="@{/img/tft/item/} + ${itemNames} + @{.png}" alt="">
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row contentsMargin border-top border-start bor-end border-dark border-5">
-                        <div class="border-bottom border-dark border-5" th:each="matchDesc : ${matchDescForm.usersData}">
-                            <div>
+                <div class="col-sm-10" id="matchDescArea">
+                    <div class="loader" id="loader"></div>
+                    <div class="contentsPadding border border-dark border-5" th:if="${matchDescForm.gameLength > 0}" th:id="${sommonerMatchDescs[0].metadateMatchId} + @{Desc}">
+                        <div class="row" th:each="matchDesc : ${matchDescForm.usersData}">
+                            <div th:if="${matchDesc.name} == *{name}">
                                 <div class="contentsPadding bg-primary bg-opacity-75 row text-white">
                                     <div class="col-sm-2 contentsBox text-center align-self-md-center">
                                         <div th:text="${matchDesc.name}"></div>
@@ -124,10 +96,58 @@
                                                 <img class="descImg" th:src="@{/img/tft/champion/} + ${units.characterId} + @{.png}" alt="">
                                             </div>
                                             <div>
-                                            <span th:each="itemNames : ${units.itemNames}">
-                                                <img class="itemImg" th:if="${itemNames.indexOf('Emblem') != -1}" th:src="@{/img/tft/item/emblem/} + ${itemNames} + @{.png}" th:unless="${itemNames == ''}" alt="">
-                                                <img class="itemImg" th:unless="${itemNames.indexOf('Emblem') != -1}" th:if="${itemNames != ''}" th:src="@{/img/tft/item/} + ${itemNames} + @{.png}" alt="">
-                                            </span>
+                                                <span th:each="itemNames : ${units.itemNames}">
+                                                    <img class="itemImg" th:if="${itemNames.indexOf('Emblem') != -1}" th:src="@{/img/tft/item/emblem/} + ${itemNames} + @{.png}" th:unless="${itemNames == ''}" alt="">
+                                                    <img class="itemImg" th:unless="${itemNames.indexOf('Emblem') != -1}" th:if="${itemNames != ''}" th:src="@{/img/tft/item/} + ${itemNames} + @{.png}" alt="">
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row contentsMargin border-top border-start border-end border-dark border-5">
+                            <div class="border-bottom border-dark border-5" th:each="matchDesc : ${matchDescForm.usersData}">
+                                <div>
+                                    <div class="contentsPadding bg-primary bg-opacity-75 row text-white">
+                                        <div class="col-sm-2 contentsBox text-center align-self-md-center">
+                                            <div th:text="${matchDesc.name}"></div>
+                                            <div th:text="${matchDesc.placement} + @{등}"></div>
+                                            <div><span th:text="${matchDescForm.gameLength/60}"></span>:<span th:text="${matchDescForm.gameLength%60}"></span></div>
+                                        </div>
+                                        <div class="col-sm-1 contentsBox text-center align-self-md-center">
+                                            <img class="descImg" th:each="augments : ${matchDesc.augments}" th:src="@{/img/tft/augment/tier} + ${augments.tier} + @{/} + ${augments.augment} + @{.png}">
+                                        </div>
+                                        <div class="row col-sm-2 contentsBox text-center align-self-md-center">
+                                            <div class="col-sm-6 descImg" th:each="traits : ${matchDesc.traits}" th:unless="${traits.style} == @{0}">
+                                                <div class="synergyStyleBronze descImg" th:if="${traits.style} == @{1}">
+                                                    <img class="descImg" th:src="@{/img/tft/synergy/hollow/} + ${traits.name} + @{.png}" alt="">
+                                                </div>
+                                                <div class="synergyStyleSilver descImg" th:if="${traits.style} == @{2}">
+                                                    <img class="descImg" th:src="@{/img/tft/synergy/hollow/} + ${traits.name} + @{.png}" alt="">
+                                                </div>
+                                                <div class="synergyStyleGold descImg" th:if="${traits.style} == @{3}">
+                                                    <img class="descImg" th:src="@{/img/tft/synergy/hollow/} + ${traits.name} + @{.png}" alt="">
+                                                </div>
+                                                <div class="synergyStyleChromatic descImg" th:if="${traits.style} == @{4}">
+                                                    <img class="descImg" th:src="@{/img/tft/synergy/hollow/} + ${traits.name} + @{.png}" alt="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row col-sm-7">
+                                            <div class="col-sm-2 text-center" th:each="units : ${matchDesc.units}">
+                                                <div class="tierHeight" th:if="${units.tier} == @{'1'}">*</div>
+                                                <div class="tierHeight" th:if="${units.tier} == @{'2'}">**</div>
+                                                <div class="tierHeight" th:if="${units.tier} == @{'3'}">***</div>
+                                                <div>
+                                                    <img class="descImg" th:src="@{/img/tft/champion/} + ${units.characterId} + @{.png}" alt="">
+                                                </div>
+                                                <div>
+                                                    <span th:each="itemNames : ${units.itemNames}">
+                                                        <img class="itemImg" th:if="${itemNames.indexOf('Emblem') != -1}" th:src="@{/img/tft/item/emblem/} + ${itemNames} + @{.png}" th:unless="${itemNames == ''}" alt="">
+                                                        <img class="itemImg" th:unless="${itemNames.indexOf('Emblem') != -1}" th:if="${itemNames != ''}" th:src="@{/img/tft/item/} + ${itemNames} + @{.png}" alt="">
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

@@ -7,10 +7,13 @@ import com.projectteam.coop.service.member.MemberService;
 import com.projectteam.coop.service.product.ProductService;
 import com.projectteam.coop.service.purchaselist.PurchaseListService;
 import com.projectteam.coop.util.Paging;
+import com.projectteam.coop.web.session.MemberSessionDto;
 import com.projectteam.coop.web.session.SessionConst;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,36 +22,36 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class OrderController {
     private final ProductService productService;
     private final MemberService memberService;
     private final PurchaseListService purchaseListService;
 
     @PostMapping("/orders/{id}")
-    public String buy(@PathVariable Long id, HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
-        if (session == null) {
-            return "redirect:/login";
-        }
-        Member loginMember = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
+    public String buy(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) MemberSessionDto loginMember, @PathVariable Long id) {
+
         //세션에 회원 데이터 없는 경우
         if (loginMember == null) {
             return "redirect:/login";
         }
 
         Product product = productService.findProduct(id);
-        Member member = memberService.findMember(loginMember.getEmail(), loginMember.getPassword());
+        Member member = memberService.findMember(loginMember.getId());
         if (member != null) {
             if (member.buyProduct(product.getPrice())) {
                 //구매성공
                 purchaseListService.addPurchaseList(product, member);
                 memberService.updateMember(member);
+                loginMember.setPoint(member.getPoint());
                 return "redirect:/";
             }
             //포인트 부족
             return "redirect:/shop";
+
         }
-        return "redirect:/products";
+        //회원 정보 없음
+        return "redirect:/login";
     }
 
     @GetMapping("/orders")

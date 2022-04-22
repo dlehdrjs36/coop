@@ -46,12 +46,12 @@ public class LoginController {
         Member findMember = memberService.findMember(loginForm.getEmail(), loginForm.getPassword());
         if(findMember == null) {
             bindingResult.reject("login");
-
             return "/templates/login/loginForm";
         } else {
+            //포인트 추가. 일별 로그인 1회만 추가
             loginService.addLoginLog(LoginLog.createLoginLog(findMember.getEmail()));
-            loginService.addPoint(findMember);//포인트 추가. 로그인 1회시에만 추가되도록 필요
-            
+            loginService.addPoint(findMember);
+            //세션 생성
             HttpSession session = request.getSession();
             session.setAttribute(LOGIN_MEMBER, MemberSessionDto.createSession(findMember));
 
@@ -61,23 +61,26 @@ public class LoginController {
 
     @GetMapping("/adminLogin")
     public String adminLoginForm(Model model) {
-        model.addAttribute("memberForm", new MemberForm());
+        model.addAttribute("loginForm", new LoginForm());
         return "/templates/login/adminLoginForm";
     }
 
     @PostMapping("/adminLogin")
-    public String adminLogin(@ModelAttribute("memberForm") MemberForm memberForm, HttpServletRequest request) {
-        //추후 validate로 입력 폼 검증 예정
-        if (memberForm != null) {
-            Member findMember = memberService.findMember(memberForm.getEmail(), memberForm.getPassword());
-            if (findMember != null) {
-                HttpSession session = request.getSession();
-                session.setAttribute(ADMIN_LOGIN_MEMBER, findMember);
+    public String adminLogin(@Validated @ModelAttribute("loginForm") LoginForm loginForm, BindingResult bindingResult, HttpServletRequest request) {
 
-                return "/templates/admin/main";
-            }
+        if (bindingResult.hasErrors()) {
+            return "/templates/login/adminLoginForm";
         }
-        return "/templates/login/adminLoginForm";
+        Member findMember = memberService.findMember(loginForm.getEmail(), loginForm.getPassword());
+        if(findMember == null) {
+            bindingResult.reject("login");
+            return "/templates/login/adminLoginForm";
+        }
+        //세션 생성
+        HttpSession session = request.getSession();
+        session.setAttribute(ADMIN_LOGIN_MEMBER, MemberSessionDto.createSession(findMember));
+
+        return "/templates/admin/main";
     }
 
     @PostMapping("/logout")

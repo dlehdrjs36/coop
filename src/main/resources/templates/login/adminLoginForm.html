@@ -4,7 +4,7 @@
 <body class="text-center">
     <header th:replace="templates/fragments/bodyHeader.html :: bodyHeader"></header>
     <div class="form-signin">
-        <form th:action="@{/adminLogin}" th:object="${memberForm}" method="post">
+        <form th:action="@{/adminLogin}" th:object="${loginForm}" method="post">
             <img class="mb-4" src="/img/login/logo.png" alt="" width="72" height="57">
             <h1 class="h3 mb-3 fw-normal">관리자 로그인 페이지</h1>
             <div class="form-floating">

@@ -43,5 +43,9 @@
         </div>
     </div>
 </body>
+<script th:if="${memberPurchaseProduct.path != null}" th:inline="javascript">
+    let path = [[${memberPurchaseProduct.path}]];
+    document.getElementById("main-background").style.backgroundImage = "url('" + "/img/product/"+path+"')";
+</script>
 <head th:replace="templates/fragments/footer.html :: footer"></head>
 </html>

@@ -19,16 +19,17 @@ public class MemberRepository {
         return member.getId();
     }
 
-    //수정
+    //수정(폼)
     public Long updateMember(MemberForm memberForm) {
         Member findMember = em.find(Member.class, memberForm.getId());
-        findMember.changeMember(memberForm.getName(), memberForm.getPassword(), memberForm.getEmailReceptionType());
+        findMember.changeMember(memberForm);
         return findMember.getId();
     }
 
     //수정
     public Long updateMember(Member member) {
-        em.merge(member);
+        Member findMember = em.find(Member.class, member.getId());
+        findMember.changeMember(member);
         return member.getId();
     }
 

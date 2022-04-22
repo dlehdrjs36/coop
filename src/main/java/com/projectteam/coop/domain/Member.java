@@ -1,5 +1,6 @@
 package com.projectteam.coop.domain;
 
+import com.projectteam.coop.web.member.MemberForm;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -59,8 +60,17 @@ public class Member {
         return member;
     }
 
-    public void changeMember(String name, String password, Boolean emailReceptionType) {
+    public void changeMember(Member member) {
+        this.name = member.getName();
+        this.password = member.getPassword();
+        this.point = member.getPoint();
+        this.emailReceptionType = member.getEmailReceptionType();
+    }
 
+    public void changeMember(MemberForm member) {
+        this.name = member.getName();
+        this.password = member.getPassword();
+        this.emailReceptionType = member.getEmailReceptionType();
     }
 
     public void minusPoint(int point) {

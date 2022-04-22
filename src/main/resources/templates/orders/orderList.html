@@ -12,7 +12,7 @@
                     <div class="card-body">
                         <h5 class="card-title" th:text="${order.product.name}"></h5>
                         <h6 class="card-subtitle mb-2 text-muted" th:text="${order.status}"></h6>
-                        <p th:text="|상품 구매일: ${order.productPurchaseDate}|"></p>
+                        <p th:text="|상품 구매일: ${#temporals.format(order.productPurchaseDate, 'yyyy-MM-dd HH:mm:ss')}|"></p>
                         <p th:text="|상품 가격: ${order.product.price}|"></p>
                         <div>
                             <button type="button" class="btn btn-success" th:onclick="'orderApply('+${order.id}+')'">적용</button>

@@ -21,7 +21,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SummonerController {
     private final TftUtil tftUtil = new TftUtil();
-    private final String apkKey = "RGAPI-2b1f1f37-9eb6-4ff4-a602-796ff6cb654c";
+    private final String apkKey = "RGAPI-a300f290-18c6-4308-b706-4270f540dd05";
     private final MatchDescService matchDescService;
 
     @GetMapping(value="/record")

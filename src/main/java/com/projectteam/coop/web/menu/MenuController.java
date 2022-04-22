@@ -26,7 +26,7 @@ public class MenuController {
     private final SynergyService synergyService;
     private final MatchDescService matchDescService;
     private final TftUtil tftUtil = new TftUtil();
-    private final String apkKey = "RGAPI-2b1f1f37-9eb6-4ff4-a602-796ff6cb654c";
+    private final String apkKey = "RGAPI-a300f290-18c6-4308-b706-4270f540dd05";
 
     @GetMapping(value = "/augmentsList")
     public String getAugmentsListPage(Model model) {
@@ -94,34 +94,31 @@ public class MenuController {
 
     @GetMapping("/summoner/{summonerName}")
     public String getSummonerPage(@PathVariable String summonerName, Model model) {
-        Summoner summoner = tftUtil.getTftSummoner(summonerName, apkKey);
+        Summoner summoner;
+        List<LeagueEntry> leagueEntry;
         SummonerForm summonerForm = new SummonerForm();
-        List<LeagueEntry> leagueEntry = tftUtil.getTftSummonerEntry(summoner.getId(), apkKey);
-
         List<MatchDesc> matchDescs;
-        List<MatchDesc> sommonerMatchDescs = new ArrayList<>();
+        List<MatchDesc> sommonerMatchDescs;
         List<String> matchPlayerNameList = new ArrayList<>();
         MatchDescForm matchDescForm = new MatchDescForm();
-
         int i;
 
-        summonerForm.setProfileIconId(summoner.getProfileIconId());
-        summonerForm.setName(summoner.getName());
-        summonerForm.setPuuid(summoner.getPuuid());
-        summonerForm.setSummonerLevel(summoner.getSummonerLevel());
-
-        summonerForm.setTier(leagueEntry.get(0).getTier());
-        summonerForm.setRank(leagueEntry.get(0).getRank());
-        summonerForm.setLeaguePoints(leagueEntry.get(0).getLeaguePoints());
-        summonerForm.setWins(leagueEntry.get(0).getWins());
-        summonerForm.setLosses(leagueEntry.get(0).getLosses());
-
-        model.addAttribute("summonerForm", summonerForm);
-
         try {
+            summoner = tftUtil.getTftSummoner(summonerName, apkKey);
+            leagueEntry = tftUtil.getTftSummonerEntry(summoner.getId(), apkKey);
+            summonerForm.setProfileIconId(summoner.getProfileIconId());
+            summonerForm.setName(summoner.getName());
+            summonerForm.setPuuid(summoner.getPuuid());
+            summonerForm.setSummonerLevel(summoner.getSummonerLevel());
+
+            summonerForm.setTier(leagueEntry.get(0).getTier());
+            summonerForm.setRank(leagueEntry.get(0).getRank());
+            summonerForm.setLeaguePoints(leagueEntry.get(0).getLeaguePoints());
+            summonerForm.setWins(leagueEntry.get(0).getWins());
+            summonerForm.setLosses(leagueEntry.get(0).getLosses());
+            model.addAttribute("summonerForm", summonerForm);
+
             sommonerMatchDescs = matchDescService.getMatchDescDataPuuid(summoner.getPuuid());
-        }catch(Exception e){
-        }finally{
             if(sommonerMatchDescs.size() == 0){
             }else{
                 matchDescs = matchDescService.getMatchDescDataMatchId(sommonerMatchDescs.get(0).getMetadateMatchId());
@@ -130,6 +127,8 @@ public class MenuController {
                 }
                 matchDescForm = matchDescForm.createMatchDescForm(matchDescs, matchPlayerNameList);
             }
+        }catch (Exception e){
+            return "/templates/tft/summonerSearchError";
         }
 
         model.addAttribute("sommonerMatchDescs", sommonerMatchDescs);

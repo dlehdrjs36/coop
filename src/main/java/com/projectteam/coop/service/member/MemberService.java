@@ -28,6 +28,11 @@ public class MemberService {
     }
 
     @Transactional(transactionManager = "h2TxManager", readOnly = true)
+    public Member findMember(Long id) {
+        return memberRepository.findMember(id);
+    }
+
+    @Transactional(transactionManager = "h2TxManager", readOnly = true)
     public Member findMember(String email, String password) {
         return memberRepository.findMember(email, password);
     }

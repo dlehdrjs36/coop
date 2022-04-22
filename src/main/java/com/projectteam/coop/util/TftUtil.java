@@ -17,8 +17,10 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.List;
+import java.util.Properties;
 
 public class TftUtil {
 
@@ -241,5 +243,18 @@ public class TftUtil {
         }else{
             return itemName.substring(9);
         }
+    }
+
+    public String getApiKey(){
+        Properties properties= new Properties();
+        ClassLoader classLoader = getClass().getClassLoader();
+        InputStream is =  classLoader.getResourceAsStream("props/system/dev.properties");
+        try {
+            properties.load(is);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+        return properties.getProperty("coop.riot.apiKey");
     }
 }

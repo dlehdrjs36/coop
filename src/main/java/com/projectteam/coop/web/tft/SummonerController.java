@@ -6,7 +6,6 @@ import com.projectteam.coop.util.TftUtil;
 import com.projectteam.coop.web.menu.summonerPageForm.MatchDescForm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,13 +15,14 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Properties;
 
 @Controller
 @RequiredArgsConstructor
 public class SummonerController {
     private final TftUtil tftUtil = new TftUtil();
-    private final String apkKey = "RGAPI-a300f290-18c6-4308-b706-4270f540dd05";
     private final MatchDescService matchDescService;
+    private final String apkKey = tftUtil.getApiKey();
 
     @GetMapping(value="/record")
     public String doGet(){

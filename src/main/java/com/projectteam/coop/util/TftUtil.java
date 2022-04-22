@@ -244,17 +244,4 @@ public class TftUtil {
             return itemName.substring(9);
         }
     }
-
-    public String getApiKey(){
-        Properties properties= new Properties();
-        ClassLoader classLoader = getClass().getClassLoader();
-        InputStream is =  classLoader.getResourceAsStream("props/system/dev.properties");
-        try {
-            properties.load(is);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-
-        return properties.getProperty("coop.riot.apiKey");
-    }
 }

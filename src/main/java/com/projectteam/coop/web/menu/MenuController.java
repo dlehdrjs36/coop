@@ -10,6 +10,7 @@ import com.projectteam.coop.util.TftUtil;
 import com.projectteam.coop.web.menu.summonerPageForm.MatchDescForm;
 import com.projectteam.coop.web.menu.summonerPageForm.SummonerForm;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +27,8 @@ public class MenuController {
     private final SynergyService synergyService;
     private final MatchDescService matchDescService;
     private final TftUtil tftUtil = new TftUtil();
-    private final String apkKey = "RGAPI-a300f290-18c6-4308-b706-4270f540dd05";
+    @Value("${coop.riot.apiKey}")
+    private String apikey;
 
     @GetMapping(value = "/augmentsList")
     public String getAugmentsListPage(Model model) {
@@ -104,8 +106,8 @@ public class MenuController {
         int i;
 
         try {
-            summoner = tftUtil.getTftSummoner(summonerName, apkKey);
-            leagueEntry = tftUtil.getTftSummonerEntry(summoner.getId(), apkKey);
+            summoner = tftUtil.getTftSummoner(summonerName, apikey);
+            leagueEntry = tftUtil.getTftSummonerEntry(summoner.getId(), apikey);
             summonerForm.setProfileIconId(summoner.getProfileIconId());
             summonerForm.setName(summoner.getName());
             summonerForm.setPuuid(summoner.getPuuid());
@@ -123,7 +125,7 @@ public class MenuController {
             }else{
                 matchDescs = matchDescService.getMatchDescDataMatchId(sommonerMatchDescs.get(0).getMetadateMatchId());
                 for(i=0; i<matchDescs.size(); i++){
-                    matchPlayerNameList.add(tftUtil.getTftPuiidToNameList(matchDescs.get(i).getPuuid(),apkKey));
+                    matchPlayerNameList.add(tftUtil.getTftPuiidToNameList(matchDescs.get(i).getPuuid(),apikey));
                 }
                 matchDescForm = matchDescForm.createMatchDescForm(matchDescs, matchPlayerNameList);
             }

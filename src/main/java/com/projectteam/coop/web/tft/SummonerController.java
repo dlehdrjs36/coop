@@ -5,8 +5,8 @@ import com.projectteam.coop.tft.service.MatchDescService;
 import com.projectteam.coop.util.TftUtil;
 import com.projectteam.coop.web.menu.summonerPageForm.MatchDescForm;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,8 +21,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SummonerController {
     private final TftUtil tftUtil = new TftUtil();
-    private final String apkKey = "RGAPI-a300f290-18c6-4308-b706-4270f540dd05";
     private final MatchDescService matchDescService;
+    @Value("${coop.riot.apiKey}")
+    private String apikey;
 
     @GetMapping(value="/record")
     public String doGet(){
@@ -33,7 +34,7 @@ public class SummonerController {
     public String updateUserRecord(HttpServletRequest request){
         String puuid = request.getParameter("puuid");
         String name = request.getParameter("name");
-        matchDescService.addMatchDesc(puuid,apkKey);
+        matchDescService.addMatchDesc(puuid,apikey);
 
         return "redirect:/summoner/"+name;
     }
@@ -48,7 +49,7 @@ public class SummonerController {
 
         List<MatchDesc> matchDescs = matchDescService.getMatchDescDataMatchId(matchId);
         for(i=0; i<matchDescs.size(); i++){
-            matchPlayerNameList.add(tftUtil.getTftPuiidToNameList(matchDescs.get(i).getPuuid(),apkKey));
+            matchPlayerNameList.add(tftUtil.getTftPuiidToNameList(matchDescs.get(i).getPuuid(),apikey));
         }
         matchDescForm = matchDescForm.createMatchDescForm(matchDescs, matchPlayerNameList);
         matchData.put("matchData", matchDescForm);

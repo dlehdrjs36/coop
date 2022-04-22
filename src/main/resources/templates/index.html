@@ -5,10 +5,10 @@
 <body>
     <header th:replace="templates/fragments/bodyHeader.html :: bodyHeader"></header>
     <div id="main-background">
-        <form class="text-center container main-contentsAtt">
+        <form class="text-center container main-contentsAtt" name="indexSearchSummoner" id="indexSearchSummoner">
             <div>
-                <input class="main-championSearchBox main-searchArea-Height" placeholder="소환사 검색">
-                <input class="btn btn-primary main-searchArea-Height" type="submit" value="검색">
+                <input class="main-championSearchBox main-searchArea-Height" id="indexSearchSummonerName" placeholder="소환사 검색">
+                <input class="btn btn-primary main-searchArea-Height" onclick="indexSummonerSearch()" value="검색">
             </div>
         </form>
         <div class="container main-contentsAtt">
@@ -43,8 +43,8 @@
         </div>
     </div>
 </body>
-<script th:if="${memberPurchaseProduct.path != null}" th:inline="javascript">
-    let path = [[${memberPurchaseProduct.path}]];
+<script th:inline="javascript">
+    let path = [[${memberPurchaseProduct?.path}]];
     document.getElementById("main-background").style.backgroundImage = "url('" + "/img/product/"+path+"')";
 </script>
 <head th:replace="templates/fragments/footer.html :: footer"></head>

@@ -33,6 +33,19 @@ public class MemberRepository {
     }
 
     //단건 조회
+    public Member findMember(Long id) {
+
+        Member findMember = em.createQuery("SELECT m FROM Member m left join fetch m.purchaseLists WHERE m.id = :id", Member.class)
+                .setParameter("id", id)
+                .getResultList()
+                .stream()
+                .findAny()
+                .orElse(null);
+
+        return findMember;
+    }
+
+    //단건 조회(로그인)
     public Member findMember(String email, String password) {
 
         Member findMember = em.createQuery("SELECT m FROM Member m left join fetch m.purchaseLists WHERE m.email = :email and m.password = :password", Member.class)

@@ -26,7 +26,7 @@ public class MenuController {
     private final SynergyService synergyService;
     private final MatchDescService matchDescService;
     private final TftUtil tftUtil = new TftUtil();
-    private final String apkKey = "RGAPI-fbabcaa2-430f-4104-abb1-7863a9c18878";
+    private final String apkKey = "RGAPI-2b1f1f37-9eb6-4ff4-a602-796ff6cb654c";
 
     @GetMapping(value = "/augmentsList")
     public String getAugmentsListPage(Model model) {

@@ -205,7 +205,7 @@ public class TftUtil {
             e.printStackTrace();
         }
 
-        for(i=0; i<3; i++){
+        for(i=0; i<augments.length; i++){
             for(j=1; j<4; j++){
                 File file1 = new File(augmentPath + "tier" + j + "/" + augments[i].substring(13)+".png");
                 if(file1.exists()){

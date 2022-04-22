@@ -11,9 +11,9 @@ import java.util.List;
 public class Augments {
     private String augment;
     private String tier;
-    private TftUtil tftUtil = new TftUtil();
 
     public List<Augments> createAugments(String augment){
+        TftUtil tftUtil = new TftUtil();
         List<Augments> usedAugments = new ArrayList<>();
         String[] augmentList = augment.split("\\|");
         String[] augmentsTmp = tftUtil.getAugmentTier(augmentList).split("\\|");

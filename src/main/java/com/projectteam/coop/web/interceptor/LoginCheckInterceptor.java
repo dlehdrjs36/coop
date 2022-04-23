@@ -15,11 +15,22 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
 
         String requestURI = request.getRequestURI();
         HttpSession session = request.getSession();
-        if (session == null || session.getAttribute(SessionConst.LOGIN_MEMBER) == null) {
-            log.info("미인증 사용자 입니다.");
-            response.sendRedirect("/login?redirectURL=" + requestURI);
-            return false;
+        log.info("session {}", session);
+        //관리자 페이지는 관리자 세션 필요
+        if (requestURI.contains("admin")) {
+            if (session == null || session.getAttribute(SessionConst.ADMIN_LOGIN_MEMBER) == null) {
+                log.info("미인증 사용자 입니다.");
+                response.sendRedirect("/");
+                return false;
+            }
+        }else {
+            if (session == null || session.getAttribute(SessionConst.LOGIN_MEMBER) == null) {
+                log.info("미인증 사용자 입니다.");
+                response.sendRedirect("/login?redirectURL=" + requestURI);
+                return false;
+            }
         }
+
         return true;
     }
 }

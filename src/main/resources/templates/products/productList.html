@@ -21,7 +21,7 @@
     </tr>
     </tbody>
 </table>
-<a href="/products/new">아이템 등록</a>
+<a href="/admin/products/new">아이템 등록</a>
 <nav aria-label="Page navigation example">
     <ul class="pagination">
         <li class="page-item">
@@ -30,7 +30,7 @@
             </a>
         </li>
         <li class="page-item" th:each="num : ${#numbers.sequence(0, paging.endPage-1)}">
-            <a class="page-link" href="/products?page=1" th:href="${'/products?page=' + numStat.count}" th:text="${numStat.count}">1</a>
+            <a class="page-link" href="/admin/products" th:href="${'/admin/products?page=' + numStat.count}" th:text="${numStat.count}">1</a>
         </li>
         <li class="page-item">
             <a class="page-link" href="#" aria-label="Next">

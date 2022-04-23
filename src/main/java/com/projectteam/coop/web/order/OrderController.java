@@ -7,17 +7,17 @@ import com.projectteam.coop.service.member.MemberService;
 import com.projectteam.coop.service.product.ProductService;
 import com.projectteam.coop.service.purchaselist.PurchaseListService;
 import com.projectteam.coop.util.Paging;
+import com.projectteam.coop.web.argumentresolver.Login;
 import com.projectteam.coop.web.session.MemberSessionDto;
-import com.projectteam.coop.web.session.SessionConst;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -29,7 +29,7 @@ public class OrderController {
     private final PurchaseListService purchaseListService;
 
     @PostMapping("/orders/{id}")
-    public String buy(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) MemberSessionDto loginMember, @PathVariable Long id) {
+    public String buy(@Login MemberSessionDto loginMember, @PathVariable Long id) {
 
         //세션에 회원 데이터 없는 경우
         if (loginMember == null) {

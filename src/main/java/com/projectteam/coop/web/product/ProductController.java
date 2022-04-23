@@ -7,23 +7,20 @@ import com.projectteam.coop.util.Paging;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/admin/products")
 public class ProductController {
     private final ProductService productService;
     private final MemberService memberService;
 
-    @GetMapping("/products")
-    public String productList(@RequestParam(value = "page", required = false) Integer page, Model model) {
-        if (page == null) {
-            page = 1;
-        }
+    @GetMapping
+    public String productList(@RequestParam(value = "page", defaultValue = "1") Integer page, Model model) {
 
         Paging paging = new Paging();
         paging.calculateTotalPage(productService.totalSize());
@@ -36,16 +33,20 @@ public class ProductController {
         return "/templates/products/productList";
     }
 
-    @GetMapping("/products/new")
+    @GetMapping("/new")
     public String createForm(Model model) {
         model.addAttribute("productForm", new ProductForm());
         return "/templates/products/createProductForm";
     }
 
-    @PostMapping("/products/new")
-    public String create(ProductForm productForm) {
-        productService.addProduct(productForm);
+    @PostMapping("/new")
+    public String create(@ModelAttribute("productForm") ProductForm productForm, BindingResult bindingResult) {
 
-        return "redirect:/products";
+        if (bindingResult.hasErrors()) {
+            return "/templates/products/createProductForm";
+        }
+
+        productService.addProduct(productForm);
+        return "redirect:/admin/products";
     }
 }

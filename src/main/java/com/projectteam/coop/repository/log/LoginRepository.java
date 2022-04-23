@@ -28,7 +28,7 @@ public class LoginRepository {
                 .getResultList()
                 .stream()
                 .findAny()
-                .orElse(null);
+                .orElseGet(() -> null);
         System.out.println("em = " + findLoginLog);
         return findLoginLog;
     }

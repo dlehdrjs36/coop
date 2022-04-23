@@ -42,10 +42,11 @@
             </table>
         </div>
     </div>
+    <footer th:replace="templates/fragments/footer.html :: footer"></footer>
 </body>
 <script th:inline="javascript">
     let path = [[${memberPurchaseProduct?.path}]];
     document.getElementById("main-background").style.backgroundImage = "url('" + "/img/product/"+path+"')";
 </script>
-<head th:replace="templates/fragments/footer.html :: footer"></head>
+
 </html>

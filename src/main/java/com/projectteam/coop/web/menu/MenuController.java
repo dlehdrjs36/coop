@@ -130,6 +130,7 @@ public class MenuController {
                 matchDescForm = matchDescForm.createMatchDescForm(matchDescs, matchPlayerNameList);
             }
         }catch (Exception e){
+            model.addAttribute("searchName",summonerName);
             return "/templates/tft/summonerSearchError";
         }
 

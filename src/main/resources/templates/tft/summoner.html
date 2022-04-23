@@ -159,7 +159,8 @@
             </div>
         </div>
     </form>
-    <div th:unless="${matchDescForm.gameLength > 0}"> 데이터 없음 </div>
+    <div class="contaier text-center" th:unless="${matchDescForm.gameLength > 0}"> 데이터 없음 </div>
+    <footer th:replace="templates/fragments/footer.html :: footer"></footer>
 </body>
 <script th:src="@{/js/tft/summoner/summoner.js}"></script>
 </html>

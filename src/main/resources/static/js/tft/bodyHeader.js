@@ -51,15 +51,19 @@ function championSearch(){
 function summonerSearch(){
     let doc = document.searchSummoner;
     let searchSummonerName = doc.searchSummonerName.value;
-    doc.action = "/summoner/" + searchSummonerName;
-    doc.submit();
+    if( searchSummonerName != "" ) {
+        doc.action = "/summoner/" + searchSummonerName;
+        doc.submit();
+    }
 }
 
 function indexSummonerSearch(){
     let doc = document.indexSearchSummoner;
     let searchSummonerName = doc.indexSearchSummonerName.value;
-    doc.action = "/summoner/" + searchSummonerName;
-    doc.submit();
+    if( searchSummonerName != "" ) {
+        doc.action = "/summoner/" + searchSummonerName;
+        doc.submit();
+    }
 }
 
 searchChampionName.addEventListener('input', searchChampion);

@@ -4,40 +4,40 @@
 <link th:href="@{/css/fragments/layoutChampionListPage.css}" rel="stylesheet">
 <link th:href="@{/css/fragments/tftContents.css}" rel="stylesheet">
 <body>
-<header th:replace="templates/fragments/bodyHeader.html :: bodyHeader"></header>
-<div id="backgroundImage">
-    <div class="container">
-        <div class="championContentsAtt">
-            <div class="col-sm-4 offset-8">
-                <input type="search" class="form-control" name="searchChampionList" id="searchChampionList" placeholder="챔피언 검색" aria-label="Search">
-            </div>
-            <div class="contentsPadding championListField" id="championListField"></div>
-            <div class="col-sm-4 offset-8 row">
-                <span class="col-sm-4">랜덤 조합</span>
-                <select class="col-sm-4" id="selectChampionNumber">
-                    <option value="" selected>선택수</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                </select>
-                <button type="button" class="col-sm-3" onclick="randomCombination()">조합 버튼</button>
+    <header th:replace="templates/fragments/bodyHeader.html :: bodyHeader"></header>
+    <div id="backgroundImage">
+        <div class="container">
+            <div class="championContentsAtt">
+                <div class="col-sm-4 offset-8">
+                    <input type="search" class="form-control" name="searchChampionList" id="searchChampionList" placeholder="챔피언 검색" aria-label="Search">
+                </div>
+                <div class="contentsPadding championListField" id="championListField"></div>
+                <div class="col-sm-4 offset-8 row">
+                    <span class="col-sm-4">랜덤 조합</span>
+                    <select class="col-sm-4" id="selectChampionNumber">
+                        <option value="" selected>선택수</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                    </select>
+                    <button type="button" class="col-sm-3" onclick="randomCombination()">조합 버튼</button>
+                </div>
             </div>
         </div>
-
+        <div class="container" id="championSelect">
+            <div class="synergyHeader contentsMargin">조합 리스트</div>
+            <div class="contentsPadding championListField" id="selectedChampionField"></div>
+            <div class="synergyHeader">시너지</div>
+            <div name="synergyDesc" id="synergyDesc"></div>
+        </div>
     </div>
-    <div class="container" id="championSelect">
-        <div class="synergyHeader contentsMargin">조합 리스트</div>
-        <div class="contentsPadding championListField" id="selectedChampionField"></div>
-        <div class="synergyHeader">시너지</div>
-        <div name="synergyDesc" id="synergyDesc"></div>
-    </div>
-</div>
+    <footer th:replace="templates/fragments/footer.html :: footer"></footer>
 </body>
 <script th:src="@{/js/tft/combination/combination.js}"></script>
 </html>

@@ -39,12 +39,12 @@ function championSearch(){
     let searchChampionName = doc.searchChampionName.value;
     for(let i=0; i<championNameKrList.length; i++){
         if(searchChampionName === championNameKrList[i]){
-            doc.action = "/championList/" + championNameList[i];
+            doc.action = "/tft/championList/" + championNameList[i];
             doc.submit();
             return "";
         }
     }
-    doc.action = "/championList";
+    doc.action = "/tft/championList";
     doc.submit();
 }
 
@@ -52,7 +52,7 @@ function summonerSearch(){
     let doc = document.searchSummoner;
     let searchSummonerName = doc.searchSummonerName.value;
     if( searchSummonerName != "" ) {
-        doc.action = "/summoner/" + searchSummonerName;
+        doc.action = "/tft/summoner/" + searchSummonerName;
         doc.submit();
     }
 }
@@ -61,7 +61,7 @@ function indexSummonerSearch(){
     let doc = document.indexSearchSummoner;
     let searchSummonerName = doc.indexSearchSummonerName.value;
     if( searchSummonerName != "" ) {
-        doc.action = "/summoner/" + searchSummonerName;
+        doc.action = "/tft/summoner/" + searchSummonerName;
         doc.submit();
     }
 }

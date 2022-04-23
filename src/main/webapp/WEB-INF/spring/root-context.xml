@@ -29,6 +29,7 @@
             <mvc:exclude-mapping path="/login" />
             <mvc:exclude-mapping path="/logout" />
             <mvc:exclude-mapping path="/members/new" />
+            <mvc:exclude-mapping path="/tft/**" />
             <mvc:exclude-mapping path="/css/**" />
             <mvc:exclude-mapping path="/js/**" />
             <mvc:exclude-mapping path="/img/**" />

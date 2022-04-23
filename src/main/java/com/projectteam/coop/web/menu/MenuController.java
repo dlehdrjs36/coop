@@ -30,17 +30,17 @@ public class MenuController {
     @Value("${coop.riot.apiKey}")
     private String apikey;
 
-    @GetMapping(value = "/augmentsList")
+    @GetMapping(value = "/tft/augmentsList")
     public String getAugmentsListPage(Model model) {
         return "/templates/tft/augmentsList";
     }
 
-    @GetMapping(value = "/championList")
+    @GetMapping(value = "/tft/championList")
     public String getChampionListPage(Model model) {
         return "/templates/tft/championList";
     }
 
-    @GetMapping(value = "/championList/{championName}")
+    @GetMapping(value = "/tft/championList/{championName}")
     public String searchChampion(@PathVariable String championName, Model model) {
         if(championName != "") {
             model.addAttribute(championName, championName);
@@ -50,7 +50,7 @@ public class MenuController {
         return "/templates/tft/championList";
     }
 
-    @GetMapping(value = "/synergyList")
+    @GetMapping(value = "/tft/synergyList")
     public String getSynergyListPage(Model model) {
         List<SynergyNameForm> SynergyNameForm = null;
         Synergy initSynergy = null;
@@ -72,7 +72,7 @@ public class MenuController {
         return "/templates/tft/synergyList";
     }
 
-    @GetMapping("/synergyList/{synergyName}")
+    @GetMapping("/tft/synergyList/{synergyName}")
     @ResponseBody
     public HashMap<String, Object> getSynergyData(@PathVariable String synergyName){
         HashMap<String, Object> SynergyData = new HashMap<>();
@@ -84,17 +84,17 @@ public class MenuController {
         return SynergyData;
     }
 
-    @GetMapping("/combination")
+    @GetMapping("/tft/combination")
     public String getCombinationPage(Model model){
         return "/templates/tft/combination";
     }
 
-    @GetMapping("/guide")
+    @GetMapping("/tft/guide")
     public String getGuidePage(Model model){
         return "/templates/tft/guide";
     }
 
-    @GetMapping("/summoner/{summonerName}")
+    @GetMapping("/tft/summoner/{summonerName}")
     public String getSummonerPage(@PathVariable String summonerName, Model model) {
         Summoner summoner;
         List<LeagueEntry> leagueEntry;

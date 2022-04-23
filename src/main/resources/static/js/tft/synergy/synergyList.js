@@ -77,7 +77,7 @@ function getSynergyData ( synergyName ){
         overlapCheck = synergyName;
         const xhr = new XMLHttpRequest();
         const method = "GET";
-        const url = "/synergyList/" + synergyName;
+        const url = "/tft/synergyList/" + synergyName;
         xhr.open(method, url);
         xhr.send();
         xhr.onload = function() {

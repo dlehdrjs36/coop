@@ -2,7 +2,7 @@ const loader = document.getElementById("loader");
 
 function recordUpdate(){
     let doc = document.summonerTitle;
-    doc.action = "/record";
+    doc.action = "/tft/record";
     doc.submit();
 }
 
@@ -24,7 +24,7 @@ function getGameDescData(matchId) {
     document.getElementById("loader").style.display = "";
     const xhr = new XMLHttpRequest();
     const method = "GET";
-    const url = "/summoner/matchData/" + matchId;
+    const url = "/tft/summoner/matchData/" + matchId;
     xhr.open(method, url);
     xhr.send();
     xhr.onload = function() {

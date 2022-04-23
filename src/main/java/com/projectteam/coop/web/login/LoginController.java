@@ -14,6 +14,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -36,7 +37,10 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String login(@Validated @ModelAttribute("loginForm") LoginForm loginForm, BindingResult bindingResult, HttpServletRequest request) {
+    public String login(@Validated @ModelAttribute("loginForm") LoginForm loginForm,
+                        BindingResult bindingResult,
+                        HttpServletRequest request,
+                        @RequestParam(name = "redirectURL", defaultValue = "/") String redirectURL) {
 
         if (bindingResult.hasErrors()) {
             return "/templates/login/loginForm";
@@ -55,7 +59,7 @@ public class LoginController {
             HttpSession session = request.getSession();
             session.setAttribute(LOGIN_MEMBER, MemberSessionDto.createSession(findMember));
 
-            return "redirect:/";
+            return "redirect:" + redirectURL;
         }
     }
 

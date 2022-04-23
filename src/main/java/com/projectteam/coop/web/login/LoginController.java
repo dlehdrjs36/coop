@@ -4,7 +4,8 @@ import com.projectteam.coop.domain.Member;
 import com.projectteam.coop.domain.log.LoginLog;
 import com.projectteam.coop.service.login.LoginService;
 import com.projectteam.coop.service.member.MemberService;
-import com.projectteam.coop.web.member.MemberForm;
+import com.projectteam.coop.web.argumentresolver.AdminLogin;
+import com.projectteam.coop.web.argumentresolver.Login;
 import com.projectteam.coop.web.session.MemberSessionDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -31,9 +32,13 @@ public class LoginController {
     private final LoginService loginService;
 
     @GetMapping("/login")
-    public String loginForm(Model model) {
-        model.addAttribute("loginForm", new LoginForm());
-        return "/templates/login/loginForm";
+    public String loginForm(@Login MemberSessionDto loginMember, Model model) {
+        if(loginMember == null) {
+            model.addAttribute("loginForm", new LoginForm());
+            return "/templates/login/loginForm";
+        }
+
+        return "redirect:/";
     }
 
     @PostMapping("/login")
@@ -64,9 +69,12 @@ public class LoginController {
     }
 
     @GetMapping("/adminLogin")
-    public String adminLoginForm(Model model) {
-        model.addAttribute("loginForm", new LoginForm());
-        return "/templates/login/adminLoginForm";
+    public String adminLoginForm(@AdminLogin MemberSessionDto adminSession, Model model) {
+        if(adminSession == null) {
+            model.addAttribute("loginForm", new LoginForm());
+            return "/templates/login/adminLoginForm";
+        }
+        return "/templates/admin/main";
     }
 
     @PostMapping("/adminLogin")
@@ -75,6 +83,7 @@ public class LoginController {
         if (bindingResult.hasErrors()) {
             return "/templates/login/adminLoginForm";
         }
+
         Member findMember = memberService.findMember(loginForm.getEmail(), loginForm.getPassword());
         if(findMember == null) {
             bindingResult.reject("login");

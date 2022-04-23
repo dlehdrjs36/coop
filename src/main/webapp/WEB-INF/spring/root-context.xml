@@ -14,29 +14,6 @@
     <mvc:resources mapping="/css/**" location="classpath:/static/css/" />
     <mvc:resources mapping="/js/**" location="classpath:/static/js/" />
 
-    <!-- 스프링 인터셉터 -->
-    <mvc:interceptors>
-        <mvc:interceptor>
-            <mvc:mapping path="/**"/>
-            <mvc:exclude-mapping path="/css/**" />
-            <mvc:exclude-mapping path="/js/**" />
-            <mvc:exclude-mapping path="/img/**" />
-            <bean class="com.projectteam.coop.web.interceptor.LogInterceptor"/>
-        </mvc:interceptor>
-        <mvc:interceptor>
-            <mvc:mapping path="/**"/>
-            <mvc:exclude-mapping path="/" />
-            <mvc:exclude-mapping path="/login" />
-            <mvc:exclude-mapping path="/logout" />
-            <mvc:exclude-mapping path="/members/new" />
-            <mvc:exclude-mapping path="/tft/**" />
-            <mvc:exclude-mapping path="/css/**" />
-            <mvc:exclude-mapping path="/js/**" />
-            <mvc:exclude-mapping path="/img/**" />
-            <bean class="com.projectteam.coop.web.interceptor.LoginCheckInterceptor"/>
-        </mvc:interceptor>
-    </mvc:interceptors>
-
     <!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <!--    <property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />-->

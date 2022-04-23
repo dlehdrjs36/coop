@@ -6,14 +6,13 @@ import com.projectteam.coop.domain.PurchaseList;
 import com.projectteam.coop.domain.PurchaseListStatus;
 import com.projectteam.coop.service.member.MemberService;
 import com.projectteam.coop.service.purchaselist.PurchaseListService;
+import com.projectteam.coop.web.argumentresolver.Login;
 import com.projectteam.coop.web.session.MemberSessionDto;
-import com.projectteam.coop.web.session.SessionConst;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.SessionAttribute;
 
 @Controller
 @RequiredArgsConstructor
@@ -23,9 +22,7 @@ public class HomeController {
     private final PurchaseListService purchaseListService;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String home(
-            @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) MemberSessionDto loginMember,
-            Model model) {
+    public String home(@Login MemberSessionDto loginMember, Model model) {
 
         //세션에 회원 데이터 있는 경우
         if (loginMember != null) {

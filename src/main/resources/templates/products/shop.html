@@ -28,7 +28,7 @@
                     </a>
                 </li>
                 <li class="page-item" th:each="num : ${#numbers.sequence(0, paging.endPage-1)}">
-                    <a class="page-link" href="/products?page=1" th:href="${'/shop?page=' + numStat.count}" th:text="${numStat.count}">1</a>
+                    <a class="page-link" href="/shop" th:href="${'/shop?page=' + numStat.count}" th:text="${numStat.count}">1</a>
                 </li>
                 <li class="page-item">
                     <a class="page-link" href="#" aria-label="Next">

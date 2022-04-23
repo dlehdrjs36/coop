@@ -17,7 +17,38 @@
 
     <!-- 스프링 MVC 어노테이션 자동 스캔 -->
     <mvc:annotation-driven />
-
+    <!-- 스프링 MVC 인터셉터 -->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/css/**" />
+            <mvc:exclude-mapping path="/js/**" />
+            <mvc:exclude-mapping path="/img/**" />
+            <bean class="com.projectteam.coop.web.interceptor.LogInterceptor"/>
+        </mvc:interceptor>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/" />
+            <mvc:exclude-mapping path="/adminLogin" />
+            <mvc:exclude-mapping path="/login" />
+            <mvc:exclude-mapping path="/logout" />
+            <mvc:exclude-mapping path="/members/new" />
+            <mvc:exclude-mapping path="/tft/**" />
+            <mvc:exclude-mapping path="/posts/**" />
+            <mvc:exclude-mapping path="/orders/**" />
+            <mvc:exclude-mapping path="/css/**" />
+            <mvc:exclude-mapping path="/js/**" />
+            <mvc:exclude-mapping path="/img/**" />
+            <bean class="com.projectteam.coop.web.interceptor.LoginCheckInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+    <!-- 스프링 MVC ArgumentResolver -->
+    <mvc:annotation-driven>
+        <mvc:argument-resolvers>
+            <bean class="com.projectteam.coop.web.argumentresolver.LoginMemberArgumentResolver"></bean>
+            <bean class="com.projectteam.coop.web.argumentresolver.AdminLoginMemberArgumentResolver"></bean>
+        </mvc:argument-resolvers>
+    </mvc:annotation-driven>
     <!-- DBCP(HikariCP) -->
     <bean id="mybatisDataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
         <property name="driverClassName" value="${spring.datasource.hikari.driverClassName}" />

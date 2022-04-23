@@ -74,7 +74,7 @@ public class LoginController {
             model.addAttribute("loginForm", new LoginForm());
             return "/templates/login/adminLoginForm";
         }
-        return "/templates/admin/main";
+        return "redirect:/admin";
     }
 
     @PostMapping("/adminLogin")
@@ -93,7 +93,7 @@ public class LoginController {
         HttpSession session = request.getSession();
         session.setAttribute(ADMIN_LOGIN_MEMBER, MemberSessionDto.createSession(findMember));
 
-        return "/templates/admin/main";
+        return "redirect:/admin";
     }
 
     @PostMapping("/logout")

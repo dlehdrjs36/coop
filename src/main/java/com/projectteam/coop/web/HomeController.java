@@ -6,6 +6,7 @@ import com.projectteam.coop.domain.PurchaseList;
 import com.projectteam.coop.domain.PurchaseListStatus;
 import com.projectteam.coop.service.member.MemberService;
 import com.projectteam.coop.service.purchaselist.PurchaseListService;
+import com.projectteam.coop.web.argumentresolver.AdminLogin;
 import com.projectteam.coop.web.argumentresolver.Login;
 import com.projectteam.coop.web.session.MemberSessionDto;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +33,7 @@ public class HomeController {
                     .filter(purchaseList -> purchaseList.getProduct().getType() == ProductType.BACKGROUND)
                     .filter(purchaseList -> purchaseList.getStatus() == PurchaseListStatus.APPLY)
                     .findAny()
-                    .orElse(null);
+                    .orElseGet(() -> null);
 
             if (memberPurchaseList != null) {
                 model.addAttribute("memberPurchaseProduct", memberPurchaseList.getProduct());
@@ -40,5 +41,10 @@ public class HomeController {
         }
 
         return "/templates/index";
+    }
+
+    @RequestMapping(value = "/admin", method = RequestMethod.GET)
+    public String adminHome(@AdminLogin MemberSessionDto loginMember, Model model) {
+        return "/templates/admin/main";
     }
 }

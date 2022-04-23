@@ -1,49 +1,55 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="templates/fragments/header.html :: header"></head>
-<body>
-    <header th:replace="templates/fragments/bodyHeader.html :: bodyHeader"></header>
-
-    <form th:action="@{/admin/products/new}" th:object="${productForm}" method="post">
-        <div class="form-group mb-3">
-            <label th:for="name">아이템명</label>
-            <input type="text" th:field="*{name}" th:errorclass="'border border-danger'" class="form-control" placeholder="아이템명을 입력하세요">
-            <div class="text-danger" th:errors="*{name}">
-                아이템명 오류
-            </div>
-        </div>
-        <div class="form-group mb-3">
-            <label th:for="type">분류</label>
-            <select th:name="type">
-                <option value="background">배경</option>
-                <option value="icon">아이콘</option>
-            </select>
-        </div>
-        <div class="form-group mb-3">
-            <label th:for="path">경로</label>
-            <input type="text" th:field="*{path}" th:errorclass="'border border-danger'" class="form-control" placeholder="아이템 경로를 입력하세요">
-            <div class="text-danger" th:errors="*{path}">
-                경로 오류
-            </div>
-        </div>
-        <div class="form-group mb-3">
-            <label th:for="price">가격</label>
-            <input type="text" th:field="*{price}" th:errorclass="'border border-danger'" class="form-control" placeholder="가격을 입력하세요">
-            <div class="text-danger" th:errors="*{price}">
-                가격 오류
-            </div>
-        </div>
-        <div class="form-group">
-            <label th:for="status">상태</label>
-            <select th:name="status">
-                <option value="Y">사용</option>
-                <option value="N">미사용</option>
-            </select>
-        </div>
-        <button type="submit" class="btn btn-primary">등록</button>
-    </form>
-
-    <br/>
-    <footer th:replace="templates/fragments/footer.html :: footer"></footer>
+<head th:replace="templates/fragments/admin/adminHeader.html :: adminHeader"></head>
+<body class="app">
+    <header th:replace="templates/fragments/admin/adminBodyHeader.html :: adminBodyHeader"></header>
+    <div class="app-wrapper">
+        <div class="app-content pt-3 p-md-3 p-lg-4">
+            <div class="container-xl">
+                <h1 class="app-page-title">상품</h1>
+                <div class="row g-3 mb-4 align-items-center justify-content-between">
+                    <form th:action="@{/admin/products/new}" th:object="${productForm}" method="post">
+                        <div class="form-group mb-3">
+                            <label th:for="name">아이템명</label>
+                            <input type="text" th:field="*{name}" th:errorclass="'border border-danger'" class="form-control" placeholder="아이템명을 입력하세요">
+                            <div class="text-danger" th:errors="*{name}">
+                                아이템명 오류
+                            </div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label th:for="type">분류</label>
+                            <select th:name="type">
+                                <option value="background">배경</option>
+                                <option value="icon">아이콘</option>
+                            </select>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label th:for="path">경로</label>
+                            <input type="text" th:field="*{path}" th:errorclass="'border border-danger'" class="form-control" placeholder="아이템 경로를 입력하세요">
+                            <div class="text-danger" th:errors="*{path}">
+                                경로 오류
+                            </div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label th:for="price">가격</label>
+                            <input type="text" th:field="*{price}" th:errorclass="'border border-danger'" class="form-control" placeholder="가격을 입력하세요">
+                            <div class="text-danger" th:errors="*{price}">
+                                가격 오류
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label th:for="status">상태</label>
+                            <select th:name="status">
+                                <option value="Y">사용</option>
+                                <option value="N">미사용</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">등록</button>
+                    </form>
+                </div>
+            </div><!--//container-fluid-->
+        </div><!--//app-content-->
+        <footer th:replace="templates/fragments/admin/adminFooter.html :: adminFooter"></footer>
+    </div>
 </body>
 </html>

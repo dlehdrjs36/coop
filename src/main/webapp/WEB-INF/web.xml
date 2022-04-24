@@ -3,16 +3,46 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
+
+    <!-- XML 설정파일 위치 -->
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>/WEB-INF/spring/root-context.xml</param-value>
     </context-param>
+
+<!-- [미동작]default XML 컨테이너에서 애노테이션 기반 컨테이너를 사용하도록 변경 -->
+<!--    <context-param>-->
+<!--        <param-name>contextClass</param-name>-->
+<!--        <param-value>-->
+<!--            org.springframework.web.context.support.AnnotationConfigWebApplicationContext-->
+<!--        </param-value>-->
+<!--    </context-param>-->
+<!-- [미동작]자바 애노테이션기반 설정 클래스 위치 -->
+<!--    <context-param>-->
+<!--        <param-name>contextConfigLocation</param-name>-->
+<!--        <param-value>com.projectteam.coop.web.WebConfig</param-value>-->
+<!--    </context-param>-->
+
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
     <servlet>
         <servlet-name>dispatcher</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+<!--        &lt;!&ndash; [미동작]자바기반 설정 지금 동작 안됨 나중에 변경해야하면 검색해서 수정 필요 &ndash;&gt;-->
+<!--                &lt;!&ndash; DispatcherServlet의 기본 구성인 XmlWebApplicationContext 대신 AnnotationConfigWebApplicationContext를 사용하도록 변경 &ndash;&gt;-->
+<!--                <init-param>-->
+<!--                    <param-name>contextClass</param-name>-->
+<!--                    <param-value>-->
+<!--                        org.springframework.web.context.support.AnnotationConfigWebApplicationContext-->
+<!--                    </param-value>-->
+<!--                </init-param>-->
+<!--                &lt;!&ndash; 자바 애노테이션기반 설정 클래스 위치 &ndash;&gt;-->
+<!--                <init-param>-->
+<!--                    <param-name>contextConfigLocation</param-name>-->
+<!--                    <param-value>com.projectteam.coop.web.ServletConfig</param-value>-->
+<!--                </init-param>-->
+<!--        &lt;!&ndash; //자바기반 설정 지금 동작 안됨 나중에 변경해야하면 검색해서 수정 필요 &ndash;&gt;-->
         <init-param>
             <!-- contextConfigLocation 설정을 통해서 서블릿이 참조할 context 파일을 설정할 수 있다.
                 DispatcherServlet은 Spring 컨테이너를 구동할 때, web.xml 파일에 등록된 서블릿 이름 뒤에 ‘-servlet.xml’을 붙인 이름의 스프링 설정파일을 자동으로 찾는다.
@@ -38,8 +68,40 @@
             <param-value>UTF-8</param-value>
         </init-param>
     </filter>
+<!--    <filter>-->
+<!--        <filter-name>logFilter</filter-name>-->
+<!--        <filter-class>-->
+<!--            com.projectteam.coop.web.filter.LogFilter-->
+<!--        </filter-class>-->
+<!--    </filter>-->
+<!--    <filter>-->
+<!--        <filter-name>loginCheckFilter</filter-name>-->
+<!--        <filter-class>-->
+<!--            com.projectteam.coop.web.filter.LoginCheckFilter-->
+<!--        </filter-class>-->
+<!--    </filter>-->
     <filter-mapping>
         <filter-name>encodingFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+<!--    <filter-mapping>-->
+<!--        <filter-name>logFilter</filter-name>-->
+<!--        <url-pattern>/*</url-pattern>-->
+<!--    </filter-mapping>-->
+<!--    <filter-mapping>-->
+<!--        <filter-name>loginCheckFilter</filter-name>-->
+<!--        <url-pattern>/*</url-pattern>-->
+<!--    </filter-mapping>-->
+    <error-page>
+        <error-code>404</error-code>
+        <location>/error</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/error</location>
+    </error-page>
+    <error-page>
+        <exception-type>java.lang.RuntimeException</exception-type>
+        <location>/error</location>
+    </error-page>
 </web-app>

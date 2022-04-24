@@ -8,6 +8,7 @@ import com.projectteam.coop.tft.service.MatchDescService;
 import com.projectteam.coop.tft.service.SynergyService;
 import com.projectteam.coop.util.TftUtil;
 import com.projectteam.coop.web.menu.summonerPageForm.MatchDescForm;
+import com.projectteam.coop.web.menu.summonerPageForm.SommonerMatchDescForm;
 import com.projectteam.coop.web.menu.summonerPageForm.SummonerForm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -103,9 +105,14 @@ public class MenuController {
         List<MatchDesc> sommonerMatchDescs;
         List<String> matchPlayerNameList = new ArrayList<>();
         MatchDescForm matchDescForm = new MatchDescForm();
+        List<SommonerMatchDescForm> sommonerMatchDescFormList = new ArrayList<>();
+        SommonerMatchDescForm sommonerMatchDescForm = new SommonerMatchDescForm();
+
         int i;
 
         try {
+            summonerName = URLDecoder.decode(summonerName,"UTF-8");
+
             summoner = tftUtil.getTftSummoner(summonerName, apikey);
             leagueEntry = tftUtil.getTftSummonerEntry(summoner.getId(), apikey);
             summonerForm.setProfileIconId(summoner.getProfileIconId());
@@ -123,6 +130,7 @@ public class MenuController {
             sommonerMatchDescs = matchDescService.getMatchDescDataPuuid(summoner.getPuuid());
             if(sommonerMatchDescs.size() == 0){
             }else{
+                sommonerMatchDescFormList = sommonerMatchDescForm.createSommonerMatchDescForm(sommonerMatchDescs);
                 matchDescs = matchDescService.getMatchDescDataMatchId(sommonerMatchDescs.get(0).getMetadateMatchId());
                 for(i=0; i<matchDescs.size(); i++){
                     matchPlayerNameList.add(tftUtil.getTftPuiidToNameList(matchDescs.get(i).getPuuid(),apikey));
@@ -134,8 +142,7 @@ public class MenuController {
             return "/templates/tft/summonerSearchError";
         }
 
-        model.addAttribute("sommonerMatchDescs", sommonerMatchDescs);
-        model.addAttribute("matchDescForm", matchDescForm);
+        model.addAttribute("sommonerMatchDescFormList", sommonerMatchDescFormList);
 
         return "/templates/tft/summoner";
     }

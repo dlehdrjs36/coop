@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,21 +26,24 @@ public class SummonerController {
     @Value("${coop.riot.apiKey}")
     private String apikey;
 
-    @GetMapping(value="/record")
+    @GetMapping(value="/tft/record")
     public String doGet(){
         return "redirect:/";
     }
 
-    @PostMapping(value="/record")
+    @PostMapping(value="/tft/record")
     public String updateUserRecord(HttpServletRequest request){
         String puuid = request.getParameter("puuid");
         String name = request.getParameter("name");
         matchDescService.addMatchDesc(puuid,apikey);
-
-        return "redirect:/summoner/"+name;
+        try {
+            name = URLEncoder.encode(name, "UTF-8");
+        }catch(Exception e){
+        }
+        return "redirect:/tft/summoner/"+name;
     }
 
-    @GetMapping(value="/summoner/matchData/{matchId}")
+    @GetMapping(value="/tft/summoner/matchData/{matchId}")
     @ResponseBody
     public HashMap<String, Object> getMatchDescData(@PathVariable String matchId){
         HashMap<String, Object> matchData = new HashMap<>();

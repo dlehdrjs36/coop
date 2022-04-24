@@ -12,10 +12,10 @@ public class UserDesc {
     private String name;
     private List<Augments> augments;
     private int placement;
+    private long timeEliminated;
     private String puuid;
     private List<Traits> traits;
     private List<Units> units;
-
 
     public List<UserDesc> createUserDesc(List<MatchDesc> matchDescList, List<String> playerNameList){
         List<UserDesc> userDescList = new ArrayList<>();
@@ -28,6 +28,7 @@ public class UserDesc {
             userDesc.name = playerNameList.get(i);
             userDesc.augments = augments.createAugments(matchDescList.get(i).getAugments());
             userDesc.placement = matchDescList.get(i).getPlacement();
+            userDesc.timeEliminated = matchDescList.get(i).getTimeEliminated();
             userDesc.puuid = matchDescList.get(i).getPuuid();
             userDesc.traits = traits.createTraits(matchDescList.get(i).getTraitsName(),
                                                   matchDescList.get(i).getTraitsNumUnits(),

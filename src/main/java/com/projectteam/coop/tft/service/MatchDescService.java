@@ -119,6 +119,7 @@ public class MatchDescService {
                     matchDesc.createMatchDesc(
                             matchData.getMetadata().getParticipants().get(i),
                             matchData.getMetadata().getMatchId(),
+                            matchData.getInfo().getGameDatetime(),
                             matchData.getInfo().getGameLength(),
                             matchData.getInfo().getGameVersion(),
                             augments,
@@ -126,6 +127,7 @@ public class MatchDescService {
                             matchData.getInfo().getParticipants().get(i).getCompanion().getSkinId(),
                             matchData.getInfo().getParticipants().get(i).getCompanion().getSpecies(),
                             matchData.getInfo().getParticipants().get(i).getPlacement(),
+                            matchData.getInfo().getParticipants().get(i).getTimeEliminated(),
                             matchData.getInfo().getParticipants().get(i).getPuuid(),
                             traitsName,
                             traitsUnits,
@@ -139,7 +141,6 @@ public class MatchDescService {
                             tier,
                             matchData.getInfo().getQueueId(),
                             matchData.getInfo().getTftGameType()
-
                     )
             );
         }

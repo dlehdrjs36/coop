@@ -14,6 +14,7 @@ public class MatchDesc {
     @Id
     private String metadateMatchId;
     //전체 게임 시간
+    private long gameDatetime;
     private long gameLength;
     private String gameVersion;
     // $ 혹은 | 를 입력해서 데이터화 시킬 예정 List 대부분 그럴예정
@@ -25,6 +26,7 @@ public class MatchDesc {
 
     private int placement;
     private String puuid;
+    private long timeEliminated;
 
     @Column(length=1000)
     private String traitsName;
@@ -48,14 +50,15 @@ public class MatchDesc {
     private int queueId;
     private String tftGameType;
 
-    public MatchDesc createMatchDesc(String metadataParticipants, String metaDateMatchId, Long gameLength, String gameVersion, String augments,
-                                     String companionContentID, int companionSkinID, String companionSpecies, int placement, String puuid,
+    public MatchDesc createMatchDesc(String metadataParticipants, String metaDateMatchId, long gameDatetime,long gameLength, String gameVersion, String augments,
+                                     String companionContentID, int companionSkinID, String companionSpecies, int placement, long timeEliminated,String puuid,
                                      String traitsName, String traitsNumUnits, String traitsStyle, String traitsTierCurrent, String traitsTierTotal,
                                      String unitsCharacterId, String unitsItemNames, String unitsName, String unitsRarity, String unitsTier,
                                      int queueId,String tftGameType) {
         MatchDesc matchDesc = new MatchDesc();
         matchDesc.metadataParticipants = metadataParticipants;
         matchDesc.metadateMatchId = metaDateMatchId;
+        matchDesc.gameDatetime = gameDatetime;
         matchDesc.gameLength = gameLength;
         matchDesc.gameVersion = gameVersion;
         matchDesc.augments = augments;
@@ -63,6 +66,7 @@ public class MatchDesc {
         matchDesc.companionSkinId = companionSkinID;
         matchDesc.companionSpecies = companionSpecies;
         matchDesc.placement = placement;
+        matchDesc.timeEliminated = timeEliminated;
         matchDesc.puuid = puuid;
         matchDesc.traitsName = traitsName;
         matchDesc.traitsNumUnits = traitsNumUnits;

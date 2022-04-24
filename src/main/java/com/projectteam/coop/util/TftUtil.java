@@ -19,8 +19,11 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
 public class TftUtil {
 
@@ -242,6 +245,36 @@ public class TftUtil {
             return itemName.substring(14);
         }else{
             return itemName.substring(9);
+        }
+    }
+
+    public String getGameDatetime(long datetime){
+        long diff, diffDay, diffHour, diffMinute;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+        Date date = new Date();
+        Date gameDate = null;
+        String gameDatetime = dateFormat.format(datetime);
+
+        try {
+            gameDate = dateFormat.parse(gameDatetime);
+        }catch (Exception e){
+
+        }
+
+        diff = date.getTime() - gameDate.getTime();
+        TimeUnit timeDay = TimeUnit.DAYS;
+        TimeUnit timeHour = TimeUnit.HOURS;
+        TimeUnit timeMinute = TimeUnit.MINUTES;
+        diffDay = timeDay.convert(diff, TimeUnit.MILLISECONDS);
+        diffHour = timeHour.convert(diff, TimeUnit.MILLISECONDS);
+        diffMinute = timeMinute.convert(diff, TimeUnit.MILLISECONDS);
+
+        if(diffHour > 24){
+            return String.valueOf(diffDay) + "일 전";
+        }else if( diffMinute > 60 ){
+            return String.valueOf(diffHour) + "시간 전";
+        }else{
+            return String.valueOf(diffMinute) + "분 전";
         }
     }
 }

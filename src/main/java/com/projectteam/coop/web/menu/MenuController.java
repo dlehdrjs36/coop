@@ -101,14 +101,9 @@ public class MenuController {
         Summoner summoner;
         List<LeagueEntry> leagueEntry;
         SummonerForm summonerForm = new SummonerForm();
-        List<MatchDesc> matchDescs;
         List<MatchDesc> sommonerMatchDescs;
-        List<String> matchPlayerNameList = new ArrayList<>();
-        MatchDescForm matchDescForm = new MatchDescForm();
         List<SommonerMatchDescForm> sommonerMatchDescFormList = new ArrayList<>();
         SommonerMatchDescForm sommonerMatchDescForm = new SommonerMatchDescForm();
-
-        int i;
 
         try {
             summonerName = URLDecoder.decode(summonerName,"UTF-8");
@@ -125,23 +120,19 @@ public class MenuController {
             summonerForm.setLeaguePoints(leagueEntry.get(0).getLeaguePoints());
             summonerForm.setWins(leagueEntry.get(0).getWins());
             summonerForm.setLosses(leagueEntry.get(0).getLosses());
-            model.addAttribute("summonerForm", summonerForm);
 
             sommonerMatchDescs = matchDescService.getMatchDescDataPuuid(summoner.getPuuid());
             if(sommonerMatchDescs.size() == 0){
             }else{
-                sommonerMatchDescFormList = sommonerMatchDescForm.createSommonerMatchDescForm(sommonerMatchDescs);
-                matchDescs = matchDescService.getMatchDescDataMatchId(sommonerMatchDescs.get(0).getMetadateMatchId());
-                for(i=0; i<matchDescs.size(); i++){
-                    matchPlayerNameList.add(tftUtil.getTftPuiidToNameList(matchDescs.get(i).getPuuid(),apikey));
-                }
-                matchDescForm = matchDescForm.createMatchDescForm(matchDescs, matchPlayerNameList);
+                sommonerMatchDescFormList = sommonerMatchDescForm.createSommonerMatchDescForm(sommonerMatchDescs, 1);
+                summonerForm.setRankDefense(summonerForm.getRankDefense(sommonerMatchDescs));
             }
         }catch (Exception e){
             model.addAttribute("searchName",summonerName);
             return "/templates/tft/summonerSearchError";
         }
 
+        model.addAttribute("summonerForm", summonerForm);
         model.addAttribute("sommonerMatchDescFormList", sommonerMatchDescFormList);
 
         return "/templates/tft/summoner";

@@ -1,6 +1,5 @@
 package com.projectteam.coop.repository.post;
 
-import com.projectteam.coop.web.post.PostForm;
 import com.projectteam.coop.domain.Post;
 import org.springframework.stereotype.Repository;
 
@@ -16,7 +15,12 @@ public class PostRepository {
 
     //등록
     public Long addPost(Post post) {
-        em.persist(post);
+        if (post.getParent() == null) {
+            em.persist(post);
+            post.initGroup();
+        }else {
+            em.persist(post);
+        }
         return post.getPostId();
     }
 
@@ -26,15 +30,15 @@ public class PostRepository {
     }
 
     //수정
-    public Long updatePost(PostForm postForm) {
-        Post findPost = em.find(Post.class, postForm.getPostId());
-        findPost.changePost(null, null, null, postForm.getPassword(), postForm.getTitle(), postForm.getContent(), null, null);
-        return findPost.getPostId();
-    }
+//    public Long updatePost(PostUpdateForm postForm) {
+//        Post findPost = em.find(Post.class, postForm.getPostId());
+//        findPost.changePost(null, null, postForm.getPassword(), postForm.getTitle(), postForm.getContent(), null, null);
+//        return findPost.getPostId();
+//    }
 
     //목록 조회
     public List<Post> findPosts(int offset, int size) {
-        List<Post> findPosts = em.createQuery("select p from Post p", Post.class)
+        List<Post> findPosts = em.createQuery("select p from Post p left join fetch p.parent order by p.group desc, p.order asc", Post.class)
                 .setFirstResult(offset)
                 .setMaxResults(size)
                 .getResultList();
@@ -54,5 +58,14 @@ public class PostRepository {
     public Post findPost(Long id) {
         Post post = em.find(Post.class, id);
         return post;
+    }
+
+    //답글 순서 정렬
+    public void orderSort(Long postId, Long depth) {
+        em.createQuery("select p from Post p where p.parent.postId = :postId and p.depth = :depth", Post.class)
+                .setParameter("postId", postId)
+                .setParameter("depth", depth+1)
+                .getResultList()
+                .forEach(post -> post.orderSort());
     }
 }

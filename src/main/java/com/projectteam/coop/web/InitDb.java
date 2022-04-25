@@ -49,6 +49,9 @@ public class InitDb {
             Post post2 = Post.createPost("테스트2", "1234", "테스트 내용입니다.", "닉네임2");
             em.persist(post1);
             em.persist(post2);
+
+            post1.initGroup();
+            post2.initGroup();
         }
     }
 }

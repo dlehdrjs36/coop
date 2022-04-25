@@ -1,61 +1,75 @@
 package com.projectteam.coop.web.post;
 
-import com.projectteam.coop.domain.Member;
 import com.projectteam.coop.domain.Post;
 import com.projectteam.coop.service.post.PostService;
+import com.projectteam.coop.service.recommed.RecommedService;
 import com.projectteam.coop.util.Paging;
-import com.projectteam.coop.web.session.SessionConst;
+import com.projectteam.coop.web.argumentresolver.Login;
+import com.projectteam.coop.web.session.MemberSessionDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/posts")
+@Slf4j
 public class PostController {
 
     private final PostService postService;
+    private final RecommedService recommedService;
 
-    @GetMapping("/posts/new")
+    @GetMapping("/new")
     public String createForm(Model model) {
-        model.addAttribute("postForm", new PostForm());
+        model.addAttribute("postForm", new PostCreateForm());
         return "/templates/posts/createPostForm";
     }
 
-    @PostMapping("/posts/new")
-    public String create(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member member, @ModelAttribute PostForm postForm, BindingResult bindingResult) {
-
-        //검증 로직
-        if (!StringUtils.hasText(postForm.getTitle())) {
-            bindingResult.addError(new FieldError("postForm", "title", postForm.getTitle(), false, new String[]{"required.post.title"}, null, null));
-        }
-
-        if (member == null) {
-            if(!StringUtils.hasText(postForm.getPassword())) {
-                bindingResult.addError(new FieldError("postForm", "password", postForm.getPassword(), false, new String[]{"required.post.password"}, null, null));
-            } else if (postForm.getPassword().length() != 4) {
-                bindingResult.addError(new FieldError("postForm", "password", postForm.getPassword(), false, new String[]{"length.post.password"}, null, null));
-            }
-        }
+    @PostMapping("/new")
+    public String create(@Login MemberSessionDto member, @Validated @ModelAttribute("postForm") PostCreateForm postForm, BindingResult bindingResult, Model model) {
 
         if (bindingResult.hasErrors()) {
+            log.info("bindingResult.hasErrors={}", bindingResult);
             return "/templates/posts/createPostForm";
         }
 
-        Post post = Post.createPost(postForm.getTitle(), postForm.getPassword(), postForm.getContent());
-        postService.addPost(post);
+        postService.addPost(postForm, Optional.ofNullable(member));
 
         return "redirect:/posts";
     }
 
-    @GetMapping("/posts")
+    @GetMapping("/reply")
+    public String replyForm(@ModelAttribute("postForm") PostCreateForm postForm) {
+        if (postForm.getUpperPostId() == null) {
+            return "redirect:/posts";
+        }
+
+        return "/templates/posts/replyPostForm";
+    }
+
+    @PostMapping("/reply")
+    public String reply(@Login MemberSessionDto member, @Validated @ModelAttribute("postForm") PostCreateForm postForm, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            log.info("bindingResult.hasErrors={}", bindingResult);
+            return "/templates/posts/replyPostForm";
+        }
+
+        postService.addReplyPost(postForm, Optional.ofNullable(member));
+
+        return "redirect:/posts";
+    }
+
+    @GetMapping
     public String postList(@RequestParam(value = "page", defaultValue = "1") Integer page, Model model) {
         Paging paging = new Paging();
         paging.calculateTotalPage(postService.totalSize());
@@ -68,7 +82,7 @@ public class PostController {
         return "/templates/posts/postList";
     }
 
-    @GetMapping("/posts/{postId}")
+    @GetMapping("/{postId}")
     public String info(@PathVariable Long postId, Model model) {
         Post post = postService.findPost(postId);
         model.addAttribute("post", post);
@@ -76,11 +90,11 @@ public class PostController {
         return "/templates/posts/postInfo";
     }
 
-    @GetMapping("/posts/{postId}/edit")
+    @GetMapping("/{postId}/edit")
     public String updateForm(@PathVariable Long postId, Model model) {
         Post post = postService.findPost(postId);
 
-        PostForm postForm = new PostForm();
+        PostUpdateForm postForm = new PostUpdateForm();
         postForm.setPostId(post.getPostId());
         postForm.setTitle(post.getTitle());
         postForm.setPassword(post.getPassword());
@@ -91,25 +105,38 @@ public class PostController {
         return "/templates/posts/updatePostForm";
     }
 
-    @PostMapping("/posts/{postId}/edit")
-    public String updateForm(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member member, @ModelAttribute("postForm") PostForm postForm, BindingResult bindingResult, Model model) {
+    @PostMapping("/{postId}/edit")
+    public String update(@Login MemberSessionDto member, @Validated @ModelAttribute("postForm") PostUpdateForm postForm, BindingResult bindingResult) {
 
-        //검증 로직
-        if (!StringUtils.hasText(postForm.getTitle())) {
-            bindingResult.addError(new FieldError("postForm", "title", postForm.getTitle(), false, new String[]{"required.post.title"}, null, null));
+        if (bindingResult.hasErrors()) {
+            log.info("bindingResult.hasErrors={}", bindingResult);
+            return "/posts/"+ postForm.getPostId() + "/edit";
         }
 
-        if (member == null) {
-            if(!StringUtils.hasText(postForm.getPassword())) {
-                bindingResult.addError(new FieldError("postForm", "password", postForm.getPassword(), false, new String[]{"required.post.password"}, null, null));
-            } else if (postForm.getPassword().length() != 4) {
-                bindingResult.addError(new FieldError("postForm", "password", postForm.getPassword(), false, new String[]{"length.post.password"}, null, null));
-            }
-        }
+        postService.updatePost(postForm);
 
-        Long postId = postService.updatePost(postForm);
-
-        return "redirect:/posts/" + postId;
+        return "redirect:/posts/" + postForm.getPostId();
     }
 
+    @PostMapping("/{postId}/recommend")
+    @ResponseBody
+    public Map<String, Object> recommend(@Login MemberSessionDto loginMember, @PathVariable Long postId) {
+
+        changeMemberRecommed(loginMember, postId);
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("recommendCount", recommedService.postRecommedCount(postId));
+
+        return result;
+    }
+
+    private void changeMemberRecommed(MemberSessionDto loginMember, Long postId) {
+        if (loginMember != null) {
+            if (recommedService.isMemberRecommed(loginMember.getId(), postId)) {
+                recommedService.removeRecommed(loginMember.getId(), postId);
+            } else {
+                postService.recommend(loginMember.getId(), postId);
+            }
+        }
+    }
 }

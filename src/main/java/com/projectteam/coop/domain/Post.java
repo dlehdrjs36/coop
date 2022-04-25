@@ -4,6 +4,9 @@ import lombok.Getter;
 
 import javax.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static javax.persistence.FetchType.LAZY;
 
 @Entity
@@ -22,12 +25,27 @@ public class Post extends BaseEntity {
     @Column(name = "STATUS")
     private PostStatus postStatus;
 
-    @Column(name = "UPPER_POST_ID")
-    private Long upperPostId;
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "UPPER_POST_ID")
+    private Post parent;
+
+    @OneToMany(mappedBy = "parent")
+    private List<Post> child = new ArrayList<>();
 
     private String password;
 
     private String title;
+
+    private String nickname;
+
+    @Column(name = "POST_GROUP")
+    private Long group;
+
+    @Column(name = "POST_ORDER")
+    private Long order;
+
+    @Column(name = "POST_DEPTH")
+    private Long depth;
 
     @Lob
     private String content;
@@ -36,7 +54,7 @@ public class Post extends BaseEntity {
     private Integer viewCount;
 
     @Column(name = "RECOMMEND_COUNT")
-    private Integer recommendCount;
+    private Long recommendCount;
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "CREATE_MEMBER_ID")
@@ -45,32 +63,98 @@ public class Post extends BaseEntity {
     @Column(name = "UPDATE_MEMBER_ID")
     private String updateMemberId;
 
-
-    public static Post createPost(String title, String password, String content) {
+    public static Post createReplyPost(String title, String password, String content, String nickname, Post parent) {
         Post post = new Post();
         post.title = title;
         post.password = password;
         post.postStatus = PostStatus.Y;
         post.content = content;
         post.viewCount = 0;
-        post.recommendCount = 0;
+        post.recommendCount = 0L;
+        post.nickname = nickname;
+        post.parent = parent;
+        post.group = parent.getGroup();
+        post.order = parent.getOrder() + 1L;
+        post.depth = parent.getDepth() + 1L;
 
         return post;
     }
 
-    public void changePost(Board board, PostStatus postStatus, Long upperPostId, String password, String title, String content, Integer viewCount, Integer recommendCount) {
+    public static Post createReplyPost(String title, String password, String content, Member createMember, Post parent) {
+        Post post = new Post();
+        post.title = title;
+        post.password = password;
+        post.postStatus = PostStatus.Y;
+        post.content = content;
+        post.viewCount = 0;
+        post.recommendCount = 0L;
+        post.createMember = createMember;
+        post.parent = parent;
+        post.group = parent.getGroup();
+        post.order = parent.getOrder() + 1L;
+        post.depth = parent.getDepth() + 1L;
+
+        return post;
+    }
+
+    public static Post createPost(String title, String password, String content, String nickname) {
+        Post post = new Post();
+        post.title = title;
+        post.password = password;
+        post.postStatus = PostStatus.Y;
+        post.content = content;
+        post.viewCount = 0;
+        post.recommendCount = 0L;
+        post.nickname = nickname;
+//        post.parent = post;
+        post.order = 0L;
+        post.depth = 0L;
+
+        return post;
+    }
+
+    public static Post createPost(String title, String password, String content, Member createMember) {
+        Post post = new Post();
+        post.title = title;
+        post.password = password;
+        post.postStatus = PostStatus.Y;
+        post.content = content;
+        post.viewCount = 0;
+        post.recommendCount = 0L;
+        post.createMember = createMember;
+//        post.parent = post;
+        post.order = 0L;
+        post.depth = 0L;
+
+        return post;
+    }
+
+    public void changePost(Board board, PostStatus postStatus, String password, String title, String content, Integer viewCount, Long recommendCount) {
         this.board = board;
         this.postStatus = postStatus;
         this.password = password;
-        this.upperPostId = upperPostId;
         this.title = title;
         this.content = content;
         this.viewCount = viewCount;
         this.recommendCount = recommendCount;
     }
 
+    //추천
+    public void recommed(Long recommendCount) {
+        this.recommendCount = recommendCount;
+    }
+
+    //조회수 증가
     public void addViewCount() {
         this.viewCount = this.viewCount + 1;
     }
 
+    //답글 순서 정렬
+    public void orderSort() {
+        this.order = order + 1;
+    }
+
+    public void initGroup() {
+        this.group = this.postId;
+    }
 }

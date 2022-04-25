@@ -18,11 +18,21 @@
             </thead>
             <tbody>
                 <tr th:each="post : ${posts}">
-                    <td th:text="${post.postId}"></td>
-                    <td><a th:text="${post.title}" th:href="'javascript:infoGet(\'posts\',' + ${post.postId} + ')'" href="#"></a></td>
+                    <td th:text="${postStat.count}"></td>
+                    <td>
+                        <span th:if="${post.depth gt 0}">
+                            <span th:each="num : ${#numbers.sequence(0, post.depth-1)}">
+                                &nbsp;&nbsp;&nbsp;
+                            </span>
+                            [답글]
+                        </span>
+                        <a th:text="${post.title}" th:href="'javascript:infoGet(\'posts\',' + ${post.postId} + ')'" href="#"></a>
+<!--                            <a th:if="${child.parent.postId == post.postId}" th:each="child : ${post?.child}"  th:text="|&nbsp;&nbsp;&nbsp;답글 : ${child.title}|" th:href="'javascript:infoGet(\'posts\',' + ${child.postId} + ')'" href="#"></a>-->
+                    </td>
                     <td th:text="${post.viewCount}"></td>
                     <td th:text="${post.recommendCount}"></td>
 <!--                    <td th:text="${post.createMember.name}"></td>-->
+                <td></td>
                 </tr>
             </tbody>
         </table>
@@ -45,6 +55,5 @@
             </ul>
         </nav>
     </div>
-    <footer th:replace="templates/fragments/footer.html :: footer"></footer>
 </body>
 </html>

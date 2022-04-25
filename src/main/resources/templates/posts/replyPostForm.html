@@ -3,10 +3,12 @@
 <head th:replace="templates/fragments/header.html :: header"></head>
 <body>
   <header th:replace="templates/fragments/bodyHeader.html :: bodyHeader"></header>
+
   <div class="container mt-5">
-    <form th:object="${postForm}" method="post">
-      <input type="hidden" th:value="*{postId}" value="">
-      <div class="form-group">
+    <form th:action="@{/posts/reply}" th:object="${postForm}" method="post">
+      <input type="hidden" th:field="*{upperPostId}" th:value="*{upperPostId}">
+
+      <div class="form-group mb-3">
         <label th:for="title">제목</label>
         <input type="text" th:field="*{title}" th:errorclass="'border border-danger'" class="form-control" placeholder="제목을 입력하세요">
         <div class="text-danger" th:errors="*{title}">
@@ -20,22 +22,22 @@
           닉네임 오류
         </div>
       </div>
-      <div class="form-group">
+      <div class="form-group mb-3">
         <label th:for="password">비밀번호</label>
         <input type="password" th:field="*{password}" th:errorclass="'border border-danger'" class="form-control" placeholder="비밀번호를 입력하세요">
         <div class="text-danger" th:errors="*{password}">
           비밀번호 오류
         </div>
       </div>
-      <div class="form-group">
+      <div class="form-group mb-3">
         <label th:for="content">내용</label>
         <textarea th:field="*{content}" class="form-control" placeholder="내용을 입력하세요" style="resize: none; height: 200px;"></textarea>
       </div>
-      <button type="submit" class="btn btn-primary mt-3">수정</button>
+      <button type="submit" class="btn btn-primary mt-3">추가</button>
       <button type="button" class="btn btn-primary mt-3" onclick="location.href='/posts'">목록</button>
     </form>
   </div>
-    <br/>
+  <br/>
   <footer th:replace="templates/fragments/footer.html :: footer"></footer>
 </body>
 </html>

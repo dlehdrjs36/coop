@@ -4,6 +4,7 @@ import com.projectteam.coop.tft.domain.MatchDesc;
 import com.projectteam.coop.tft.service.MatchDescService;
 import com.projectteam.coop.util.TftUtil;
 import com.projectteam.coop.web.menu.summonerPageForm.MatchDescForm;
+import com.projectteam.coop.web.menu.summonerPageForm.SommonerMatchDescForm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -43,10 +44,28 @@ public class SummonerController {
         return "redirect:/tft/summoner/"+name;
     }
 
+    @GetMapping(value="/tft/record/{page}")
+    @ResponseBody
+    public HashMap<String, Object> getMatchDataPage(@PathVariable int page, HttpServletRequest request){
+        String puuid = request.getParameter("puuid");
+        List<MatchDesc> sommonerMatchDescs = matchDescService.getMatchDescDataPuuid(puuid);
+        List<SommonerMatchDescForm> sommonerMatchDescFormList = new ArrayList<>();
+        SommonerMatchDescForm sommonerMatchDescForm = new SommonerMatchDescForm();
+        HashMap<String, Object> matchData = new HashMap<>();
+
+        if(sommonerMatchDescs.size() == 0){
+        }else{
+            sommonerMatchDescFormList = sommonerMatchDescForm.createSommonerMatchDescForm(sommonerMatchDescs, page);
+        }
+        matchData.put("sommonerMatchData",sommonerMatchDescFormList);
+
+        return matchData;
+    }
+
     @GetMapping(value="/tft/summoner/matchData/{matchId}")
     @ResponseBody
     public HashMap<String, Object> getMatchDescData(@PathVariable String matchId){
-        HashMap<String, Object> matchData = new HashMap<>();
+        HashMap<String, Object> matchDescData = new HashMap<>();
         MatchDescForm matchDescForm = new MatchDescForm();
         List<String> matchPlayerNameList = new ArrayList<>();
         int i;
@@ -56,7 +75,7 @@ public class SummonerController {
             matchPlayerNameList.add(tftUtil.getTftPuiidToNameList(matchDescs.get(i).getPuuid(),apikey));
         }
         matchDescForm = matchDescForm.createMatchDescForm(matchDescs, matchPlayerNameList);
-        matchData.put("matchData", matchDescForm);
-        return matchData;
+        matchDescData.put("matchData", matchDescForm);
+        return matchDescData;
     }
 }

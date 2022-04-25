@@ -7,7 +7,7 @@
     <header th:replace="templates/fragments/bodyHeader.html :: bodyHeader"></header>
     <div id="db-wrapper">
         <div class="container" th:object="${summonerForm}">
-            <div class="bg-primary pt-10 pb-21"></div>
+            <div class="bg-light-dark pt-10 pb-21"></div>
             <div class="container-fluid mt-n22 px-6">
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-12">
@@ -15,7 +15,7 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="mb-2 mb-lg-0">
                                     <img class="profileImg" th:src='@{/img/tft/profileicon/} + *{profileIconId} + @{.png}'>
-                                    <span class="text-white h4 contentsTextPadding" th:text="|*{name} ( Lv*{summonerLevel} )|"></span>
+                                    <span class="text-dark h4 contentsTextPadding" th:text="|*{name} ( Lv*{summonerLevel} )|"></span>
                                 </div>
                                 <form name="summonerTitle" method="post">
                                     <a onclick="recordUpdate()" class="btn btn-white">전적 갱신</a>
@@ -40,17 +40,13 @@
                         </div>
                     </div>
                     <div class="col-xl-3 col-lg-6 col-md-12 col-12 mt-6">
-                        <!-- card -->
                         <div class="card ">
-                            <!-- card body -->
                             <div class="card-body">
-                                <!-- heading -->
                                 <div class="d-flex justify-content-between align-items-center mb-3">
                                     <div>
                                         <h4 class="mb-0">승</h4>
                                     </div>
                                 </div>
-                                <!-- project number -->
                                 <div>
                                     <h1 class="fw-bold" th:text="|*{wins}승|"></h1>
                                 </div>
@@ -58,17 +54,13 @@
                         </div>
                     </div>
                     <div class="col-xl-3 col-lg-6 col-md-12 col-12 mt-6">
-                        <!-- card -->
                         <div class="card ">
-                            <!-- card body -->
                             <div class="card-body">
-                                <!-- heading -->
                                 <div class="d-flex justify-content-between align-items-center mb-3">
                                     <div>
                                         <h4 class="mb-0">패</h4>
                                     </div>
                                 </div>
-                                <!-- project number -->
                                 <div>
                                     <h1 class="fw-bold" th:text="|*{losses}패|"></h1>
                                 </div>
@@ -77,37 +69,29 @@
 
                     </div>
                     <div class="col-xl-3 col-lg-6 col-md-12 col-12 mt-6">
-                        <!-- card -->
                         <div class="card ">
-                            <!-- card body -->
                             <div class="card-body">
-                                <!-- heading -->
                                 <div class="d-flex justify-content-between align-items-center mb-3">
                                     <div>
-                                        <h4 class="mb-0">4등 이내</h4>
+                                        <h4 class="mb-0">4등 이내( 최근 20경기 이내 )</h4>
                                     </div>
                                 </div>
-                                <!-- project number -->
                                 <div>
-                                    <h1 class="fw-bold">76%</h1>
+                                    <h1 class="fw-bold" th:text="|*{rankDefense}회|"></h1>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- row  -->
                 <div class="row mt-6">
                     <div class="col-md-12 col-12">
                         <div class="card">
-                            <!-- card header  -->
                             <div class="card-header bg-white py-4">
                                 <h4 class="mb-0">경기 기록</h4>
                             </div>
-                            <!-- table  -->
-                            <div class="table text-nowrap mb-0">
+                            <div id="matchTable" class="table text-nowrap mb-0">
                                 <div th:id="|table${matchData.matchDesc.metadateMatchId}|" th:if="${sommonerMatchDescFormList.size() != 0}" th:each="matchData : ${sommonerMatchDescFormList}">
                                     <div class="row">
-                                        <!-- 프로젝트 네임 -->
                                         <span class="col-md-3 align-self-sm-center">
                                             <div class="d-flex justify-content-sm-center">
                                                 <div class="ms-1 lh-1">
@@ -121,9 +105,7 @@
                                                 </div>
                                             </div>
                                         </span>
-                                        <!-- 시간 -->
                                         <span class="col-md-1 align-self-sm-center"><span th:text="|${matchData.matchDesc.placement}등|"></span></span>
-                                        <!-- priority -->
                                         <span class="col-md-1 align-self-sm-center">
                                             <span th:text="|${matchData.matchDesc.timeEliminated/60}:${matchData.matchDesc.timeEliminated%60}|"></span>
                                         </span>
@@ -139,7 +121,6 @@
                                                 </div>
                                             </div>
                                         </span>
-                                        <!-- 프로그레스 -->
                                         <span class="col-md-1 align-self-sm-center text-dark">
                                             <button class="btn btn-white" th:id="${matchData.matchDesc.metadateMatchId}" onclick="changeViewRecord(this.id)">상세</button>
                                         </span>
@@ -147,9 +128,10 @@
                                     <div th:id="|${matchData.matchDesc.metadateMatchId}Desc|"></div>
                                 </div>
                             </div>
-                            <!-- card footer  -->
-                            <div class="card-footer bg-white text-center">
-                                <a href="#" class="link-primary">View All Projects</a>
+                            <div id="moreMatchSpin"></div>
+                            <div id="moreMatch" class="card-footer bg-white text-center">
+                                <a type="button" onclick="addMatchData()" class="link-primary">더보기</a>
+                                <input type="hidden" name="page" id="page" value="1">
                             </div>
                         </div>
                     </div>

@@ -1,6 +1,8 @@
 package com.projectteam.coop.web.post;
 
+import com.projectteam.coop.domain.Comment;
 import com.projectteam.coop.domain.Post;
+import com.projectteam.coop.service.comment.CommentService;
 import com.projectteam.coop.service.post.PostService;
 import com.projectteam.coop.service.recommed.RecommedService;
 import com.projectteam.coop.util.Paging;
@@ -27,6 +29,7 @@ public class PostController {
 
     private final PostService postService;
     private final RecommedService recommedService;
+    private final CommentService commentService;
 
     @GetMapping("/new")
     public String createForm(Model model) {
@@ -83,9 +86,16 @@ public class PostController {
     }
 
     @GetMapping("/{postId}")
-    public String info(@PathVariable Long postId, Model model) {
+    public String info(@RequestParam(value = "page", defaultValue = "1") Integer page, @PathVariable Long postId, Model model) {
         Post post = postService.findPost(postId);
         model.addAttribute("post", post);
+
+        Paging paging = new Paging();
+        paging.calculateTotalPage(commentService.totalSize());
+
+        List<Comment> findComments = commentService.findComments(Paging.calculateStartOffset(page), Paging.calculateLastOffset(page), postId);
+        model.addAttribute("comments", findComments);
+        model.addAttribute("commentForm", new CommentCreateForm());
 
         return "/templates/posts/postInfo";
     }
@@ -110,7 +120,7 @@ public class PostController {
 
         if (bindingResult.hasErrors()) {
             log.info("bindingResult.hasErrors={}", bindingResult);
-            return "/posts/"+ postForm.getPostId() + "/edit";
+            return "/posts/" + postForm.getPostId() + "/edit";
         }
 
         postService.updatePost(postForm);

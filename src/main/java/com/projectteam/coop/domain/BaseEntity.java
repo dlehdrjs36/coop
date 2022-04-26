@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 public class BaseEntity {
 
     @Column(name = "CREATE_DATE")
-    private LocalDateTime createDate;
+    private LocalDateTime createDate = LocalDateTime.now();
 
     @Column(name = "UPDATE_DATE")
     private LocalDateTime updateDate;

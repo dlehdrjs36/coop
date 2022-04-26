@@ -4,7 +4,7 @@
 <body>
   <header th:replace="templates/fragments/bodyHeader.html :: bodyHeader"></header>
   <div class="container mt-5">
-    <div th:object="${post}">
+    <div class="mb-4" th:object="${post}">
       <div class="form-group">
         <label th:for="title">제목</label>
         <p class="form-control" th:field="*{title}" th:text="*{title}"></p>
@@ -18,6 +18,55 @@
         <i class="fa fa-heart fa-6x" aria-hidden="true"></i>
       </button>
     </div>
+
+    <!-- 댓글 -->
+    <section class="mb-5">
+      <div class="card bg-light">
+        <div class="card-body">
+          <!-- Comment form-->
+          <form class="mb-4" th:action="@{/comments/{postId}(postId=${post.postId})}" th:object="${commentForm}" method="post">
+            <div>
+              <input type="hidden" th:value="${post.postId}" th:field="${post.postId}">
+              <label th:for="nickname">닉네임</label>
+              <input type="text" class="form-control" th:errorclass="'border border-danger'" th:field="*{nickname}" placeholder="닉네임을 입력하세요">
+              <label th:for="password">비밀번호</label>
+              <input type="password" class="form-control mb-2" th:errorclass="'border border-danger'" th:field="*{password}" placeholder="비밀번호를 입력하세요">
+              <textarea th:field="*{content}" class="form-control mb-2" rows="3" placeholder="댓글 내용을 입력하세요"></textarea>
+              <button class="w-100 mb-1 btn btn-sm btn-dark" type="submit">댓글 등록</button>
+            </div>
+          </form>
+
+          <th:block th:block th:each="comment : ${comments}">
+            <th:block th:if="${comment.depth eq 0}" th:utext="|&lt;div class='d-flex mb-4' &gt;|"></th:block>
+            <!-- 부모 댓글 -->
+            <div class="flex-shrink-0" th:unless="${comment.depth gt 0}">
+              <img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="...">
+            </div>
+              <div class="ms-6">
+                <th:block th:unless="${comment.depth gt 0}">
+                  <div class="fw-bold" th:text="${comment.nickname}"></div>
+                  <span th:text="${comment.content}"></span>
+                </th:block>
+                <!-- 자식 댓글 -->
+                <th:block th:if="${comment.depth gt 0}">
+                  <div class="d-flex mt-4 mb-4">
+                    <div class="flex-shrink-0">
+                      <img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="...">
+                    </div>
+                    <div class="ms-3">
+                      <div class="fw-bold" th:text="${comment.nickname}"></div>
+                      <span th:text="${comment.content}"></span>
+                    </div>
+                  </div>
+                </th:block>
+                <!-- //자식 댓글 -->
+              </div>
+            <th:block th:if="${comment.depth eq 0 or commentStat.last}" th:utext="'&lt;/div&gt;'"></th:block>
+          </th:block>
+        </div>
+      </div>
+    </section>
+
     <button type="button" class="btn btn-primary mt-3" th:onclick="'javascript:updateGet(\'posts\',' + *{postId} + ')'">수정</button>
     <button type="button" class="btn btn-primary mt-3" th:onclick="'javascript:replyGet(' + *{postId} + ')'">답글</button>
     <button type="button" class="btn btn-primary mt-3" onclick="location.href='/posts'">목록</button>

@@ -9,14 +9,12 @@
     <!-- system.properties에서 시스템 관련 값 참조하도록 propertyConfigurer 설정. -->
     <context:property-placeholder location="classpath:props/system/*.properties" />
 
-    <!-- bean 자동 등록 스캔 -->
+    <!-- bean 자동 등록하기 위해 스캔 -->
     <context:component-scan base-package="com.projectteam.coop" />
 
     <!-- 트랜잭션 어노테이션이 선언된 메소드는 transactionManager 라는 Bean 객체가 처리할 수 있도록 해준다.(@Transactional 어노테이션 처리) -->
     <tx:annotation-driven transaction-manager="mybatisTxManager" />
 
-    <!-- 스프링 MVC 어노테이션 자동 스캔 -->
-    <mvc:annotation-driven />
     <!-- 스프링 MVC 인터셉터 -->
     <mvc:interceptors>
         <mvc:interceptor>
@@ -29,12 +27,14 @@
         <mvc:interceptor>
             <mvc:mapping path="/**"/>
             <mvc:exclude-mapping path="/" />
+            <mvc:exclude-mapping path="/error" />
             <mvc:exclude-mapping path="/adminLogin" />
             <mvc:exclude-mapping path="/login" />
             <mvc:exclude-mapping path="/logout" />
             <mvc:exclude-mapping path="/members/new" />
             <mvc:exclude-mapping path="/tft/**" />
             <mvc:exclude-mapping path="/posts/**" />
+            <mvc:exclude-mapping path="/comments/**" />
             <mvc:exclude-mapping path="/orders/**" />
             <mvc:exclude-mapping path="/css/**" />
             <mvc:exclude-mapping path="/js/**" />
@@ -42,13 +42,16 @@
             <bean class="com.projectteam.coop.web.interceptor.LoginCheckInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
-    <!-- 스프링 MVC ArgumentResolver -->
+
+    <!-- 스프링 MVC 어노테이션 자동 스캔 -->
     <mvc:annotation-driven>
+        <!-- 스프링 MVC ArgumentResolver -->
         <mvc:argument-resolvers>
             <bean class="com.projectteam.coop.web.argumentresolver.LoginMemberArgumentResolver"></bean>
             <bean class="com.projectteam.coop.web.argumentresolver.AdminLoginMemberArgumentResolver"></bean>
         </mvc:argument-resolvers>
     </mvc:annotation-driven>
+
     <!-- DBCP(HikariCP) -->
     <bean id="mybatisDataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
         <property name="driverClassName" value="${spring.datasource.hikari.driverClassName}" />

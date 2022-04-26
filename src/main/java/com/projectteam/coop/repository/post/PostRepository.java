@@ -26,7 +26,8 @@ public class PostRepository {
 
     //삭제
     public void removePost(Long id) {
-        em.remove(id);
+        Post post = em.find(Post.class, id);
+        em.remove(post);
     }
 
     //수정

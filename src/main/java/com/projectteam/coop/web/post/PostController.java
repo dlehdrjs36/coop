@@ -94,6 +94,7 @@ public class PostController {
         paging.calculateTotalPage(commentService.totalSize());
 
         List<Comment> findComments = commentService.findComments(Paging.calculateStartOffset(page), Paging.calculateLastOffset(page), postId);
+        model.addAttribute("paging", paging);
         model.addAttribute("comments", findComments);
         model.addAttribute("commentForm", new CommentCreateForm());
 

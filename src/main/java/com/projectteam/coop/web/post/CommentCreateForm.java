@@ -20,6 +20,7 @@ public class CommentCreateForm {
     @NotEmpty
     private String nickname;
 
+    @NotEmpty
     private String content;
 
     private Long upperCommentId;

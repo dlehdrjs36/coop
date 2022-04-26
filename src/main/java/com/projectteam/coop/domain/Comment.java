@@ -86,8 +86,9 @@ public class Comment extends BaseEntity {
         return comment;
     }
 
-    public static Comment createChildComment(String password, String content, String nickname, Comment parent) {
+    public static Comment createChildComment(Post post, String password, String content, String nickname, Comment parent) {
         Comment comment = new Comment();
+        comment.post = post;
         comment.password = password;
         comment.content = content;
         comment.nickname = nickname;
@@ -99,8 +100,9 @@ public class Comment extends BaseEntity {
         return comment;
     }
 
-    public static Comment createChildComment(String password, String content, Member createMember, Comment parent) {
+    public static Comment createChildComment(Post post, String password, String content, Member createMember, Comment parent) {
         Comment comment = new Comment();
+        comment.post = post;
         comment.password = password;
         comment.content = content;
         comment.createMember = createMember;

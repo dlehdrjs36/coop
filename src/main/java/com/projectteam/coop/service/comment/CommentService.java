@@ -42,16 +42,17 @@ public class CommentService {
     public Long addChildComment(CommentCreateForm commentCreateForm, Optional<MemberSessionDto> memberSession) {
 
         Comment comment;
+        Post post = postRepository.findPost(commentCreateForm.getPostId());
         if(memberSession.isEmpty()) {
             Comment upperComment = commentRepository.findComment(commentCreateForm.getUpperCommentId());
             commentRepository.orderSort(upperComment.getId(), upperComment.getDepth());
-            comment = Comment.createChildComment(commentCreateForm.getPassword(), commentCreateForm.getContent(), commentCreateForm.getNickname(), upperComment);
+            comment = Comment.createChildComment(post, commentCreateForm.getPassword(), commentCreateForm.getContent(), commentCreateForm.getNickname(), upperComment);
         }else {
             MemberSessionDto session = memberSession.get();
             Member member = memberRepository.findMember(session.getId());
             Comment upperComment = commentRepository.findComment(commentCreateForm.getUpperCommentId());
             commentRepository.orderSort(upperComment.getId(), upperComment.getDepth());
-            comment = Comment.createChildComment(commentCreateForm.getPassword(), commentCreateForm.getContent(), member, upperComment);
+            comment = Comment.createChildComment(post, commentCreateForm.getPassword(), commentCreateForm.getContent(), member, upperComment);
         }
 
         return commentRepository.addComment(comment);

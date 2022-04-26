@@ -11,35 +11,44 @@
                 <button class="btn btn-primary main-searchArea-Height" onclick="indexSummonerSearch()">검 색</button>
             </div>
         </form>
-        <div class="container main-contentsAtt">
-            <table class="container main-community-tableAtt">
-                <tbody>
-                <tr class="bg-white">
-                    <td>&nbsp;커뮤니티 인기글</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td class="main-community-tableRow col-md-4">&nbsp;<a href="#">1.xxxxxxxxxxxxxxxxxxxxxxxxxxx</a></td>
-                    <td class="main-community-tableRow col-md-4">&nbsp;<a href="#">1.xxxxxxxxxxxxxxxxxxxxxxxxxxx</a></td>
-                </tr>
-                <tr>
-                    <td class="main-community-tableRow col-md-4">&nbsp;<a href="#">1.xxxxxxxxxxxxxxxxxxxxxxxxxxx</a></td>
-                    <td class="main-community-tableRow col-md-4">&nbsp;<a href="#">1.xxxxxxxxxxxxxxxxxxxxxxxxxxx</a></td>
-                </tr>
-                <tr>
-                    <td class="main-community-tableRow col-md-4">&nbsp;<a href="#">1.xxxxxxxxxxxxxxxxxxxxxxxxxxx</a></td>
-                    <td class="main-community-tableRow col-md-4">&nbsp;<a href="#">1.xxxxxxxxxxxxxxxxxxxxxxxxxxx</a></td>
-                </tr>
-                <tr>
-                    <td class="main-community-tableRow col-md-4">&nbsp;<a href="#">1.xxxxxxxxxxxxxxxxxxxxxxxxxxx</a></td>
-                    <td class="main-community-tableRow col-md-4">&nbsp;<a href="#">1.xxxxxxxxxxxxxxxxxxxxxxxxxxx</a></td>
-                </tr>
-                <tr>
-                    <td class="main-community-tableRow col-md-4">&nbsp;<a href="#">1.xxxxxxxxxxxxxxxxxxxxxxxxxxx</a></td>
-                    <td class="main-community-tableRow col-md-4">&nbsp;<a href="#">1.xxxxxxxxxxxxxxxxxxxxxxxxxxx</a></td>
-                </tr>
-                </tbody>
-            </table>
+        <div class="container main-contentsAtt main-community-tableAtt">
+            <div class="card border-0 shadow">
+                <div class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h2 class="fs-5 fw-bold mb-0">커뮤니티 인기글</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table align-items-center table-flush">
+                        <thead class="thead-light">
+                        <tr>
+                            <th class="border-bottom" scope="col">게시물</th>
+                            <th class="border-bottom" scope="col">작성자</th>
+                            <th class="border-bottom" scope="col">추천수</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th class="text-gray-900" scope="row">/demo/admin/index.html</th>
+                            <td class="fw-bolder text-gray-500">3,225</td>
+                            <td class="fw-bolder text-gray-500">$20</td>
+                        </tr>
+                        <tr>
+                            <th class="text-gray-900" scope="row">/demo/admin/forms.html</th>
+                            <td class="fw-bolder text-gray-500">2,987</td>
+                            <td class="fw-bolder text-gray-500">0</td>
+                        </tr>
+                        <tr>
+                            <th class="text-gray-900" scope="row">/demo/admin/util.html</th>
+                            <td class="fw-bolder text-gray-500">2,844</td>
+                            <td class="fw-bolder text-gray-500">294</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
     <footer th:replace="templates/fragments/footer.html :: footer"></footer>

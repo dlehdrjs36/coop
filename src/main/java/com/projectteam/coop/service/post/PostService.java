@@ -59,6 +59,11 @@ public class PostService {
     }
 
     @Transactional(transactionManager = "h2TxManager", readOnly = true)
+    public List<Post> findRecommendPosts() {
+        return postRepository.findRecommendPosts();
+    }
+
+    @Transactional(transactionManager = "h2TxManager", readOnly = true)
     public List<Post> findPosts(int offset, int size) {
         return postRepository.findPosts(offset, size);
     }

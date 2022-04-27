@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="templates/fragments/header.html :: header"></head>
+<body>
+<header th:replace="templates/fragments/bodyHeader.html :: bodyHeader"></header>
+<div class="container mt-5">
+    <form th:action="@{/members/update}" name="changePassword" id="changePassword" method="post" th:object="${memberForm}">
+        <div class="form-group mb-3">
+            <label th:for="email">아이디</label>
+            <input type="text" th:field="*{email}" th:value="*{email}" th:errorclass="'border border-danger'" class="form-control" disabled>
+        </div>
+        <div class="form-group mb-3 row">
+            <div class="col-sm-2">
+                <label th:for="password">비밀번호</label>
+                <input type="button" value="비밀번호 변경" class="form-control" data-bs-toggle="collapse" data-bs-target="#changePasswordArea" aria-controls="changePasswordArea" aria-expanded="false" aria-label="Toggle navigation">
+            </div>
+            <div class="col-sm-4">
+                <div th:if="${errorMessage != ''}" th:text="${errorMessage}" class="text-danger"></div>
+            </div>
+        </div>
+        <div class="collapse mb-3" name="changePasswordArea" id="changePasswordArea">
+            <label>현재 비밀번호</label>
+            <div class="mb-3">
+                <input type="password" name="currentPassword" id="currentPassword" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label>비밀번호</label>
+                <input type="password" name="password" id="password" class="form-control">
+                <div class="text-danger hide" name="errorPassword" id="errorPassword">
+                    비밀번호 확인 오류
+                </div>
+            </div>
+            <div class="mb-3">
+                <label>비밀번호 확인</label>
+                <input type="password" name="verifyPassword" id="verifyPassword" class="form-control">
+                <div class="text-danger hide" name="errorVerifyPassword" id="errorVerifyPassword">
+                    비밀번호 확인 오류
+                </div>
+            </div>
+            <input type="button" class="btn btn-outline-primary" name="verifyButton" id="verifyButton" value="변경">
+        </div>
+
+        <div class="form-group mb-3">
+            <label th:for="name">닉네임</label>
+            <input ype="text" th:field="*{name}" th:value="*{name}" th:errorclass="'border border-danger'" class="form-control" disabled>
+        </div>
+    </form>
+</div>
+<footer th:replace="templates/fragments/footer.html :: footer"></footer>
+</body>
+<script th:src="@{/js/updateMemberForm.js}"></script>
+</html>

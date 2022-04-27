@@ -13,10 +13,10 @@
         <label th:for="content">내용</label>
         <textarea th:field="*{content}" th:text="*{content}" class="form-control" style="resize: none; height: 200px;" readonly></textarea>
       </div>
-      <h1 class="text-center">추천수(<span th:id="recommendCount" th:text="*{recommendCount}"></span>)</h1>
+      <h1 class="text-center mt-2">추천수(<span th:id="recommendCount" th:text="*{recommendCount}"></span>)</h1>
       <div class="text-center">
         <button th:onclick="'javascript:recommend(' + *{postId} + ')'">
-          <i class="fa fa-heart fa-6x" aria-hidden="true"></i>
+          <i class="fa fa-heart fa-6x recommendIcon" th:classappend="${recommendAt} ? 'text-danger' : _ " aria-hidden="true"></i>
         </button>
       </div>
     </div>
@@ -53,10 +53,17 @@
             <div class="flex-shrink-0" th:unless="${comment.depth gt 0}">
               <img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="...">
             </div>
-              <div class="ms-6">
+              <div class="ms-6" th:classappend="${comment.status} ? _ : 'align-self-center'">
                 <th:block th:unless="${comment.depth gt 0}">
-                  <div class="fw-bold" th:text="${comment.nickname}"></div>
-                  <p class="parentComment" th:data-postid="${post.postId}" th:data-commentid="${comment.id}" th:text="${comment.content}"></p>
+                  <div class="fw-bold" th:text="${comment.status} ? ${comment.nickname} : _ "></div>
+                  <div class="commentContent">
+                    <span class="parentComment" th:if="${comment.status}" th:text="${comment.content}" th:data-postid="${post.postId}" th:data-commentid="${comment.id}" role="button"></span>
+                    <span class="removeComment" th:if="${comment.status}" th:data-commentid="${comment.id}" role="button">
+                      <i class="fa fa-times-circle text-danger" aria-hidden="true"></i>
+                    </span>
+                    <span th:unless="${comment.status}">삭제된 댓글 입니다.</span>
+<!--                <span th:text="${#temporals.format(comment.createDate, 'yyyy-MM-dd HH:mm:ss')}"></span>-->
+                  </div>
                 </th:block>
                 <!-- 자식 댓글 -->
                 <th:block th:if="${comment.depth gt 0}">
@@ -64,9 +71,16 @@
                     <div class="flex-shrink-0">
                       <img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="...">
                     </div>
-                    <div class="ms-3">
-                      <div class="fw-bold" th:text="${comment.nickname}"></div>
-                      <p class="childComment" th:data-postid="${post.postId}" th:data-commentid="${comment.id}" th:text="${comment.content}"></p>
+                    <div class="ms-3" th:classappend="${comment.status} ? _ : 'align-self-center'">
+                      <div class="fw-bold" th:text="${comment.status} ? ${comment.nickname} : _ "></div>
+                      <div class="commentContent">
+                        <span class="childComment" th:if="${comment.status}" th:text="${comment.content}"></span>
+                        <span class="removeComment" th:if="${comment.status}" th:data-commentid="${comment.id}" role="button">
+                          <i class="fa fa-times-circle text-danger" aria-hidden="true"></i>
+                        </span>
+                        <span th:unless="${comment.status}">삭제된 댓글 입니다.</span>
+<!--                     <span th:text="${#temporals.format(comment.createDate, 'yyyy-MM-dd HH:mm:ss')}"></span>-->
+                      </div>
                     </div>
                   </div>
                 </th:block>

@@ -1,12 +1,12 @@
 package com.projectteam.coop.service.post;
 
 import com.projectteam.coop.domain.Member;
-import com.projectteam.coop.domain.Recommed;
-import com.projectteam.coop.repository.member.MemberRepository;
-import com.projectteam.coop.repository.recommed.RecommedRepository;
-import com.projectteam.coop.web.post.PostCreateForm;
 import com.projectteam.coop.domain.Post;
+import com.projectteam.coop.domain.Recommend;
+import com.projectteam.coop.repository.member.MemberRepository;
 import com.projectteam.coop.repository.post.PostRepository;
+import com.projectteam.coop.repository.recommed.RecommendRepository;
+import com.projectteam.coop.web.post.PostCreateForm;
 import com.projectteam.coop.web.post.PostUpdateForm;
 import com.projectteam.coop.web.session.MemberSessionDto;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,7 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final MemberRepository memberRepository;
-    private final RecommedRepository recommedRepository;
+    private final RecommendRepository recommendRepository;
 
     public Long addReplyPost(PostCreateForm postForm, Optional<MemberSessionDto> memberSession) {
 
@@ -80,8 +80,8 @@ public class PostService {
         Member member = memberRepository.findMember(memberId);
         Post post = postRepository.findPost(postId);
 
-        recommedRepository.addRecommed(Recommed.createRecommed(post, member));
-        post.recommed(recommedRepository.getPostRecommedCount(postId));
+        recommendRepository.addRecommend(Recommend.createRecommed(post, member));
+        post.recommed(recommendRepository.getPostRecommendCount(postId));
     }
 
     public int totalSize() {

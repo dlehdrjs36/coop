@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Getter
-public class Recommed extends BaseEntity {
+public class Recommend extends BaseEntity {
 
     @Id @GeneratedValue
     @Column(name = "RECOMMED_ID")
@@ -20,13 +20,13 @@ public class Recommed extends BaseEntity {
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
-    protected Recommed() {}
+    protected Recommend() {}
 
-    public static Recommed createRecommed(Post post, Member member) {
-        Recommed recommed = new Recommed();
-        recommed.post = post;
-        recommed.member = member;
+    public static Recommend createRecommed(Post post, Member member) {
+        Recommend recommend = new Recommend();
+        recommend.post = post;
+        recommend.member = member;
 
-        return recommed;
+        return recommend;
     }
 }

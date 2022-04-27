@@ -69,9 +69,22 @@ public class CommentService {
         return comment;
     }
 
-    //삭제
+    //DB 삭제
     public void removeComment(Long id) {
         commentRepository.removeComment(id);
+    }
+
+    //미사용 상태 변경
+    public boolean changeStateComment(Long commentId, String password) {
+
+        Comment comment = commentRepository.findComment(commentId);
+        if (comment != null) {
+            if (comment.getPassword().equals(password)) {
+                commentRepository.changeStateComment(comment);
+                return true;
+            }
+        }
+        return false;
     }
 
     public int totalSize() {

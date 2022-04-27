@@ -22,9 +22,7 @@ public class Comment extends BaseEntity {
     @JoinColumn(name = "BOARD_ID")
     private Board board;
 
-    @Enumerated(EnumType.STRING)
-    private CommentStatus status;
-
+    private Boolean status;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "UPPER_COMMENT_ID")
@@ -62,10 +60,15 @@ public class Comment extends BaseEntity {
         this.group = this.id;
     }
 
+    public void delete() {
+        this.status = Boolean.FALSE;
+    }
+
     public static Comment createComment(Post post, String password, String content, String nickname) {
         Comment comment = new Comment();
         comment.post = post;
         comment.password = password;
+        comment.status = Boolean.TRUE;
         comment.content = content;
         comment.nickname = nickname;
         comment.order = 0L;
@@ -78,6 +81,7 @@ public class Comment extends BaseEntity {
         Comment comment = new Comment();
         comment.post = post;
         comment.password = password;
+        comment.status = Boolean.TRUE;
         comment.content = content;
         comment.createMember = createMember;
         comment.order = 0L;
@@ -90,6 +94,7 @@ public class Comment extends BaseEntity {
         Comment comment = new Comment();
         comment.post = post;
         comment.password = password;
+        comment.status = Boolean.TRUE;
         comment.content = content;
         comment.nickname = nickname;
         comment.parent = parent;
@@ -104,6 +109,7 @@ public class Comment extends BaseEntity {
         Comment comment = new Comment();
         comment.post = post;
         comment.password = password;
+        comment.status = Boolean.TRUE;
         comment.content = content;
         comment.createMember = createMember;
         comment.parent = parent;
@@ -113,5 +119,6 @@ public class Comment extends BaseEntity {
 
         return comment;
     }
+
 
 }

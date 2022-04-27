@@ -4,7 +4,7 @@ import com.projectteam.coop.domain.Comment;
 import com.projectteam.coop.domain.Post;
 import com.projectteam.coop.service.comment.CommentService;
 import com.projectteam.coop.service.post.PostService;
-import com.projectteam.coop.service.recommed.RecommedService;
+import com.projectteam.coop.service.recommed.RecommendService;
 import com.projectteam.coop.util.Paging;
 import com.projectteam.coop.web.argumentresolver.Login;
 import com.projectteam.coop.web.session.MemberSessionDto;
@@ -28,7 +28,7 @@ import java.util.Optional;
 public class PostController {
 
     private final PostService postService;
-    private final RecommedService recommedService;
+    private final RecommendService recommedService;
     private final CommentService commentService;
 
     @GetMapping("/new")
@@ -86,9 +86,14 @@ public class PostController {
     }
 
     @GetMapping("/{postId}")
-    public String info(@RequestParam(value = "page", defaultValue = "1") Integer page, @PathVariable Long postId, Model model) {
+    public String info(@Login MemberSessionDto loginMemeber, @RequestParam(value = "page", defaultValue = "1") Integer page, @PathVariable Long postId, Model model) {
         Post post = postService.findPost(postId);
         model.addAttribute("post", post);
+
+        if (loginMemeber != null) {
+            Boolean recommendAt = recommedService.isMemberRecommend(loginMemeber.getId(), postId);
+            model.addAttribute("recommendAt", recommendAt);
+        }
 
         Paging paging = new Paging();
         paging.calculateTotalPage(commentService.totalSize());
@@ -132,22 +137,20 @@ public class PostController {
     @PostMapping("/{postId}/recommend")
     @ResponseBody
     public Map<String, Object> recommend(@Login MemberSessionDto loginMember, @PathVariable Long postId) {
-
-        changeMemberRecommed(loginMember, postId);
-
         Map<String, Object> result = new HashMap<>();
-        result.put("recommendCount", recommedService.postRecommedCount(postId));
-
+        if (loginMember != null) {
+            changeMemberRecommend(loginMember, postId);
+            result.put("recommendAt", recommedService.isMemberRecommend(loginMember.getId(), postId));
+        }
+        result.put("recommendCount", recommedService.postRecommendCount(postId));
         return result;
     }
 
-    private void changeMemberRecommed(MemberSessionDto loginMember, Long postId) {
-        if (loginMember != null) {
-            if (recommedService.isMemberRecommed(loginMember.getId(), postId)) {
-                recommedService.removeRecommed(loginMember.getId(), postId);
-            } else {
-                postService.recommend(loginMember.getId(), postId);
-            }
+    private void changeMemberRecommend(MemberSessionDto loginMember, Long postId) {
+        if (recommedService.isMemberRecommend(loginMember.getId(), postId)) {
+            recommedService.removeRecommend(loginMember.getId(), postId);
+        } else {
+            postService.recommend(loginMember.getId(), postId);
         }
     }
 }

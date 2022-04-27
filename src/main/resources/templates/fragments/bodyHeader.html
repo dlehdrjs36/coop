@@ -50,7 +50,7 @@
                     <div th:if="${session.loginMember ne null}">
                         <p th:text="|${session.loginMember.name}님 보유포인트: ${session.loginMember.point}|"></p>
                         <button type="button" class="btn btn-outline-dark me-2" onclick="location.href='/orders'">구매목록</button>
-                        <button type="button" class="btn btn-outline-dark me-2" onclick="location.href='#'">회원수정</button>
+                        <button type="button" class="btn btn-outline-dark me-2" onclick="location.href='/members/update'">회원수정</button>
                         <button type="button" class="btn btn-outline-dark me-2" onclick="logout()">로그아웃</button>
                     </div>
                 </div>

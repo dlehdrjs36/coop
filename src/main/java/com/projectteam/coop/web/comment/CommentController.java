@@ -4,15 +4,14 @@ import com.projectteam.coop.domain.Comment;
 import com.projectteam.coop.service.comment.CommentService;
 import com.projectteam.coop.web.argumentresolver.Login;
 import com.projectteam.coop.web.post.CommentCreateForm;
+import com.projectteam.coop.web.post.PostUpdateForm;
 import com.projectteam.coop.web.session.MemberSessionDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -24,11 +23,22 @@ public class CommentController {
     private final CommentService commentService;
 
     @PostMapping("/{postId}")
-    public String create(@Login MemberSessionDto memberSessionDto, @Validated @ModelAttribute("commentForm") CommentCreateForm commentCreateForm, BindingResult bindingResult) {
+    public String create(@Login MemberSessionDto memberSessionDto,
+                         @Validated @ModelAttribute("commentForm") CommentCreateForm commentCreateForm,
+                         BindingResult bindingResult,
+                         @PathVariable Long postId) {
 
-        commentService.addComment(commentCreateForm, Optional.ofNullable(memberSessionDto));
+        if (bindingResult.hasErrors()) {
+            return "redirect:/posts/" + postId;
+        }
 
-        return "redirect:/posts/" + commentCreateForm.getPostId();
+        if (commentCreateForm.getUpperCommentId() == null) {
+            commentService.addComment(commentCreateForm, Optional.ofNullable(memberSessionDto));
+        } else {
+            commentService.addChildComment(commentCreateForm, Optional.ofNullable(memberSessionDto));
+        }
+
+        return "redirect:/posts/" + postId;
     }
 
     @DeleteMapping("/{commentId}")

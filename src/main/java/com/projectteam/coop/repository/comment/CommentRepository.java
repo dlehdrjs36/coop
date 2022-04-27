@@ -31,7 +31,7 @@ public class CommentRepository {
 
     //목록 조회
     public List<Comment> findComments(int offset, int size, Long postId) {
-        List<Comment> findComments = em.createQuery("select p from Comment p left join fetch p.parent where p.post.postId = :postId order by p.group desc, p.order asc", Comment.class)
+        List<Comment> findComments = em.createQuery("select p from Comment p where p.post.postId = :postId order by p.group desc, p.order asc", Comment.class)
                 .setParameter("postId", postId)
                 .setFirstResult(offset)
                 .setMaxResults(size)

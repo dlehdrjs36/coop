@@ -13,10 +13,12 @@
         <label th:for="content">내용</label>
         <textarea th:field="*{content}" th:text="*{content}" class="form-control" style="resize: none; height: 200px;" readonly></textarea>
       </div>
-      <h1>추천수(<span th:id="recommendCount" th:text="*{recommendCount}"></span>)</h1>
-      <button th:onclick="'javascript:recommend(' + *{postId} + ')'">
-        <i class="fa fa-heart fa-6x" aria-hidden="true"></i>
-      </button>
+      <h1 class="text-center">추천수(<span th:id="recommendCount" th:text="*{recommendCount}"></span>)</h1>
+      <div class="text-center">
+        <button th:onclick="'javascript:recommend(' + *{postId} + ')'">
+          <i class="fa fa-heart fa-6x" aria-hidden="true"></i>
+        </button>
+      </div>
     </div>
 
     <!-- 댓글 -->
@@ -29,9 +31,18 @@
               <input type="hidden" th:value="${post.postId}" th:field="${post.postId}">
               <label th:for="nickname">닉네임</label>
               <input type="text" class="form-control" th:errorclass="'border border-danger'" th:field="*{nickname}" placeholder="닉네임을 입력하세요">
+              <div class="text-danger mb-2" th:errors="*{nickname}">
+                닉네임 오류
+              </div>
               <label th:for="password">비밀번호</label>
               <input type="password" class="form-control mb-2" th:errorclass="'border border-danger'" th:field="*{password}" placeholder="비밀번호를 입력하세요">
-              <textarea th:field="*{content}" class="form-control mb-2" rows="3" placeholder="댓글 내용을 입력하세요"></textarea>
+              <div class="text-danger mb-2" th:errors="*{password}">
+                패스워드 오류
+              </div>
+              <textarea th:field="*{content}" class="form-control mb-2" th:errorclass="'border border-danger'" rows="3" placeholder="댓글 내용을 입력하세요"></textarea>
+              <div class="text-danger mb-2" th:errors="*{content}">
+                내용 오류
+              </div>
               <button class="w-100 mb-1 btn btn-sm btn-dark" type="submit">댓글 등록</button>
             </div>
           </form>
@@ -45,7 +56,7 @@
               <div class="ms-6">
                 <th:block th:unless="${comment.depth gt 0}">
                   <div class="fw-bold" th:text="${comment.nickname}"></div>
-                  <span th:text="${comment.content}"></span>
+                  <p class="parentComment" th:data-postid="${post.postId}" th:data-commentid="${comment.id}" th:text="${comment.content}"></p>
                 </th:block>
                 <!-- 자식 댓글 -->
                 <th:block th:if="${comment.depth gt 0}">
@@ -55,7 +66,7 @@
                     </div>
                     <div class="ms-3">
                       <div class="fw-bold" th:text="${comment.nickname}"></div>
-                      <span th:text="${comment.content}"></span>
+                      <p class="childComment" th:data-postid="${post.postId}" th:data-commentid="${comment.id}" th:text="${comment.content}"></p>
                     </div>
                   </div>
                 </th:block>
@@ -63,6 +74,23 @@
               </div>
             <th:block th:if="${comment.depth eq 0 or commentStat.last}" th:utext="'&lt;/div&gt;'"></th:block>
           </th:block>
+          <nav aria-label="Page navigation example m-3" th:if="${#lists.size(comments) gt 0}">
+            <ul class="pagination justify-content-center">
+              <li class="page-item">
+                <a class="page-link" href="#" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+              <li class="page-item" th:each="num : ${#numbers.sequence(0, paging.endPage-1)}">
+                <a class="page-link" href="/posts" th:href="@{/posts/{postId}(postId=${post.postId},page=${numStat.count})}" th:text="${numStat.count}">1</a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
         </div>
       </div>
     </section>

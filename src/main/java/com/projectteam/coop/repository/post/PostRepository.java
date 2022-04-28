@@ -37,6 +37,16 @@ public class PostRepository {
 //        return findPost.getPostId();
 //    }
 
+    //인기글 목록 조회 10개
+    public List<Post> findRecommendPosts() {
+        List<Post> findPosts = em.createQuery("select p from Post p left join fetch p.createMember order by p.recommendCount desc", Post.class)
+                .setFirstResult(0)
+                .setMaxResults(10)
+                .getResultList();
+
+        return findPosts;
+    }
+
     //목록 조회
     public List<Post> findPosts(int offset, int size) {
         List<Post> findPosts = em.createQuery("select p from Post p left join fetch p.parent order by p.group desc, p.order asc", Post.class)

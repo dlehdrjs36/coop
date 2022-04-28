@@ -23,28 +23,20 @@
                 <div class="table-responsive">
                     <table class="table align-items-center table-flush">
                         <thead class="thead-light">
-                        <tr>
-                            <th class="border-bottom" scope="col">게시물</th>
-                            <th class="border-bottom" scope="col">작성자</th>
-                            <th class="border-bottom" scope="col">추천수</th>
-                        </tr>
+                            <tr>
+                                <th class="border-bottom" scope="col">제목</th>
+                                <th class="border-bottom" scope="col">작성자</th>
+                                <th class="border-bottom" scope="col">추천수</th>
+                            </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <th class="text-gray-900" scope="row">/demo/admin/index.html</th>
-                            <td class="fw-bolder text-gray-500">3,225</td>
-                            <td class="fw-bolder text-gray-500">$20</td>
-                        </tr>
-                        <tr>
-                            <th class="text-gray-900" scope="row">/demo/admin/forms.html</th>
-                            <td class="fw-bolder text-gray-500">2,987</td>
-                            <td class="fw-bolder text-gray-500">0</td>
-                        </tr>
-                        <tr>
-                            <th class="text-gray-900" scope="row">/demo/admin/util.html</th>
-                            <td class="fw-bolder text-gray-500">2,844</td>
-                            <td class="fw-bolder text-gray-500">294</td>
-                        </tr>
+                            <tr th:each="post : ${recommendPosts}">
+                                <th class="text-gray-900" scope="row">
+                                    <a th:href="@{/posts/{postId}(postId=${post.postId})}" th:text="${post.title}"></a>
+                                </th>
+                                <td class="fw-bolder text-gray-500" th:text="${post.createMember eq null} ? ${post.nickname} : ${post.createMember.name}"></td>
+                                <td class="fw-bolder text-gray-500" th:text="${post.recommendCount}"></td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>

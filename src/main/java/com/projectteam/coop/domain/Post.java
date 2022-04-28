@@ -88,6 +88,7 @@ public class Post extends BaseEntity {
         post.content = content;
         post.viewCount = 0;
         post.recommendCount = 0L;
+        post.nickname = createMember.getName();
         post.createMember = createMember;
         post.parent = parent;
         post.group = parent.getGroup();
@@ -106,7 +107,6 @@ public class Post extends BaseEntity {
         post.viewCount = 0;
         post.recommendCount = 0L;
         post.nickname = nickname;
-//        post.parent = post;
         post.order = 0L;
         post.depth = 0L;
 
@@ -121,26 +121,24 @@ public class Post extends BaseEntity {
         post.content = content;
         post.viewCount = 0;
         post.recommendCount = 0L;
+        post.nickname = createMember.getName();
         post.createMember = createMember;
-//        post.parent = post;
         post.order = 0L;
         post.depth = 0L;
 
         return post;
     }
 
-    public void changePost(Board board, PostStatus postStatus, String password, String title, String content, Integer viewCount, Long recommendCount) {
+    public void changePost(Board board, String nickname, String password, String title, String content) {
         this.board = board;
-        this.postStatus = postStatus;
+        this.nickname = nickname;
         this.password = password;
         this.title = title;
         this.content = content;
-        this.viewCount = viewCount;
-        this.recommendCount = recommendCount;
     }
 
     //추천
-    public void recommed(Long recommendCount) {
+    public void recommend(Long recommendCount) {
         this.recommendCount = recommendCount;
     }
 

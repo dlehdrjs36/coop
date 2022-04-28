@@ -49,7 +49,7 @@ public class PostRepository {
 
     //목록 조회
     public List<Post> findPosts(int offset, int size) {
-        List<Post> findPosts = em.createQuery("select p from Post p left join fetch p.parent order by p.group desc, p.order asc", Post.class)
+        List<Post> findPosts = em.createQuery("select p from Post p left join fetch p.createMember order by p.group desc, p.order asc", Post.class)
                 .setFirstResult(offset)
                 .setMaxResults(size)
                 .getResultList();

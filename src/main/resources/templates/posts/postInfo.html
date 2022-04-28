@@ -10,6 +10,11 @@
         <p class="form-control" th:field="*{title}" th:text="*{title}"></p>
       </div>
       <div class="form-group">
+        <label th:for="title">작성자</label>
+        <p class="form-control" th:text="*{nickname}"></p>
+      </div>
+
+      <div class="form-group">
         <label th:for="content">내용</label>
         <textarea th:field="*{content}" th:text="*{content}" class="form-control" style="resize: none; height: 200px;" readonly></textarea>
       </div>

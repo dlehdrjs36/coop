@@ -34,7 +34,7 @@
                                 <th class="text-gray-900" scope="row">
                                     <a th:href="@{/posts/{postId}(postId=${post.postId})}" th:text="${post.title}"></a>
                                 </th>
-                                <td class="fw-bolder text-gray-500" th:text="${post.createMember eq null} ? ${post.nickname} : ${post.createMember.name}"></td>
+                                <td class="fw-bolder text-gray-500" th:text="${post.nickname}"></td>
                                 <td class="fw-bolder text-gray-500" th:text="${post.recommendCount}"></td>
                             </tr>
                         </tbody>

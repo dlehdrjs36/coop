@@ -1,12 +1,14 @@
 package com.projectteam.coop.web.post;
 
 import com.projectteam.coop.domain.Comment;
+import com.projectteam.coop.domain.Member;
 import com.projectteam.coop.domain.Post;
 import com.projectteam.coop.service.comment.CommentService;
 import com.projectteam.coop.service.post.PostService;
 import com.projectteam.coop.service.recommed.RecommendService;
 import com.projectteam.coop.util.Paging;
 import com.projectteam.coop.web.argumentresolver.Login;
+import com.projectteam.coop.web.login.LoginForm;
 import com.projectteam.coop.web.session.MemberSessionDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -38,14 +40,14 @@ public class PostController {
     }
 
     @PostMapping("/new")
-    public String create(@Login MemberSessionDto member, @Validated @ModelAttribute("postForm") PostCreateForm postForm, BindingResult bindingResult, Model model) {
+    public String create(@Login MemberSessionDto loginMember, @Validated @ModelAttribute("postForm") PostCreateForm postForm, BindingResult bindingResult, Model model) {
+
+        postService.addPost(postForm, Optional.ofNullable(loginMember));
 
         if (bindingResult.hasErrors()) {
             log.info("bindingResult.hasErrors={}", bindingResult);
             return "/templates/posts/createPostForm";
         }
-
-        postService.addPost(postForm, Optional.ofNullable(member));
 
         return "redirect:/posts";
     }
@@ -60,14 +62,14 @@ public class PostController {
     }
 
     @PostMapping("/reply")
-    public String reply(@Login MemberSessionDto member, @Validated @ModelAttribute("postForm") PostCreateForm postForm, BindingResult bindingResult) {
+    public String reply(@Login MemberSessionDto loginMember, @Validated @ModelAttribute("postForm") PostCreateForm postForm, BindingResult bindingResult) {
+
+        postService.addReplyPost(postForm, Optional.ofNullable(loginMember));
 
         if (bindingResult.hasErrors()) {
             log.info("bindingResult.hasErrors={}", bindingResult);
             return "/templates/posts/replyPostForm";
         }
-
-        postService.addReplyPost(postForm, Optional.ofNullable(member));
 
         return "redirect:/posts";
     }
@@ -86,12 +88,12 @@ public class PostController {
     }
 
     @GetMapping("/{postId}")
-    public String info(@Login MemberSessionDto loginMemeber, @RequestParam(value = "page", defaultValue = "1") Integer page, @PathVariable Long postId, Model model) {
+    public String info(@Login MemberSessionDto loginMember, @RequestParam(value = "page", defaultValue = "1") Integer page, @PathVariable Long postId, Model model) {
         Post post = postService.findPost(postId);
         model.addAttribute("post", post);
 
-        if (loginMemeber != null) {
-            Boolean recommendAt = recommedService.isMemberRecommend(loginMemeber.getId(), postId);
+        if (loginMember != null) {
+            Boolean recommendAt = recommedService.isMemberRecommend(loginMember.getId(), postId);
             model.addAttribute("recommendAt", recommendAt);
         }
 
@@ -107,29 +109,77 @@ public class PostController {
     }
 
     @GetMapping("/{postId}/edit")
-    public String updateForm(@PathVariable Long postId, Model model) {
+    public String updateForm(@Login MemberSessionDto loginMember,
+                             @PathVariable Long postId, Model model,
+                             @RequestParam(value = "postPassword", required = false) String password) {
         Post post = postService.findPost(postId);
 
+        Member postCreateMember = post.getCreateMember();
+        if (loginMember == null) {
+            if (postCreateMember == null) {
+                if (post.getPassword().equals(password)) {
+                    model.addAttribute("postForm", createUpdateForm(post));
+                    return "/templates/posts/updatePostForm";
+                }
+            }
+        }else {
+            if (postCreateMember != null) {
+                PostUpdateForm updateForm = createUpdateForm(post);
+                updateForm.setCreateMember(postCreateMember);
+                if (loginMember.getId() == postCreateMember.getId()) {
+                    model.addAttribute("postForm", updateForm);
+                    return "/templates/posts/updatePostForm";
+                }
+            }else {
+                if (post.getPassword().equals(password)) {
+                    model.addAttribute("postForm", createUpdateForm(post));
+                    return "/templates/posts/updatePostForm";
+                }
+            }
+        }
+        return "/templates/posts/passwordForm";
+    }
+
+    private PostUpdateForm createUpdateForm(Post post) {
         PostUpdateForm postForm = new PostUpdateForm();
         postForm.setPostId(post.getPostId());
+        postForm.setNickname(post.getNickname());
         postForm.setTitle(post.getTitle());
-        postForm.setPassword(post.getPassword());
         postForm.setContent(post.getContent());
-
-        model.addAttribute("postForm", postForm);
-
-        return "/templates/posts/updatePostForm";
+        return postForm;
     }
 
     @PostMapping("/{postId}/edit")
-    public String update(@Login MemberSessionDto member, @Validated @ModelAttribute("postForm") PostUpdateForm postForm, BindingResult bindingResult) {
+    public String update(@Login MemberSessionDto loginMember,
+                         @Validated @ModelAttribute("postForm") PostUpdateForm postForm,
+                         BindingResult bindingResult,
+                         Model model) {
+
+        Post post = postService.findPost(postForm.getPostId());
 
         if (bindingResult.hasErrors()) {
             log.info("bindingResult.hasErrors={}", bindingResult);
             return "/posts/" + postForm.getPostId() + "/edit";
         }
 
-        postService.updatePost(postForm);
+        Member postCreateMember = post.getCreateMember();
+        if (loginMember == null) {
+            if (postCreateMember == null) {
+                postService.updatePost(postForm);
+            }
+        } else {
+            if (postCreateMember != null) {
+                if (loginMember.getId() == postCreateMember.getId()) {
+                    postForm.setNickname(loginMember.getName());
+                    postService.updatePost(postForm);
+                }else {
+                    model.addAttribute("loginForm", new LoginForm());
+                    return "/templates/login/loginForm";
+                }
+            }else {
+                postService.updatePost(postForm);
+            }
+        }
 
         return "redirect:/posts/" + postForm.getPostId();
     }

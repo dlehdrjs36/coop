@@ -5,6 +5,7 @@ import com.projectteam.coop.service.member.MemberService;
 import com.projectteam.coop.web.member.MemberForm;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.mail.internet.MimeMessage;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 @Controller
 @RequiredArgsConstructor
@@ -23,6 +26,8 @@ public class EmailController {
 
     private final JavaMailSender mailSender;
     private final MemberService memberService;
+    @Value("${tomcat.server.port}")
+    private String serverPort;
 
     @GetMapping(value = "/mail")
     public String getMailAdd(Model model){
@@ -55,12 +60,21 @@ public class EmailController {
         memberForm.setEmailReceptionType(findMember.getEmailReceptionType());
         memberService.updateMember(memberForm);
 
+        InetAddress local;
+        String ip = "";
+        try {
+            local = InetAddress.getLocalHost();
+            ip = local.getHostAddress();
+        } catch (UnknownHostException e1) {
+            e1.printStackTrace();
+        }
+
         String setfrom = "TFTInfo";
         String tomail = emailForm.getEmail(); // 받는 사람 이메일
         String title = "TFTInfo 임시 비밀번호에 대해서"; // 제목
         String content = "요청하신 임시비밀번호는 아래와 같습니다.\n\n" +
                 randomPassword +
-                "\n\nhttp://localhost:8080/login 으로 접속해 로그인 한뒤 비밀번호를 반드시 변경해주시길 바랍니다."; // 로컬 호스트 기준
+                "\n\nhttp://" + ip + ":" + serverPort + "/login 으로 접속해 로그인 한뒤 비밀번호를 반드시 변경해주시길 바랍니다."; // 로컬 호스트 기준
 
         try {
             MimeMessage message = mailSender.createMimeMessage();

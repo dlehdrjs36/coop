@@ -83,6 +83,7 @@ public class Comment extends BaseEntity {
         comment.password = password;
         comment.status = Boolean.TRUE;
         comment.content = content;
+        comment.nickname = createMember.getName();
         comment.createMember = createMember;
         comment.order = 0L;
         comment.depth = 0L;
@@ -111,6 +112,7 @@ public class Comment extends BaseEntity {
         comment.password = password;
         comment.status = Boolean.TRUE;
         comment.content = content;
+        comment.nickname = createMember.getName();
         comment.createMember = createMember;
         comment.parent = parent;
         comment.group = parent.getGroup();

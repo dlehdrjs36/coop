@@ -43,15 +43,14 @@ public class PostService {
         return postRepository.addPost(post);
     }
 
-    public Long addPost(PostCreateForm postForm, Optional<MemberSessionDto> memberSession) {
+    public Long addPost(PostCreateForm postForm, Optional<MemberSessionDto> loginMember) {
 
         Post post;
-        if(memberSession.isEmpty()) {
+        if(loginMember.isEmpty()) {
             post = Post.createPost(postForm.getTitle(), postForm.getPassword(), postForm.getContent(), postForm.getNickname());
         }else {
-            MemberSessionDto session = memberSession.get();
+            MemberSessionDto session = loginMember.get();
             Member member = memberRepository.findMember(session.getId());
-
             post = Post.createPost(postForm.getTitle(), postForm.getPassword(), postForm.getContent(), member);
         }
 
@@ -71,13 +70,12 @@ public class PostService {
     public Post findPost(Long id) {
         Post post = postRepository.findPost(id);
         post.addViewCount();
-
         return post;
     }
 
     public void updatePost(PostUpdateForm postForm) {
         Post post = postRepository.findPost(postForm.getPostId());
-        post.changePost(post.getBoard(), post.getPostStatus(), postForm.getPassword(), postForm.getTitle(), postForm.getContent(), post.getViewCount(), post.getRecommendCount());
+        post.changePost(post.getBoard(), postForm.getNickname(), postForm.getPassword(), postForm.getTitle(), postForm.getContent());
     }
 
     //게시물 추천 등록
@@ -86,7 +84,7 @@ public class PostService {
         Post post = postRepository.findPost(postId);
 
         recommendRepository.addRecommend(Recommend.createRecommed(post, member));
-        post.recommed(recommendRepository.getPostRecommendCount(postId));
+        post.recommend(recommendRepository.getPostRecommendCount(postId));
     }
 
     public int totalSize() {

@@ -13,7 +13,7 @@
                     <th scope="col">제목</th>
                     <th scope="col">조회수</th>
                     <th scope="col">추천수</th>
-<!--                    <th scope="col">작성자</th>-->
+                    <th scope="col">작성자</th>
                 </tr>
             </thead>
             <tbody>
@@ -27,11 +27,10 @@
                             [답글]
                         </span>
                         <a th:text="${post.title}" th:href="'javascript:infoGet(\'posts\',' + ${post.postId} + ')'" href="#"></a>
-<!--                            <a th:if="${child.parent.postId == post.postId}" th:each="child : ${post?.child}"  th:text="|&nbsp;&nbsp;&nbsp;답글 : ${child.title}|" th:href="'javascript:infoGet(\'posts\',' + ${child.postId} + ')'" href="#"></a>-->
                     </td>
                     <td th:text="${post.viewCount}"></td>
                     <td th:text="${post.recommendCount}"></td>
-<!--                    <td th:text="${post.createMember.name}"></td>-->
+                    <td th:text="${post.nickname}"></td>
                 <td></td>
                 </tr>
             </tbody>

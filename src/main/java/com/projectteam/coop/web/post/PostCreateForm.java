@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotEmpty;
 
 @Getter
 @Setter
@@ -18,7 +18,6 @@ public class PostCreateForm {
     @Length(min = 4, max = 4)
     private String password;
 
-    @NotEmpty
     private String nickname;
 
     private String content;

@@ -60,6 +60,17 @@ public class MemberRepository {
         return findMember;
     }
 
+    //이메일 조회( 이메일 단독으로 조회 -> [임시 비밀번호 등록용] )
+    public Member findMemberForPassword(String email) {
+        Member member = em.createQuery("SELECT m FROM Member m WHERE m.email = :email", Member.class)
+                .setParameter("email", email)
+                .getResultList()
+                .stream()
+                .findAny()
+                .orElse(null);
+        return member;
+    }
+
     //등록
     public Long addPoint(Member member) {
         member.addPoint();

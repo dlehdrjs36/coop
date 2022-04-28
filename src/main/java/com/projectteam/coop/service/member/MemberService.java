@@ -36,4 +36,10 @@ public class MemberService {
     public Member findMember(String email, String password) {
         return memberRepository.findMember(email, password);
     }
+
+    //이메일 조회( 이메일 단독으로 조회 -> [임시 비밀번호 등록용] )
+    @Transactional(transactionManager = "h2TxManager", readOnly = true)
+    public Member findMemberForPassword(String Email) {
+        return memberRepository.findMemberForPassword(Email);
+    }
 }

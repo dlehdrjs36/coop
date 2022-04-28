@@ -1,15 +1,18 @@
 <header th:fragment="bodyHeader">
     <div class="header">
         <div class="container d-flex flex-wrap  justify-content-center justify-content-lg-start">
-            <nav class="header-nav container navbar navbar-expand-md navbar-dark sticky-top">
+            <nav class="container navbar navbar-expand-md navbar-dark sticky-top">
                 <div class="container-fluid">
-                    <a class="justify-content-start navbar-brand bg-dark" href="/">Fixed navbar</a>
+                    <a class="justify-content-start navbar-brand bg-dark" href="/">
+                        <img src="/img/login/logo.png">
+                    </a>
+                    <a type="button" class="headerTitle h1 text-white col-md-3" href="/">TFT Info</a>
                     <button class="navbar-toggler collapsed bg-dark" type="button" data-bs-toggle="collapse" data-bs-target="#header-navbar" aria-controls="header-navbar" aria-expanded="false" aria-label="Toggle navigation">
                         <a class="header-search-button navbar-brand">검색</a>
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="justify-content-end navbar-collapse collapse " id="header-navbar">
-                        <form class="searchSummoner d-flex offset-md-4 bg-dark" name="searchSummoner" type="GET">
+                        <form class="searchSummoner d-flex offset-md-3 bg-dark" name="searchSummoner" type="GET">
                             <input type="search" class="form-control" id="searchSummonerName" placeholder="소환사 검색" aria-label="Search">
                             <button class="btn btn-outline-success" onclick="summonerSearch()">Search</button>
                         </form>
@@ -20,9 +23,9 @@
                     </div>
                 </div>
             </nav>
-            <div class="container d-flex flex-wrap justify-content-center justify-content-lg-start">
+            <div class="container d-flex flex-wrap justify-content-center justify-content-lg-start championKeywordArea hide">
                 <div class="header-nav container navbar navbar-expand-md navbar-dark sticky-top">
-                    <div class="form-control championKeywords hide"></div>
+                    <div class="form-control championKeywords"></div>
                 </div>
             </div>
         </div>

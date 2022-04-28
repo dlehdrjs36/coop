@@ -1,18 +1,17 @@
 package com.projectteam.coop.web.comment;
 
-import com.projectteam.coop.domain.Comment;
 import com.projectteam.coop.service.comment.CommentService;
 import com.projectteam.coop.web.argumentresolver.Login;
 import com.projectteam.coop.web.post.CommentCreateForm;
-import com.projectteam.coop.web.post.PostUpdateForm;
 import com.projectteam.coop.web.session.MemberSessionDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @Controller
@@ -42,17 +41,16 @@ public class CommentController {
     }
 
     @DeleteMapping("/{commentId}")
-    public void delete(@Login MemberSessionDto memberSessionDto, @Validated @ModelAttribute("commentForm") CommentCreateForm commentCreateForm, BindingResult bindingResult) {
+    @ResponseBody
+    public Map<String, Object> delete(@PathVariable("commentId") Long commentId,
+                                      @RequestBody CommentCreateForm removeForm) {
 
-        if (bindingResult.hasErrors()) {
-            return;
-        }
+        Map<String, Object> result = new HashMap<>();
 
-        Comment comment = commentService.findComment(commentCreateForm.getCommentId());
-        if(commentCreateForm.getPassword().equals(comment.getPassword())) {
-            commentService.removeComment(commentCreateForm.getCommentId());
-        }else {
-            bindingResult.rejectValue("password", "mismatch.commentForm.password");
-        }
+        boolean isRemove = commentService.changeStateComment(commentId, removeForm.getPassword());
+        result.put("isRemove", isRemove);
+
+        return result;
+//      bindingResult.rejectValue("password", "mismatch.commentForm.password");
     }
 }

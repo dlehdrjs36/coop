@@ -23,6 +23,11 @@ public class CommentRepository {
         return comment.getId();
     }
 
+    //미사용 상태로 변경
+    public void changeStateComment(Comment comment) {
+        comment.delete();
+    }
+
     //삭제
     public void removeComment(Long id) {
         Comment comment = em.find(Comment.class, id);

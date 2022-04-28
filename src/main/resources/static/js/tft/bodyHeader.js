@@ -12,9 +12,9 @@ function searchChampion(e){
     }
 
     if(search === "") {
-        keywords.classList.add("hide");
+        document.querySelector(".championKeywordArea").classList.add("hide");
     } else {
-        keywords.classList.remove("hide");
+        document.querySelector(".championKeywordArea").classList.remove("hide");
     }
 
     if( search !== "") {
@@ -31,7 +31,7 @@ function insertSearchKeyword( keyword ){
     if(keyword.type !== "") {
         searchChampionName.value = championNameKrList[keyword];
     }
-    document.querySelector(".championKeywords").classList.add("hide");
+    document.querySelector(".championKeywordArea").classList.add("hide");
 }
 
 function championSearch(){
@@ -76,6 +76,6 @@ keywords.addEventListener('mouseleave', function (){
 });
 searchChampionName.addEventListener('focusout', function (){
     if(!keywordsFlg){
-        document.querySelector(".championKeywords").classList.add("hide");
+        document.querySelector(".championKeywordArea").classList.add("hide");
     }
 });

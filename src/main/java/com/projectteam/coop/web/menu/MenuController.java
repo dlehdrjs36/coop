@@ -52,8 +52,6 @@ public class MenuController {
         JsonNode championListJsonObject = null;
         JsonNode synergyListJsonObject = null;
         try {
-            FileInputStream Input = new FileInputStream(resource.getURL().getPath()+"championList.json");
-            InputStreamReader reader = new InputStreamReader(Input, "UTF-8");
             championListJsonObject = mapper.readTree(new File(resource.getURL().getPath()+"championList.json"));
             synergyListJsonObject = mapper.readTree(new File(resource.getURL().getPath()+"synergyList.json"));
         } catch (IOException e) {

@@ -19,21 +19,21 @@ function showTierAugmentsList(Tier){
         for (let i = 0; i < augmentsNameTier1.length; i++) {
             innerHtml += "<div class='row'><div class='col-md-1'><a href=''><img src='/img/tft/augment/tier1/" + augmentsNameTier1[i] + ".png' class='augmentListImage'></a></div>";
             innerHtml += "<div class='text-white col-md-9'>";
-            innerHtml += "<h5>" + augmentsNameKrTier1[i] + "</h5>";
+            innerHtml += "<h5 class='text-white'>" + augmentsNameKrTier1[i] + "</h5>";
             innerHtml += "<p>" + augmentsDescTier1[i] + "</p></div></div>";
         }
     }else if(Tier == 2){
         for (let i = 0; i < augmentsNameTier2.length; i++) {
             innerHtml += "<div class='row'><div class='col-md-1'><a href=''><img src='/img/tft/augment/tier2/" + augmentsNameTier2[i] + ".png' class='augmentListImage'></a></div>";
             innerHtml += "<div class='text-white col-md-9'>";
-            innerHtml += "<h5>" + augmentsNameKrTier2[i] + "</h5>";
+            innerHtml += "<h5 class='text-white'>" + augmentsNameKrTier2[i] + "</h5>";
             innerHtml += "<p>" + augmentsDescTier2[i] + "</p></div></div>";
         }
     }else if(Tier == 3){
         for (let i = 0; i < augmentsNameTier3.length; i++) {
             innerHtml += "<div class='row'><div class='col-md-1'><a href=''><img src='/img/tft/augment/tier3/" + augmentsNameTier3[i] + ".png' class='augmentListImage'></a></div>";
             innerHtml += "<div class='text-white col-md-9'>";
-            innerHtml += "<h5>" + augmentsNameKrTier3[i] + "</h5>";
+            innerHtml += "<h5 class='text-white'>" + augmentsNameKrTier3[i] + "</h5>";
             innerHtml += "<p>" + augmentsDescTier3[i] + "</p></div></div>";
         }
     }
@@ -53,7 +53,7 @@ function eventSearchAugment(e) {
             if (augmentsNameKrTier1[i][0].indexOf(search) != -1) {
                 searchInnerHtml += "<div class='row'><div class='col-md-1'><a href=''><img src='/img/tft/augment/tier1/" + augmentsNameTier1[i] + ".png' class='augmentListImage'></a></div>";
                 searchInnerHtml += "<div class='text-white col-md-9'>";
-                searchInnerHtml += "<h5>" + augmentsNameKrTier1[i] + "</h5>";
+                searchInnerHtml += "<h5 class='text-white'>" + augmentsNameKrTier1[i] + "</h5>";
                 searchInnerHtml += "<p>" + augmentsDescTier1[i] + "</p></div></div>";
             }
         }
@@ -61,7 +61,7 @@ function eventSearchAugment(e) {
             if (augmentsNameKrTier2[j][0].indexOf(search) != -1) {
                 searchInnerHtml += "<div class='row'><div class='col-md-1'><a href=''><img src='/img/tft/augment/tier2/" + augmentsNameTier2[j] + ".png' class='augmentListImage'></a></div>";
                 searchInnerHtml += "<div class='text-white col-md-9'>";
-                searchInnerHtml += "<h5>" + augmentsNameKrTier2[j] + "</h5>";
+                searchInnerHtml += "<h5 class='text-white'>" + augmentsNameKrTier2[j] + "</h5>";
                 searchInnerHtml += "<p>" + augmentsDescTier2[j] + "</p></div></div>";
             }
         }
@@ -69,7 +69,7 @@ function eventSearchAugment(e) {
             if (augmentsNameKrTier3[k][0].indexOf(search) != -1) {
                 searchInnerHtml += "<div class='row'><div class='col-md-1'><a href=''><img src='/img/tft/augment/tier3/" + augmentsNameTier3[k] + ".png' class='augmentListImage'></a></div>";
                 searchInnerHtml += "<div class='text-white col-md-9'>";
-                searchInnerHtml += "<h5>" + augmentsNameKrTier3[k] + "</h5>";
+                searchInnerHtml += "<h5 class='text-white'>" + augmentsNameKrTier3[k] + "</h5>";
                 searchInnerHtml += "<p>" + augmentsDescTier3[k] + "</p></div></div>";
             }
         }

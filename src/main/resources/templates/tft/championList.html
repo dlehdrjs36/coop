@@ -2,16 +2,19 @@
 <html xmlns:th="http://www.thymleaf.org">
 <head th:replace="templates/fragments/header.html :: header"></head>
 <link th:href="@{/css/fragments/layoutChampionListPage.css}" rel="stylesheet">
+<link th:href="@{/css/fragments/tftContents.css}" rel="stylesheet">
 <body>
     <header th:replace="templates/fragments/bodyHeader.html :: bodyHeader"></header>
     <input type="hidden" id="championName" th:value="*{championName}">
+    <input type="hidden" id="championListData" th:value="*{championListData}">
+    <input type="hidden" id="synergyListData" th:value="*{synergyListData}">
     <div id="backgroundImage">
         <div class="container">
             <div class="championContentsAtt">
                 <div class="col-sm-4 offset-8">
                     <input type="search" class="form-control" name="searchChampionList" id="searchChampionList" placeholder="챔피언 검색" aria-label="Search">
                 </div>
-                <div class="championListField">
+                <div class="contentsPadding championListField text-center">
                     <div id="championList"></div>
                 </div>
             </div>

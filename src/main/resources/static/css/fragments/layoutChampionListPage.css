@@ -1,6 +1,20 @@
 .championContentsAtt{
     padding-top: 70px;
 }
+
+.championListField::-webkit-scrollbar{
+    width: 8px;
+}
+
+.championListField::-webkit-scrollbar-thumb{
+    height: auto;
+    background: #ffffff;
+}
+
+.championListField::-webkit-scrollbar-track {
+    background: #000000;
+}
+
 .championListField{
     background-color: #000000;
     max-height: 280px;

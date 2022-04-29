@@ -1,0 +1,256 @@
+{
+    "synergyList": [
+        {
+            "type": "ORIGINS",
+            "name": "Rivals",
+            "nameKr": "경쟁자",
+            "desc": ["이 특성은 정확히 하나의 경쟁자 유닛이 있을 때만 활성화됩니다. 경쟁자들은 서로 같은 팀에 있기 싫어하니까요."],
+            "synergyAbility": ["바이의 마나 소모량 20 감소","징크스가 처치 관여 시 3초 동안 공격 속도가 40% 증가"],
+            "championName": ["_Vi","Jinx"],
+            "championNameKr": ["바이","징크스"]
+        },
+        {
+            "type": "ORIGINS",
+            "name": "Scrap",
+            "nameKr": "고물상",
+            "desc": ["전투 시작 시 고물상 챔피언이 보유한 조합 아이템은 전투가 끝날 때까지 완성 아이템으로 변합니다. 또한 아군은 완성 아이템의 일부를 포함하여 보유한 모든 조합 아이템마다 보호막을 얻습니다."],
+            "synergyAbility": ["(2) 조합 아이템 1개를 완성 아이템으로 변경 + 조합 아이템 하나당 보호막 20","(4) 조합 아이템 3개를 완성 아이템으로 변경 + 조합 아이템 하나당 보호막 35","(6) 모든 조합 아이템을 완성 아이템으로 변경 + 조합 아이템 하나당 보호막 60"],
+            "championName": ["Ezreal","Ziggs","Blitzcrank","Ekko","Irelia","Jinx"],
+            "championNameKr": ["이즈리얼","직스","블리츠크랭크","에코","이렐리아","징크스"]
+        },
+        {
+            "type": "ORIGINS",
+            "name": "Glutton",
+            "nameKr": "대식가",
+            "desc": ["준비 단계마다 한 번씩 탐 켄치가 대기석에 있는 아군 하나를 삼켜 주문력, 체력, 방어력 또는 마법 저항력 중 하나를 영구적으로 부여합니다.","대기석에 있는 아군을 탐 켄치 위로 드래그해 입을 벌릴 때까지 기다렸다가 놓으면 탐 켄치가 아군을 먹습니다."],
+            "synergyAbility": [""],
+            "championName": ["TahmKench"],
+            "championNameKr": ["탐 켄치"]
+        },
+        {
+            "type": "ORIGINS",
+            "name": "Mutant",
+            "nameKr": "돌연변이",
+            "desc": ["돌연변이의 효과는 게임마다 변경됩니다."],
+            "synergyAbility": ["(3) ???","(5) ???","(7) ???"],
+            "championName": ["Kassadin","RekSai","Malzahar","ChoGath","KhaZix","Kaisa"],
+            "championNameKr": ["카사딘","렉사이","말자하","초가스","카직스","카이사"]
+        },
+        {
+            "type": "ORIGINS",
+            "name": "Hextech",
+            "nameKr": "마법공학",
+            "desc": ["전투 시작 시 및 전투 중 6초에 한 번씩 마공학 핵이 파동을 방출합니다. 파동에 맞은 아군 마법공학 챔피언은 4초 동안 지속되는 보호막을 얻습니다. 보호막이 남아있는 동안 기본 공격 적중 시 추가 마법 피해를 입힙니다. 보호막은 중첩되지 않습니다. 또한 마공학 핵에 있는 증강 하나당 보호막 피해 흡수량 및 추가 마법 피해가 20%씩 증가합니다."],
+            "synergyAbility": ["(2) 보호막 120, 마법 피해 15","(4) 보호막 170, 마법 피해 30","(6) 보호막 340, 마법 피해 60","(8) 보호막 700, 마법 피해 120"],
+            "championName": ["JarvanIV","Nocturne","Sejuani","Swain","Lucian","Sivir","Alistar"],
+            "championNameKr": ["자르반 4세","녹턴","세주아니","스웨인","루시안","시비르","알리스타"]
+        },
+        {
+            "type": "ORIGINS",
+            "name": "Syndicate",
+            "nameKr": "범죄 조직",
+            "desc": ["아래의 아군이 그림자에 숨어 55의 방어력, 55의 마법 저항력, 20%의 모든 피해 흡혈 효과를 얻습니다.(입힌 모든 피해 비례 체력 회복)"],
+            "synergyAbility": ["(3) 가장 낮은 체력을 가진 범죄 조직 챔피언","(5) 모든 범죄 조직 챔피언","(7) 아군 전체, 효과 60% 증가"],
+            "championName": ["Darius","Ashe","Zyra","Morgana","Braum","Ahri"],
+            "championNameKr": ["다리우스","애쉬","자이라","모르가나","브라움","아리"]
+        },
+        {
+            "type": "ORIGINS",
+            "name": "Socialite",
+            "nameKr": "사교계",
+            "desc": ["사교계는 전장에 스포트라이트를 드리웁니다. 전투 시작 시 스포트라이트를 받는 유닛은 고유 추가 효과를 얻습니다."],
+            "synergyAbility": ["(1) 추가 피해 15%","(2) 위 효과 + 초당 마나 4","(3) 위 효과 + 입힌 모든 피해의 33%만큼 체력 회복","(5) 모든 추가 효과 두 배 증가"],
+            "championName": ["Gnar","Senna","Seraphine","Galio"],
+            "championNameKr": ["나르","세나","세라핀","갈리오"]
+        },
+        {
+            "type": "ORIGINS",
+            "name": "Clockwork",
+            "nameKr": "시계태엽",
+            "desc": ["아군의 공격 속도가 상승합니다. 마공학 핵의 증강 수에 따라 효과가 더욱 강화됩니다."],
+            "synergyAbility": ["(2) 공격 속도 +10%+증강 하나당 +5%","(4) 공격 속도 +35%+증강 하나당 +10%","(6) 공격 속도 +80%+증강 하나당 +15%"],
+            "championName": ["Camille","Zilean","Orianna","Jhin"],
+            "championNameKr": ["카밀","질리언","오리아나","진"]
+        },
+        {
+            "type": "ORIGINS",
+            "name": "Debonair",
+            "nameKr": "연미복",
+            "desc": ["연미복 챔피언은 추가 체력과 주문력을 얻습니다. 상점에 연미복 VIP가 등장할 확률이 증가합니다.","연미복 VIP를 전장에 배치하면 고유 추가 효과가 활성화됩니다. VIP 판매 시 상점에 새로운 VIP가 등장할 수 있습니다."],
+            "synergyAbility": ["(3) 체력 200, 주문력 20","(5) 체력 450, 주문력 45","(7) 체력 800, 주문력 80"],
+            "championName": ["Brand","Syndra","Talon","Leona","Draven","Zeri"],
+            "championNameKr": ["브랜드","신드라","탈론","레오나","드레이븐","제리"]
+        },
+        {
+            "type": "ORIGINS",
+            "name": "Yordle",
+            "nameKr": "요들",
+            "desc": [""],
+            "synergyAbility": ["(3) 플레이어와 전투를 마칠 때마다 무작위 요들 하나가 무료로 대기석에 추가","(6) 요들의 스킬 마나 소모량 25% 감소"],
+            "championName": ["Poppy","Ziggs","Corki","Lulu","Gnar","Vex"],
+            "championNameKr": ["뽀삐","직스","코르키","룰루","나르","벡스"]
+        },
+        {
+            "type": "ORIGINS",
+            "name": "YordleLord",
+            "nameKr": "요들 군주",
+            "desc": [""],
+            "synergyAbility": ["(1) 요들 특성 효과"],
+            "championName": ["Veigar"],
+            "championNameKr": ["베이가"]
+        },
+        {
+            "type": "ORIGINS",
+            "name": "Mercenary",
+            "nameKr": "용병",
+            "desc": ["플레이어를 상대로 전투에서 승리하면 열리는 보물 상자를 획득합니다. 플레이어를 상대하는 준비 단계가 시작되면 주사위를 굴려 상자에 전리품을 추가합니다. 상자를 더 오래 열지 않을수록 주사위에 행운이 증가합니다."],
+            "synergyAbility": ["(3) 주사위 2개 굴리기","(5) 주사위의 행운이 더욱 강력해집니다!","(7) 승리 시 추가 전리품을 부여하는 3번째 주사위 굴리기"],
+            "championName": ["Illaoi","Quinn","Gangplank","MissFortune","TahmKench"],
+            "championNameKr": ["일라오이","퀸","갱플랭크","미스 포츈","탐 켄치"]
+        },
+        {
+            "type": "ORIGINS",
+            "name": "Enforcer",
+            "nameKr": "집행자",
+            "desc": [""],
+            "synergyAbility": ["(3) 집행자가 전투 시작 시 적을 기절시킵니다. 대상은 4초 후 또는 최대 체력의 40%를 잃은 다음 기절에서 벗어납니다. 군중 제어 효과에 면역인 적은 기절시키지 않습니다."],
+            "championName": ["Caitlyn","Sejuani","_Vi","Jayce"],
+            "championNameKr": ["케이틀린","세주아니","바이","제이스"]
+        },
+        {
+            "type": "ORIGINS",
+            "name": "Chemtech",
+            "nameKr": "화학공학",
+            "desc": ["화학공학 챔피언의 체력이 75% 아래로 떨어지면 화공 강화 상태가 되어 8초 동안 공격 속도가 상승하고, 받는 피해량이 20% 감소하며, 매초 최대 체력의 일부를 회복합니다."],
+            "synergyAbility": ["(3) 공격 속도 15%, 체력 4%","(5) 공격 속도 40%, 체력 7%","(7) 공격 속도 80%, 체력 10%","(9) 공격 속도 150%, 체력 18%"],
+            "championName": ["Singed","Twitch","Warwick","Tryndamere","Zac","Renata","Viktor"],
+            "championNameKr": ["신지드","트위치","워윅","트린다미어","자크","레나타 글라스크","빅토르"]
+        },
+        {
+            "type": "ORIGINS",
+            "name": "Mastermind",
+            "nameKr": "흑막",
+            "desc": ["전투 시작 시 흑막은 바로 앞에 있는 아군 2명에게 30의 마나를 부여합니다. 이 효과는 중첩되지 않습니다"],
+            "synergyAbility": [""],
+            "championName": ["Silco"],
+            "championNameKr": ["실코"]
+        },
+        {
+            "type": "CLASSES",
+            "name": "Enchanter",
+            "nameKr": "강화술사",
+            "desc": ["아군이 추가 마법 저항력을 얻습니다. 강화술사가 체력 회복 및 보호막 효과를 추가로 얻습니다."],
+            "synergyAbility": ["(2) 마법 저항력 20, 체력 회복량 및 보호막 흡수량 25%","(3) 마법 저항력 35, 체력 회복량 및 보호막 흡수량 40%","(4) 마법 저항력 50, 체력 회복량 및 보호막 흡수량 60%","(5) 마법 저항력 75, 체력 회복량 및 보호막 흡수량 100%"],
+            "championName": ["Lulu","Morgana","Senna","Orianna"],
+            "championNameKr": ["룰루","모르가나","세나","오리아나"]
+        },
+        {
+            "type": "CLASSES",
+            "name": "Colossus",
+            "nameKr": "거신",
+            "desc": ["고유: 거신은 더 거대하고 강력하며, 추가 체력을 800 얻고 군중 제어 효과에 면역입니다. 거신 하나당 2개의 팀 슬롯이 필요합니다."],
+            "synergyAbility": ["(2) 거신 챔피언이 받는 피해 25% 감소",""],
+            "championName": ["ChoGath","Alistar","Galio"],
+            "championNameKr": ["초가스","알리스타","갈리오"]
+        },
+        {
+            "type": "CLASSES",
+            "name": "Bodyguard",
+            "nameKr": "경호대",
+            "desc": ["경호대는 방어력이 증가합니다. 전투 시작 얼마 후, 보호막을 얻고 근처 적들을 도발해 경호대를 공격하게 합니다."],
+            "synergyAbility": ["(2) 방어력 80, 보호막 150","(4) 방어력 160, 보호막 350","(6) 방어력 250, 보호막 700","(8) 방어력 450, 보호막 1200"],
+            "championName": ["Darius","Poppy","Blitzcrank","Leona","Braum","Galio"],
+            "championNameKr": ["다리우스","뽀삐","블리츠크랭크","레오나","브라움","갈리오"]
+        },
+        {
+            "type": "CLASSES",
+            "name": "Bruiser",
+            "nameKr": "난동꾼",
+            "desc": ["아군의 최대 체력이 증가합니다. 난동꾼은 두 배로 증가합니다."],
+            "synergyAbility": ["(2) 체력 125","(4) 체력 225","(6) 체력 450","(8) 체력 800"],
+            "championName": ["Illaoi","Sejuani","RekSai","Zac","ChoGath","_Vi","TahmKench"],
+            "championNameKr": ["일라오이","세주아니","렉사이","자크","초가스","바이","탐 켄치"]
+        },
+        {
+            "type": "CLASSES",
+            "name": "Challenger",
+            "nameKr": "도전자",
+            "desc": ["도전자는 추가 공격 속도를 얻습니다. 처치 관여 시, 새로운 대상에게 돌진하며 2.5초 동안 공격 속도 상승 효과가 두 배가 됩니다."],
+            "synergyAbility": ["(2) 공격 속도 25%","(4) 공격 속도 55%","(6) 공격 속도 90%","(8) 공격 속도 150%"],
+            "championName": ["Camille","Warwick","Quinn","Tryndamere","Draven","Kaisa"],
+            "championNameKr": ["카밀","워윅","퀸","트린다미어","드레이븐","카이사"]
+        },
+        {
+            "type": "CLASSES",
+            "name": "Transformer",
+            "nameKr": "변형술사",
+            "desc": ["제이스가 전방 2열에서는 근접 공격, 후방 2열에서는 원거리 공격을 합니다."],
+            "synergyAbility": [""],
+            "championName": ["Jayce"],
+            "championNameKr": ["제이스"]
+        },
+        {
+            "type": "CLASSES",
+            "name": "Arcanist",
+            "nameKr": "비전 마법사",
+            "desc": ["비전 마법사는 아군의 주문력을 증가시킵니다."],
+            "synergyAbility": ["(2) 아군의 주문력 20 증가","(4) 아군의 주문력 20 증가, 비전 마법사는 40 추가 증가","(6) 아군의 주문력 50 증가, 비전 마법사는 50 추가 증가","(8) 아군의 주문력 145 증가"],
+            "championName": ["Brand","Ziggs","Swain","Malzahar","Vex","Ahri","Viktor"],
+            "championNameKr": ["브랜드","직스","스웨인","말자하","벡스","아리","빅토르"]
+        },
+        {
+            "type": "CLASSES",
+            "name": "Twinshot",
+            "nameKr": "쌍발총",
+            "desc": ["쌍발총 챔피언은 추가 공격력을 얻으며, 기본 공격하거나 스킬을 사용할 때 일정 확률로 두 번 공격합니다."],
+            "synergyAbility": ["(2) 공격력 10, 40% 확률","(3) 공격력 25, 55% 확률","(4) 공격력 45, 70% 확률","(5) 공격력 80, 100% 확률"],
+            "championName": ["Corki","Gangplank","Lucian","Jinx"],
+            "championNameKr": ["코르키","갱플랭크","루시안","징크스"]
+        },
+        {
+            "type": "CLASSES",
+            "name": "Assassin",
+            "nameKr": "암살자",
+            "desc": ["암살자는 추가 치명타 피해량과 확률을 획득하며, 스킬에 치명타가 적용될 수 있습니다."],
+            "synergyAbility": ["(2) 치명타 확률 +10% 및 치명타 피해량 +20%","(4) 치명타 확률 +30% 및 치명타 피해량 +40%","(6) 치명타 확률 +50% 및 치명타 피해량 +60%"],
+            "championName": ["Nocturne","Twitch","Talon","Ekko","KhaZix"],
+            "championNameKr": ["녹턴","트위치","탈론","에코","카직스"]
+        },
+        {
+            "type": "CLASSES",
+            "name": "Sniper",
+            "nameKr": "저격수",
+            "desc": ["저격수와 대상 사이에 놓인 칸 하나당 해당 저격수가 입히는 피해량이 증가합니다."],
+            "synergyAbility": ["(2) 추가 피해 8%","(4) 추가 피해 16%","(6) 추가 피해 30%"],
+            "championName": ["Caitlyn","Ashe","MissFortune","Jhin","Zeri"],
+            "championNameKr": ["케이틀린","애쉬","미스 포츈","진","제리"]
+        },
+        {
+            "type": "CLASSES",
+            "name": "Striker",
+            "nameKr": "타격대",
+            "desc": ["타격대는 추가 공격력을 얻습니다."],
+            "synergyAbility": ["(2) 공격력 +30","(4) 공격력 +65","(6) 공격력 +110"],
+            "championName": ["JarvanIV","RekSai","Gnar","Sivir","Irelia"],
+            "championNameKr": ["자르반 4세","렉사이","나르","시비르","이렐리아"]
+        },
+        {
+            "type": "CLASSES",
+            "name": "Scholar",
+            "nameKr": "학자",
+            "desc": ["2초마다 모든 아군의 마나가 회복됩니다."],
+            "synergyAbility": ["(2) 5마나","(4) 10마나","(6) 20마나"],
+            "championName": ["Kassadin","Syndra","Zyra","Renata","Silco"],
+            "championNameKr": ["카사딘","신드라","자이라","레나타 글라스크","실코"]
+        },
+        {
+            "type": "CLASSES",
+            "name": "Innovator",
+            "nameKr": "혁신가",
+            "desc": ["혁신가는 기계 동료를 만들어 전장에서 함께 싸웁니다. 기계 동료는 아군 혁신가의 별 등급에 따라 추가 체력 및 공격력을 얻습니다."],
+            "synergyAbility": ["(3) 기계 풍뎅이","(5) 기계 곰","(7) 기계 용"],
+            "championName": ["Ezreal","Singed","Zilean","Ekko","Seraphine","Jayce"],
+            "championNameKr": ["이즈리얼","신지드","질리언","에코","세라핀","제이스"]
+        }
+    ]
+}

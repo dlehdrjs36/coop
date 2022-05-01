@@ -22,7 +22,8 @@ public class ProductRepository {
 
     //삭제
     public void removeProduct(Long id) {
-        em.remove(id);
+        Product product = em.find(Product.class, id);
+        em.remove(product);
     }
 
     //수정
@@ -47,7 +48,7 @@ public class ProductRepository {
         int size = em.createQuery("select p from Product p", Product.class)
                 .getResultList()
                 .size();
-        System.out.println("size = " + size);
+
         return size;
     }
 

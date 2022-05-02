@@ -49,7 +49,7 @@ public class PostRepository {
 
     //목록 조회
     public List<Post> findPosts(int offset, int size) {
-        List<Post> findPosts = em.createQuery("select p from Post p left join fetch p.createMember order by p.group desc, p.order asc", Post.class)
+        List<Post> findPosts = em.createQuery("select p from Post p left join fetch p.createMember order by p.group desc, p.order asc, p.depth asc", Post.class)
                 .setFirstResult(offset)
                 .setMaxResults(size)
                 .getResultList();
@@ -72,10 +72,9 @@ public class PostRepository {
     }
 
     //답글 순서 정렬
-    public void orderSort(Long postId, Long depth) {
-        em.createQuery("select p from Post p where p.parent.postId = :postId and p.depth = :depth", Post.class)
+    public void orderSort(Long postId) {
+        em.createQuery("select p from Post p where p.group = :postId and p.depth > 0", Post.class)
                 .setParameter("postId", postId)
-                .setParameter("depth", depth+1)
                 .getResultList()
                 .forEach(post -> post.orderSort());
     }

@@ -63,6 +63,8 @@ public class Post extends BaseEntity {
     @Column(name = "UPDATE_MEMBER_ID")
     private String updateMemberId;
 
+    protected Post() {}
+
     public static Post createReplyPost(String title, String password, String content, String nickname, Post parent) {
         Post post = new Post();
         post.title = title;
@@ -74,7 +76,7 @@ public class Post extends BaseEntity {
         post.nickname = nickname;
         post.parent = parent;
         post.group = parent.getGroup();
-        post.order = parent.getOrder() + 1L;
+        post.order = parent.getOrder();
         post.depth = parent.getDepth() + 1L;
 
         return post;
@@ -92,7 +94,7 @@ public class Post extends BaseEntity {
         post.createMember = createMember;
         post.parent = parent;
         post.group = parent.getGroup();
-        post.order = parent.getOrder() + 1L;
+        post.order = parent.getOrder();
         post.depth = parent.getDepth() + 1L;
 
         return post;

@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -42,7 +41,7 @@ public class PostController {
     @PostMapping("/new")
     public String create(@Login MemberSessionDto loginMember, @Validated @ModelAttribute("postForm") PostCreateForm postForm, BindingResult bindingResult, Model model) {
 
-        postService.addPost(postForm, Optional.ofNullable(loginMember));
+        postService.addPost(postForm, loginMember);
 
         if (bindingResult.hasErrors()) {
             log.info("bindingResult.hasErrors={}", bindingResult);
@@ -64,7 +63,7 @@ public class PostController {
     @PostMapping("/reply")
     public String reply(@Login MemberSessionDto loginMember, @Validated @ModelAttribute("postForm") PostCreateForm postForm, BindingResult bindingResult) {
 
-        postService.addReplyPost(postForm, Optional.ofNullable(loginMember));
+        postService.addReplyPost(postForm, loginMember);
 
         if (bindingResult.hasErrors()) {
             log.info("bindingResult.hasErrors={}", bindingResult);

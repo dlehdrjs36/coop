@@ -1,22 +1,19 @@
 package com.projectteam.coop.web.member;
 
 import com.projectteam.coop.domain.Member;
-import com.projectteam.coop.domain.Product;
 import com.projectteam.coop.service.member.MemberService;
 import com.projectteam.coop.web.argumentresolver.Login;
 import com.projectteam.coop.web.session.MemberSessionDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
-import java.net.http.HttpRequest;
 
 @Controller
 @RequiredArgsConstructor
@@ -31,18 +28,7 @@ public class MemberController {
     }
 
     @PostMapping("/members/new")
-    public String create(@ModelAttribute(name = "memberForm") MemberForm memberForm, BindingResult bindingResult) {
-
-        //검증 로직
-        if (!StringUtils.hasText(memberForm.getEmail())) {
-            bindingResult.addError(new FieldError("memberForm", "email", memberForm.getEmail(), false, new String[]{"required.member.email"}, null, null));
-        }
-        if (!StringUtils.hasText(memberForm.getPassword())) {
-            bindingResult.addError(new FieldError("memberForm", "password", memberForm.getPassword(), false, new String[]{"required.member.password"}, null, null));
-        }
-        if (!StringUtils.hasText(memberForm.getName())) {
-            bindingResult.addError(new FieldError("memberForm", "name", memberForm.getName(), false, new String[]{"required.member.name"}, null, null));
-        }
+    public String create(@Validated @ModelAttribute(name = "memberForm") MemberForm memberForm, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             return "/templates/members/createMemberForm";
@@ -50,6 +36,7 @@ public class MemberController {
 
         Member member = Member.createMember(memberForm.getEmail(), memberForm.getName(), memberForm.getPassword(), Boolean.TRUE);
         memberService.addMember(member);
+
 
         return "redirect:/";
     }

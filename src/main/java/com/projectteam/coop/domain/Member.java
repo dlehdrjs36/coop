@@ -39,11 +39,7 @@ public class Member {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "member")
     private List<PurchaseList> purchaseLists = new ArrayList<>();
 
-    //연관관계 편의 메서드
-//    public void addPurchaseList(PurchaseList purchaseList) {
-//        this.purchaseLists.add(purchaseList);
-//        purchaseList.addMember(this);
-//    }
+    protected Member() {}
 
     //회원가입
     public static Member createMember(String email, String name, String password, Boolean emailReceptionType) {

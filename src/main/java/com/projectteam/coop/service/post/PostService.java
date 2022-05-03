@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional(transactionManager = "h2TxManager")
@@ -25,31 +24,31 @@ public class PostService {
     private final MemberRepository memberRepository;
     private final RecommendRepository recommendRepository;
 
-    public Long addReplyPost(PostCreateForm postForm, Optional<MemberSessionDto> memberSession) {
+    public Long addReplyPost(PostCreateForm postForm, MemberSessionDto loginMember) {
 
         Post post;
-        if(memberSession.isEmpty()) {
+        if(loginMember == null) {
             Post upperPost = postRepository.findPost(postForm.getUpperPostId());
-            postRepository.orderSort(upperPost.getPostId(), upperPost.getDepth());
+            postRepository.orderSort(upperPost.getGroup());
             post = Post.createReplyPost(postForm.getTitle(), postForm.getPassword(), postForm.getContent(), postForm.getNickname(), upperPost);
         }else {
-            MemberSessionDto session = memberSession.get();
+            MemberSessionDto session = loginMember;
             Member member = memberRepository.findMember(session.getId());
             Post upperPost = postRepository.findPost(postForm.getUpperPostId());
-            postRepository.orderSort(upperPost.getPostId(), upperPost.getDepth());
+            postRepository.orderSort(upperPost.getGroup());
             post = Post.createReplyPost(postForm.getTitle(), postForm.getPassword(), postForm.getContent(), member, upperPost);
         }
 
         return postRepository.addPost(post);
     }
 
-    public Long addPost(PostCreateForm postForm, Optional<MemberSessionDto> loginMember) {
+    public Long addPost(PostCreateForm postForm, MemberSessionDto loginMember) {
 
         Post post;
-        if(loginMember.isEmpty()) {
+        if(loginMember == null) {
             post = Post.createPost(postForm.getTitle(), postForm.getPassword(), postForm.getContent(), postForm.getNickname());
         }else {
-            MemberSessionDto session = loginMember.get();
+            MemberSessionDto session = loginMember;
             Member member = memberRepository.findMember(session.getId());
             post = Post.createPost(postForm.getTitle(), postForm.getPassword(), postForm.getContent(), member);
         }
@@ -80,11 +79,12 @@ public class PostService {
 
     //게시물 추천 등록
     public void recommend(Long memberId, Long postId) {
-        Member member = memberRepository.findMember(memberId);
-        Post post = postRepository.findPost(postId);
-
-        recommendRepository.addRecommend(Recommend.createRecommed(post, member));
-        post.recommend(recommendRepository.getPostRecommendCount(postId));
+        if (recommendRepository.findMemberRecommend(memberId, postId) == null) {
+            Member member = memberRepository.findMember(memberId);
+            Post post = postRepository.findPost(postId);
+            recommendRepository.addRecommend(Recommend.createRecommed(post, member));
+            post.recommend(recommendRepository.getPostRecommendCount(postId));
+        }
     }
 
     public int totalSize() {

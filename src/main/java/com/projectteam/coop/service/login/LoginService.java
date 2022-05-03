@@ -16,8 +16,8 @@ public class LoginService {
     private final MemberRepository memberRepository;
     private final LoginRepository loginRepository;
 
-    public void addLoginLog(LoginLog login) {
-        loginRepository.addLoginLog(login);
+    public Long addLoginLog(LoginLog login) {
+        return loginRepository.addLoginLog(login);
     }
 
     public void addPoint(Member member) {

@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 
 @Service
 @Transactional(transactionManager = "h2TxManager")
@@ -15,14 +17,26 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
 
+    //회원 가입
     public Long addMember(Member member) {
+        validateDuplicateMember(member);
         return memberRepository.addMember(member);
     }
 
+    //회원 중복 검사
+    private void validateDuplicateMember(Member member) {
+        List<Member> findMembers = memberRepository.findByEmail(member.getEmail());
+        if (!findMembers.isEmpty()) {
+            throw new IllegalStateException("이미 존재하는 회원입니다.");
+        }
+    }
+
+    //회원 수정
     public Long updateMember(MemberForm memberForm) {
         return memberRepository.updateMember(memberForm);
     }
 
+    //회원 수정
     public Long updateMember(Member member) {
         return memberRepository.updateMember(member);
     }

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.List;
 
 @Repository
 public class MemberRepository {
@@ -41,7 +42,7 @@ public class MemberRepository {
                 .getResultList()
                 .stream()
                 .findAny()
-                .orElse(null);
+                .orElseGet(() -> null);
 
         return findMember;
     }
@@ -55,9 +56,18 @@ public class MemberRepository {
                 .getResultList()
                 .stream()
                 .findAny()
-                .orElse(null);
+                .orElseGet(() -> null);
 
         return findMember;
+    }
+
+    //중복 회원 목록 조회
+    public List<Member> findByEmail(String email) {
+        List<Member> memberList = em.createQuery("SELECT m FROM Member m WHERE m.email = :email", Member.class)
+                .setParameter("email", email)
+                .getResultList();
+
+        return memberList;
     }
 
     //이메일 조회( 이메일 단독으로 조회 -> [임시 비밀번호 등록용] )
@@ -72,9 +82,8 @@ public class MemberRepository {
     }
 
     //등록
-    public Long addPoint(Member member) {
+    public void addPoint(Member member) {
         member.addPoint();
         em.merge(member);
-        return member.getId();
     }
 }

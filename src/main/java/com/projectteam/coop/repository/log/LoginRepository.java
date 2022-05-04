@@ -21,15 +21,13 @@ public class LoginRepository {
 
     //로그인 이력 조회
     public Long findLoginLog() {
-
-        System.out.println("em = " + LocalDate.now().toString());
         Long findLoginLog = em.createQuery("SELECT count(l) FROM LoginLog l WHERE substring(l.createDate, 0, 10) = :date", Long.class)
                 .setParameter("date", LocalDate.now().toString())
                 .getResultList()
                 .stream()
                 .findAny()
                 .orElseGet(() -> null);
-        System.out.println("em = " + findLoginLog);
+
         return findLoginLog;
     }
 

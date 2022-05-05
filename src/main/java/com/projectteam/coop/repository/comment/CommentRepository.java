@@ -60,10 +60,9 @@ public class CommentRepository {
     }
 
     //댓글 순서 정렬
-    public void orderSort(Long commentId, Long depth) {
-        em.createQuery("select p from Comment p where p.parent.id = :commentId and p.depth = :depth", Comment.class)
+    public void orderSort(Long commentId) {
+        em.createQuery("select p from Comment p where p.parent.id = :commentId and p.depth > 0", Comment.class)
                 .setParameter("commentId", commentId)
-                .setParameter("depth", depth+1)
                 .getResultList()
                 .forEach(Comment::orderSort);
     }

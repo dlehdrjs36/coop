@@ -5,6 +5,7 @@ import com.projectteam.coop.web.argumentresolver.Login;
 import com.projectteam.coop.web.post.CommentCreateForm;
 import com.projectteam.coop.web.session.MemberSessionDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -17,6 +18,7 @@ import java.util.Optional;
 @Controller
 @RequestMapping("/comments")
 @RequiredArgsConstructor
+@Slf4j
 public class CommentController {
 
     private final CommentService commentService;
@@ -46,6 +48,10 @@ public class CommentController {
                                       @RequestBody CommentCreateForm removeForm) {
 
         Map<String, Object> result = new HashMap<>();
+
+        if (removeForm.getPassword() == null) {
+            throw new IllegalArgumentException("미입력된 비밀번호");
+        }
 
         boolean isRemove = commentService.changeStateComment(commentId, removeForm.getPassword());
         result.put("isRemove", isRemove);

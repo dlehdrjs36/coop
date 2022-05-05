@@ -3,6 +3,7 @@ package com.projectteam.coop.service.comment;
 import com.projectteam.coop.domain.Comment;
 import com.projectteam.coop.domain.Member;
 import com.projectteam.coop.domain.Post;
+import com.projectteam.coop.exception.CommentNotFoundException;
 import com.projectteam.coop.repository.comment.CommentRepository;
 import com.projectteam.coop.repository.member.MemberRepository;
 import com.projectteam.coop.repository.post.PostRepository;
@@ -83,6 +84,8 @@ public class CommentService {
                 commentRepository.changeStateComment(comment);
                 return true;
             }
+        }else {
+            throw new CommentNotFoundException("확인 불가능한 댓글");
         }
         return false;
     }

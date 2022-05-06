@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/comments")
@@ -24,7 +23,7 @@ public class CommentController {
     private final CommentService commentService;
 
     @PostMapping("/{postId}")
-    public String create(@Login MemberSessionDto memberSessionDto,
+    public String create(@Login MemberSessionDto loginMember,
                          @Validated @ModelAttribute("commentForm") CommentCreateForm commentCreateForm,
                          BindingResult bindingResult,
                          @PathVariable Long postId) {
@@ -34,9 +33,9 @@ public class CommentController {
         }
 
         if (commentCreateForm.getUpperCommentId() == null) {
-            commentService.addComment(commentCreateForm, Optional.ofNullable(memberSessionDto));
+            commentService.addComment(commentCreateForm, loginMember);
         } else {
-            commentService.addChildComment(commentCreateForm, Optional.ofNullable(memberSessionDto));
+            commentService.addChildComment(commentCreateForm, loginMember);
         }
 
         return "redirect:/posts/" + postId;
@@ -47,16 +46,13 @@ public class CommentController {
     public Map<String, Object> delete(@PathVariable("commentId") Long commentId,
                                       @RequestBody CommentCreateForm removeForm) {
 
-        Map<String, Object> result = new HashMap<>();
-
         if (removeForm.getPassword() == null) {
-            throw new IllegalArgumentException("미입력된 비밀번호");
+            throw new IllegalArgumentException("댓글 비밀번호 미입력");
         }
 
+        Map<String, Object> result = new HashMap<>();
         boolean isRemove = commentService.changeStateComment(commentId, removeForm.getPassword());
         result.put("isRemove", isRemove);
-
         return result;
-//      bindingResult.rejectValue("password", "mismatch.commentForm.password");
     }
 }

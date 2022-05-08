@@ -29,7 +29,7 @@ public class ProductRepository {
     //수정
     public Long updateProduct(ProductForm productForm) {
         Product findProduct = em.find(Product.class, productForm.getId());
-        //findProduct.changeProduct(null, null, null, productForm.getPassword(), productForm.getTitle(), productForm.getContent(), null, null);
+        findProduct.changeProduct(productForm.getName(), productForm.getPath(), productForm.getType(), productForm.getPrice());
         return findProduct.getId();
     }
 

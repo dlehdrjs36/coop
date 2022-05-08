@@ -17,7 +17,7 @@ public class ProductService {
     private final ProductRepository productRepository;
 
     public Long addProduct(ProductForm productForm) {
-        Product product = Product.createProduct(productForm.getName(), productForm.getPath(), productForm.getPrice());
+        Product product = Product.createProduct(productForm.getName(), productForm.getPath(), productForm.getType(), productForm.getPrice());
         return productRepository.addProduct(product);
     }
 
@@ -31,7 +31,7 @@ public class ProductService {
         return productRepository.findProduct(id);
     }
 
-    public Long updatePost(ProductForm productForm) {
+    public Long updateProduct(ProductForm productForm) {
         return productRepository.updateProduct(productForm);
     }
 

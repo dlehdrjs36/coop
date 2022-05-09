@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head th:replace="templates/fragments/admin/adminHeader.html :: adminHeader"></head>
+<head th:replace="templates/fragments/admin/adminHeader :: adminHeader(~{::title})">
+    <title>에러 페이지</title>
+</head>
 <body class="app app-404-page">
     <div class="container mb-5">
         <div class="row">

@@ -26,7 +26,7 @@ public class RecommendService {
         recommedRepository.removeRecommend(memberRecommend.getId());
 
         Post post = postRepository.findPost(postId);
-        post.recommed(recommedRepository.getPostRecommendCount(postId));
+        post.recommend(recommedRepository.getPostRecommendCount(postId));
     }
 
     @Transactional(transactionManager = "h2TxManager", readOnly = true)

@@ -3,6 +3,7 @@ package com.projectteam.coop.web;
 import com.projectteam.coop.domain.Member;
 import com.projectteam.coop.domain.Post;
 import com.projectteam.coop.domain.Product;
+import com.projectteam.coop.domain.ProductType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,9 +38,9 @@ public class InitDb {
             em.persist(member2);
 
             //상품
-            Product background1 = Product.createProduct("background1", "background01.jpg", 1);
-            Product background2 = Product.createProduct("background2", "background02.jpg", 2);
-            Product background3 = Product.createProduct("background3", "background03.jpg", 3);
+            Product background1 = Product.createProduct("background1", "background01.jpg", ProductType.BACKGROUND, 1);
+            Product background2 = Product.createProduct("background2", "background02.jpg", ProductType.BACKGROUND, 2);
+            Product background3 = Product.createProduct("background3", "background03.jpg", ProductType.BACKGROUND, 3);
             em.persist(background1);
             em.persist(background2);
             em.persist(background3);

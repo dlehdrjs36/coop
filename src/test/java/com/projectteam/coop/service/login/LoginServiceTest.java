@@ -44,7 +44,7 @@ class LoginServiceTest {
         em.flush();
         assertEquals(member, memberService.findMember(addMemberId));
         assertEquals(0, member.getPoint());
-        assertEquals(0, loginRepository.findLoginLog());
+        assertEquals(0, loginRepository.findLoginLog(member));
         loginService.addPoint(member);
 
         Member changedMember = memberService.findMember(addMemberId);
@@ -65,7 +65,7 @@ class LoginServiceTest {
 
         LoginLog loginLog = LoginLog.createLoginLog(member.getEmail());
         loginService.addLoginLog(loginLog);
-        assertNotEquals(0, loginRepository.findLoginLog());
+        assertNotEquals(0, loginRepository.findLoginLog(member));
         loginService.addPoint(member);
 
         em.flush();

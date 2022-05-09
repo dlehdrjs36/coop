@@ -1,5 +1,15 @@
 package com.projectteam.coop.domain;
 
 public enum PurchaseListStatus {
-    ORDER, APPLY, UNAPPLY
+    ORDER("주문"), APPLY("적용"), UNAPPLY("미적용");
+
+    private String description;
+
+    PurchaseListStatus(String description) {
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
+    }
 }

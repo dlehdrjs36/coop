@@ -1,26 +1,56 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="templates/fragments/header.html :: header"></head>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{templates/layouts/adminBaseLayout :: layout(~{::title}, ~{::section})}">
+<head>
+    <title>상품 수정 페이지</title>
+</head>
 <body>
-<header th:replace="templates/fragments/bodyHeader.html :: bodyHeader"></header>
-
-<form th:object="${productForm}" method="post">
-    <input type="hidden" th:value="*{id}" value="">
-    <div class="form-group">
-        <label th:for="title">제목</label>
-        <input type="text" th:field="*{title}" class="form-control" placeholder="제목을 입력하세요">
-    </div>
-    <div class="form-group">
-        <label th:for="password">비밀번호</label>
-        <input type="password" th:field="*{password}" class="form-control" placeholder="비밀번호를 입력하세요">
-    </div>
-    <div class="form-group">
-        <label th:for="content">내용</label>
-        <input type="text" th:field="*{content}" class="form-control" placeholder="내용을 입력하세요">
-    </div>
-    <button type="submit" class="btn btn-primary mb-2">수정</button>
-</form>
-<br/>
-<footer th:replace="templates/fragments/footer.html :: footer"></footer>
+<section>
+<div class="app-wrapper">
+    <div class="app-content pt-3 p-md-3 p-lg-4">
+        <div class="container-xl">
+            <h1 class="app-page-title">상품</h1>
+            <div class="row g-3 mb-4 align-items-center justify-content-between">
+                <form th:action="@{/admin/products/{productId}/edit(productId=${productId})}" th:object="${productForm}" method="post">
+                    <div class="form-group mb-3">
+                        <label th:for="name">아이템명</label>
+                        <input type="text" th:field="*{name}" th:errorclass="'border border-danger'" class="form-control" placeholder="아이템명을 입력하세요">
+                        <div class="text-danger" th:errors="*{name}">
+                            아이템명 오류
+                        </div>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label th:for="type">분류</label>
+                        <select class="form-select" aria-label="Default select example" th:name="type">
+                            <option th:each="type : ${productTypes}" th:field="*{type}" th:value="${type.name()}" th:text="${type.description}"></option>
+                        </select>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label th:for="path">경로</label>
+                        <input type="text" th:field="*{path}" th:errorclass="'border border-danger'" class="form-control" placeholder="아이템 경로를 입력하세요">
+                        <div class="text-danger" th:errors="*{path}">
+                            경로 오류
+                        </div>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label th:for="price">가격</label>
+                        <input type="text" th:field="*{price}" th:errorclass="'border border-danger'" class="form-control" placeholder="가격을 입력하세요">
+                        <div class="text-danger" th:errors="*{price}">
+                            가격 오류
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label th:for="status">상태</label>
+                        <select class="form-select" aria-label="Default select example" th:name="status">
+                            <option value="Y">사용</option>
+                            <option value="N">미사용</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="mt-2 btn btn-primary">수정</button>
+                </form>
+            </div>
+        </div><!--//container-fluid-->
+    </div><!--//app-content-->
+</div>
+</section>
 </body>
 </html>

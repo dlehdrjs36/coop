@@ -1,6 +1,7 @@
 package com.projectteam.coop.web.product;
 
 import com.projectteam.coop.domain.Product;
+import com.projectteam.coop.domain.ProductType;
 import com.projectteam.coop.service.member.MemberService;
 import com.projectteam.coop.service.product.ProductService;
 import com.projectteam.coop.util.Paging;
@@ -8,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,6 +20,12 @@ import java.util.List;
 public class ProductController {
     private final ProductService productService;
     private final MemberService memberService;
+
+
+    @ModelAttribute("productTypes")
+    public ProductType[] productType() {
+        return ProductType.values();
+    }
 
     @GetMapping
     public String productList(@RequestParam(value = "page", defaultValue = "1") Integer page, Model model) {
@@ -40,8 +48,7 @@ public class ProductController {
     }
 
     @PostMapping("/new")
-    public String create(@ModelAttribute("productForm") ProductForm productForm, BindingResult bindingResult) {
-
+    public String create(@Validated @ModelAttribute("productForm") ProductForm productForm, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "/templates/products/createProductForm";
         }
@@ -49,4 +56,25 @@ public class ProductController {
         productService.addProduct(productForm);
         return "redirect:/admin/products";
     }
+
+    @GetMapping("/{productId}/edit")
+    public String updateForm(@PathVariable Long productId, Model model) {
+        Product product = productService.findProduct(productId);
+        model.addAttribute("productForm", product);
+        return "/templates/products/updateProductForm";
+    }
+
+    @PostMapping("/{productId}/edit")
+    public String update(@PathVariable Long productId, @Validated @ModelAttribute("productForm") ProductForm productForm, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "/templates/products/updateProductForm";
+        }
+
+        System.out.println("productId = " + productId);
+        System.out.println("productId = " + productForm.getId());
+        productForm.setId(productId);
+        productService.updateProduct(productForm);
+        return "redirect:/admin/products";
+    }
+
 }

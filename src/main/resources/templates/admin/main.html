@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymleaf.org">
-<head th:replace="templates/fragments/admin/adminHeader.html :: adminHeader"></head>
-<body class="app">
-    <header th:replace="templates/fragments/admin/adminBodyHeader.html :: adminBodyHeader"></header>
+<html lang="ko" xmlns:th="http://www.thymleaf.org" th:replace="~{templates/layouts/adminBaseLayout :: layout(~{::title}, ~{::section})}">
+<head>
+    <title>관리자 페이지 메인화면</title>
+</head>
+<body>
+<section>
     <div class="app-wrapper">
         <div class="app-content pt-3 p-md-3 p-lg-4">
             <div class="container-xl">
@@ -425,9 +427,9 @@
     <!--        &lt;!&ndash;//container-fluid&ndash;&gt;-->
     <!--    </div>-->
     <!--    &lt;!&ndash;//app-content&ndash;&gt;-->
-
-    </div><!--//app-wrapper-->
-    <footer th:replace="templates/fragments/admin/adminFooter.html :: adminFooter"></footer>
+            </div><!--//app-wrapper-->
+        </div>
+    </div>
     <!-- Javascript -->
     <script th:src="@{/js/plugins/popper.min.js}"></script>
     <script th:src="@{/js/bootstrap/bootstrap.bundle.js}"></script>
@@ -438,5 +440,6 @@
 
     <!-- Page Specific JS -->
     <script th:src="@{/js/admin/app.js}"></script>
+</section>
 </body>
 </html>

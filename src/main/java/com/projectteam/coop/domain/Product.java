@@ -36,14 +36,22 @@ public class Product extends BaseEntity {
 
 
     //상품 등록
-    public static Product createProduct(String name, String path, Integer price) {
+    public static Product createProduct(String name, String path, ProductType type, Integer price) {
         Product product = new Product();
         product.name = name;
         product.path = path;
-        product.type = ProductType.BACKGROUND;
+        product.type = type;
         product.price = price;
         product.status = ProductStatus.Y;
 
         return product;
+    }
+
+    //상품 수정
+    public void changeProduct(String name, String path, ProductType type, Integer price) {
+        this.name = name;
+        this.path = path;
+        this.type = type;
+        this.price = price;
     }
 }

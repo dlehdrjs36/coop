@@ -1,6 +1,7 @@
 package com.projectteam.coop.repository.purchaselist;
 
 import com.projectteam.coop.domain.PurchaseList;
+import com.projectteam.coop.web.session.MemberSessionDto;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -21,12 +22,14 @@ public class PurchaseListRepository {
 
     //삭제
     public void removePurchaseList(Long id) {
-        em.remove(id);
+        PurchaseList purchaseList = em.find(PurchaseList.class, id);
+        em.remove(purchaseList);
     }
 
     //목록 조회
-    public List<PurchaseList> findPurchaseList(int offset, int size) {
-        List<PurchaseList> findPurchaseList = em.createQuery("select p from PurchaseList p join fetch p.product", PurchaseList.class)
+    public List<PurchaseList> findPurchaseList(MemberSessionDto loginMember, int offset, int size) {
+        List<PurchaseList> findPurchaseList = em.createQuery("select p from PurchaseList p join fetch p.product where p.member.email = :email", PurchaseList.class)
+                .setParameter("email", loginMember.getEmail())
                 .setFirstResult(offset)
                 .setMaxResults(size)
                 .getResultList();
@@ -42,15 +45,47 @@ public class PurchaseListRepository {
 
         return memberPurchaseList;
     }
-    //단건 조회
-    public Long orderApply(Long id) {
+
+    //회원 적용 아이콘 조회
+    public PurchaseList memberApplyIcon(String email) {
+        PurchaseList result = em.createQuery("select p from PurchaseList p join fetch p.product join fetch p.member where p.member.email = :email and p.status = 'APPLY' and p.product.type = 'ICON'", PurchaseList.class)
+                .setParameter("email", email)
+                .getResultList()
+                .stream()
+                .findAny()
+                .orElseGet(() -> null);;
+
+        return result;
+    }
+
+    //회원 구매 배경 상품 적용
+    public Long orderBackgroundApply(Long id) {
+        em.createQuery("select p from PurchaseList p where p.id <> :orderId and p.product.type = 'BACKGROUND'", PurchaseList.class)
+                .setParameter("orderId", id)
+                .getResultList()
+                .forEach((purchaseList) -> purchaseList.unapply());
+
         PurchaseList purchaseList = em.find(PurchaseList.class, id);
         purchaseList.apply();
 
         return purchaseList.getId();
     }
 
-    public Long orderUnApply(Long id) {
+    //회원 구매 아이콘 상품 적용
+    public Long orderIconApply(Long id) {
+        em.createQuery("select p from PurchaseList p where p.id <> :orderId and p.product.type = 'ICON'", PurchaseList.class)
+                .setParameter("orderId", id)
+                .getResultList()
+                .forEach((purchaseList) -> purchaseList.unapply());
+
+        PurchaseList purchaseList = em.find(PurchaseList.class, id);
+        purchaseList.apply();
+
+        return purchaseList.getId();
+    }
+
+    //회원 구매 배경, 아이콘 상품 미적용
+    public Long orderUnapply(Long id) {
         PurchaseList purchaseList = em.find(PurchaseList.class, id);
         purchaseList.unapply();
 

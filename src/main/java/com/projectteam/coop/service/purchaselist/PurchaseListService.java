@@ -3,6 +3,7 @@ package com.projectteam.coop.service.purchaselist;
 import com.projectteam.coop.domain.Member;
 import com.projectteam.coop.domain.Product;
 import com.projectteam.coop.domain.PurchaseList;
+import com.projectteam.coop.repository.member.MemberRepository;
 import com.projectteam.coop.repository.purchaselist.PurchaseListRepository;
 import com.projectteam.coop.web.session.MemberSessionDto;
 import lombok.RequiredArgsConstructor;
@@ -17,10 +18,12 @@ import java.util.List;
 public class PurchaseListService {
 
     private final PurchaseListRepository purchaseListRepository;
+    private final MemberRepository memberRepository;
 
-    public Long addPurchaseList(Product product, Member member) {
+    public void addPurchaseList(Product product, Member member) {
         PurchaseList purchaseList = PurchaseList.addPurchaseList(product, member);
-        return purchaseListRepository.addPurchaseList(purchaseList);
+        purchaseListRepository.addPurchaseList(purchaseList);
+        memberRepository.updateMember(member);
     }
 
     @Transactional(transactionManager = "h2TxManager", readOnly = true)

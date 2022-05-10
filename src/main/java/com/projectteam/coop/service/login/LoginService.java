@@ -21,7 +21,7 @@ public class LoginService {
     }
 
     public void addPoint(Member member) {
-        if (loginRepository.findLoginLog() == 1) {
+        if (loginRepository.findLoginLog(member) == 1) {
             memberRepository.addPoint(member);
         }
     }

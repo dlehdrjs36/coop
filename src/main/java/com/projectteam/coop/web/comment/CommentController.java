@@ -29,7 +29,9 @@ public class CommentController {
                          @PathVariable Long postId) {
 
         if (bindingResult.hasErrors()) {
-            return "redirect:/posts/" + postId;
+            if (!(bindingResult.getErrorCount() == 1 && loginMember != null && bindingResult.getFieldError("nickname") != null)) {
+                return "redirect:/posts/" + postId;
+            }
         }
 
         if (commentCreateForm.getUpperCommentId() == null) {

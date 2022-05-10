@@ -1,40 +1,34 @@
 package com.projectteam.coop.web.order;
 
-import com.projectteam.coop.domain.Member;
-import com.projectteam.coop.domain.Product;
-import com.projectteam.coop.domain.PurchaseList;
+import com.projectteam.coop.domain.*;
 import com.projectteam.coop.service.member.MemberService;
 import com.projectteam.coop.service.product.ProductService;
 import com.projectteam.coop.service.purchaselist.PurchaseListService;
 import com.projectteam.coop.util.Paging;
 import com.projectteam.coop.web.argumentresolver.Login;
+import com.projectteam.coop.web.product.ProductForm;
 import com.projectteam.coop.web.session.MemberSessionDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
 @Slf4j
+@RequestMapping("/orders")
 public class OrderController {
     private final ProductService productService;
     private final MemberService memberService;
     private final PurchaseListService purchaseListService;
 
-    @PostMapping("/orders/{id}")
+    @PostMapping("/{id}")
     public String buy(@Login MemberSessionDto loginMember, @PathVariable Long id) {
-
-        //세션에 회원 데이터 없는 경우
-        if (loginMember == null) {
-            return "redirect:/login";
-        }
 
         Product product = productService.findProduct(id);
         Member member = memberService.findMember(loginMember.getId());
@@ -54,13 +48,13 @@ public class OrderController {
         return "redirect:/login";
     }
 
-    @GetMapping("/orders")
-    public String list(@RequestParam(value = "page", defaultValue = "1") Integer page, Model model) {
+    @GetMapping
+    public String list(@Login MemberSessionDto loginMember, @RequestParam(value = "page", defaultValue = "1") Integer page, Model model) {
 
         Paging paging = new Paging();
         paging.calculateTotalPage(purchaseListService.totalSize());
 
-        List<PurchaseList> findPurchaseList = purchaseListService.findPurchaseList(Paging.calculateStartOffset(page), Paging.calculateLastOffset(page));
+        List<PurchaseList> findPurchaseList = purchaseListService.findPurchaseList(loginMember, Paging.calculateStartOffset(page), Paging.calculateLastOffset(page));
 
         model.addAttribute("paging", paging);
         model.addAttribute("purchaseList", findPurchaseList);
@@ -68,16 +62,32 @@ public class OrderController {
         return "/templates/orders/orderList";
     }
 
-    @PostMapping("/orders/{orderId}/apply")
-    public String orderApply(@PathVariable("orderId") Long orderId) {
-        purchaseListService.orderApply(orderId);
-        return "redirect:/orders";
+    @PostMapping("/{orderId}/apply")
+    @ResponseBody
+    public Map<String, Object> orderApply(@PathVariable("orderId") Long orderId, @RequestBody ProductForm productForm) {
+        Map<String, Object> result = new HashMap<>();
+        result.put("applyAt", "N");
+        if (productForm.getType().equals(ProductType.BACKGROUND)) {
+            purchaseListService.orderBackgroundApply(orderId);
+            result.put("applyAt", "Y");
+        } else {
+            purchaseListService.orderIconApply(orderId);
+            result.put("applyAt", "Y");
+        }
+
+        return result;
     }
 
-    @PostMapping("/orders/{orderId}/unapply")
-    public String orderUnApply(@PathVariable("orderId") Long orderId) {
-        purchaseListService.orderUnApply(orderId);
-        return "redirect:/orders";
+    @PostMapping("/{orderId}/unapply")
+    @ResponseBody
+    public Map<String, Object> orderUnApply(@PathVariable("orderId") Long orderId) {
+        Map<String, Object> result = new HashMap<>();
+        result.put("applyAt", "N");
+
+        purchaseListService.orderUnapply(orderId);
+        result.put("applyAt", "Y");
+
+        return result;
     }
 
 }

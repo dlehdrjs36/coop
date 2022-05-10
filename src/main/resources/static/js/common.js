@@ -45,20 +45,69 @@ function buyProduct(id) {
     form.submit();
 }
 
-function orderApply(id) {
-    var form = document.createElement("form");
-    form.setAttribute("method", "post");
-    form.setAttribute("action", "/orders/" + id + "/apply");
-    document.body.appendChild(form);
-    form.submit();
+function orderApply() {
+    const orderId = this.dataset.orderid;
+    const orderStatus = this.dataset.status;
+    const productType = this.dataset.type;
+    const buttonElement = this;
+
+    if(orderStatus == "적용") {
+        alert("이미 적용된 상품 입니다.");
+        return false;
+    }
+
+    fetch("/orders/" + orderId + "/apply", {
+        method: 'post',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+            type : productType
+        })
+    }).then(res => {
+        return res.json();
+    }).then(data => { //응답 결과를 json으로 파싱
+        if (data.applyAt == "Y") {
+            buttonElement.parentNode.childNodes[3].textContent = "적용";
+            buttonElement.dataset.status = "적용";
+            alert("상품이 적용되었습니다.");
+        } else {
+            alert("상품 적용에 실패하였습니다.");
+        }
+    }).catch(err => { // 오류 발생시 오류를 담아서 보여줌
+        console.log('Fetch Error', err);
+    });
 }
 
-function orderUnApply(id) {
-    var form = document.createElement("form");
-    form.setAttribute("method", "post");
-    form.setAttribute("action", "/orders/" + id + "/unapply");
-    document.body.appendChild(form);
-    form.submit();
+function orderUnapply() {
+    const orderId = this.dataset.orderid;
+    const orderStatus = this.dataset.status;
+    const buttonElement = this;
+
+    if(orderStatus == "미적용") {
+        alert("이미 미적용된 상품 입니다.");
+        return false;
+    }
+
+    fetch("/orders/" + orderId + "/unapply", {
+        method: 'post',
+        headers: {
+            'Accept': 'application/json'
+        }
+    }).then(res => {
+        return res.json();
+    }).then(data => { //응답 결과를 json으로 파싱
+        if (data.applyAt == "Y") {
+            buttonElement.parentNode.childNodes[3].textContent = "미적용";
+            buttonElement.dataset.status = "미적용";
+            alert("상품이 미적용되었습니다.");
+        } else {
+            alert("상품 미적용에 실패하였습니다.");
+        }
+    }).catch(err => { // 오류 발생시 오류를 담아서 보여줌
+        console.log('Fetch Error', err);
+    });
 }
 
 function recommend(id){
@@ -89,12 +138,24 @@ function recommend(id){
 
 document.addEventListener("DOMContentLoaded", ready)
 function ready() {
+    //상품 적용
+    const applyBtn = document.querySelectorAll(".productApply");
+    for (let i = 0; i < applyBtn.length; i++) {
+        applyBtn[i].addEventListener('click', orderApply);
+    }
+
+    //상품 미적용
+    const unApplyBtn = document.querySelectorAll(".productUnApply");
+    for (let i = 0; i < unApplyBtn.length; i++) {
+        unApplyBtn[i].addEventListener('click', orderUnapply);
+    }
+
     //대댓글 입력 폼
     const comments = document.querySelectorAll(".parentComment");
     for (var i = 0; i < comments.length; i++) {
         comments[i].addEventListener('click', createCommentForm);
     }
-
+    //댓글 삭제 폼
     const removeIcons = document.querySelectorAll(".removeComment");
     for (var j = 0; j < removeIcons.length; j++) {
         removeIcons[j].addEventListener('click', removeCommentForm);
@@ -238,9 +299,24 @@ function removeComment() {
         //삭제된 경우
         if (data.isRemove) {
             let removeForm = document.querySelector(".removeCommentForm");
+
+            //댓글 내용 변경
             let commentDiv = removeForm.parentNode;
             commentDiv.classList.add("align-self-center");
             commentDiv.innerHTML = "<span>삭제된 댓글 입니다.</span>";
+
+            //댓글 아이콘 변경
+            let iconDiv = commentDiv.previousSibling.previousSibling;
+            if (iconDiv.nodeName == "DIV") {
+                while (iconDiv.hasChildNodes()) {	// 부모노드가 자식이 있는지 여부를 알아낸다
+                    iconDiv.removeChild(iconDiv.firstChild);
+                }
+                let imgElement = document.createElement("img");
+                imgElement.setAttribute("src", "https://dummyimage.com/50x50/ced4da/6c757d.jpg");
+                imgElement.setAttribute("class", "rounded-circle");
+                imgElement.setAttribute("alt", "댓글 아이콘");
+                iconDiv.appendChild(imgElement);
+            }
             removeForm.remove(); //댓글 삭제 폼 삭제
             alert("댓글이 삭제되었습니다.");
         } else {

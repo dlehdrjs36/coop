@@ -18,6 +18,8 @@ public class LoginLog {
     @Column(name = "CREATE_DATE")
     private LocalDateTime createDate;
 
+    protected LoginLog() { }
+
     public static LoginLog createLoginLog(String email) {
         LoginLog loginLog = new LoginLog();
         loginLog.email = email;

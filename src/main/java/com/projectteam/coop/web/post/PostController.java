@@ -3,8 +3,10 @@ package com.projectteam.coop.web.post;
 import com.projectteam.coop.domain.Comment;
 import com.projectteam.coop.domain.Member;
 import com.projectteam.coop.domain.Post;
+import com.projectteam.coop.domain.PurchaseList;
 import com.projectteam.coop.service.comment.CommentService;
 import com.projectteam.coop.service.post.PostService;
+import com.projectteam.coop.service.purchaselist.PurchaseListService;
 import com.projectteam.coop.service.recommed.RecommendService;
 import com.projectteam.coop.util.Paging;
 import com.projectteam.coop.web.argumentresolver.Login;
@@ -31,6 +33,7 @@ public class PostController {
     private final PostService postService;
     private final RecommendService recommedService;
     private final CommentService commentService;
+    private final PurchaseListService purchaseListService;
 
     @GetMapping("/new")
     public String createForm(Model model) {
@@ -100,11 +103,27 @@ public class PostController {
         paging.calculateTotalPage(commentService.totalSize());
 
         List<Comment> findComments = commentService.findComments(Paging.calculateStartOffset(page), Paging.calculateLastOffset(page), postId);
+        Map<String, Object> memberApplyIcon = getMemberApplyIcon(findComments);
+
         model.addAttribute("paging", paging);
         model.addAttribute("comments", findComments);
+        model.addAttribute("commentsIcon", memberApplyIcon);
         model.addAttribute("commentForm", new CommentCreateForm());
 
         return "/templates/posts/postInfo";
+    }
+
+    private Map<String, Object> getMemberApplyIcon(List<Comment> findComments) {
+        Map<String, Object> memberApplyIcon = new HashMap();
+        findComments.stream()
+            .filter((comment) -> comment.getCreateMember() != null)
+            .forEach((comment) -> {
+                PurchaseList purchaseList = purchaseListService.memberApplyIcon(comment.getCreateMember().getEmail());
+                if (purchaseList != null) {
+                    memberApplyIcon.put(String.valueOf(comment.getId()), purchaseList.getProduct().getPath());
+                }
+            });
+        return memberApplyIcon;
     }
 
     @GetMapping("/{postId}/edit")

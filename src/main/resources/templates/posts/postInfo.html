@@ -34,9 +34,9 @@
           <form class="mb-4" th:action="@{/comments/{postId}(postId=${post.postId})}" th:object="${commentForm}" method="post">
             <div>
               <input type="hidden" th:value="${post.postId}" th:field="${post.postId}">
-              <label th:for="nickname">닉네임</label>
-              <input type="text" class="form-control" th:errorclass="'border border-danger'" th:field="*{nickname}" placeholder="닉네임을 입력하세요">
-              <div class="text-danger mb-2" th:errors="*{nickname}">
+              <label th:for="nickname" th:if="${session.loginMember eq null}">닉네임</label>
+              <input type="text" class="form-control" th:errorclass="'border border-danger'" th:field="*{nickname}" placeholder="닉네임을 입력하세요" th:if="${session.loginMember eq null}">
+              <div class="text-danger mb-2" th:errors="*{nickname}" th:if="${session.loginMember eq null}">
                 닉네임 오류
               </div>
               <label th:for="password">비밀번호</label>
@@ -56,9 +56,11 @@
             <th:block th:if="${comment.depth eq 0}" th:utext="|&lt;div class='d-flex mb-4' &gt;|"></th:block>
             <!-- 부모 댓글 -->
             <div class="flex-shrink-0" th:unless="${comment.depth gt 0}">
-              <img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="...">
+              <img th:if="${commentsIcon['__${comment.id}__'] eq null and comment.status}" class="rounded-circle" src="/img/product/icon01.png" alt="댓글 아이콘">
+              <img th:if="${commentsIcon['__${comment.id}__'] ne null and comment.status}" class="rounded-circle" th:src="'/img/product/' + ${commentsIcon['__${comment.id}__']}" src="/img/product/icon01.png" alt="댓글 아이콘">
+              <img th:unless="${comment.status}" class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="댓글 아이콘">
             </div>
-              <div class="ms-6" th:classappend="${comment.status} ? _ : 'align-self-center'">
+              <div class="ms-3" th:classappend="${comment.status} ? _ : 'align-self-center'">
                 <th:block th:unless="${comment.depth gt 0}">
                   <div class="fw-bold" th:text="${comment.status} ? ${comment.nickname} : _ "></div>
                   <div class="commentContent">
@@ -74,7 +76,9 @@
                 <th:block th:if="${comment.depth gt 0}">
                   <div class="d-flex mt-4 mb-4">
                     <div class="flex-shrink-0">
-                      <img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="...">
+                      <img th:if="${commentsIcon['__${comment.id}__'] eq null and comment.status}" class="rounded-circle" src="/img/product/icon01.png" alt="댓글 아이콘">
+                      <img th:if="${commentsIcon['__${comment.id}__'] ne null and comment.status}" class="rounded-circle" th:src="'/img/product/' + ${commentsIcon['__${comment.id}__']}" src="/img/product/icon01.png" alt="댓글 아이콘">
+                      <img th:unless="${comment.status}" class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="댓글 아이콘">
                     </div>
                     <div class="ms-3" th:classappend="${comment.status} ? _ : 'align-self-center'">
                       <div class="fw-bold" th:text="${comment.status} ? ${comment.nickname} : _ "></div>

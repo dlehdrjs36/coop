@@ -6,18 +6,20 @@
         <header th:replace="templates/fragments/bodyHeader.html :: bodyHeader"></header>
     </div>
     <div class="container mt-5">
-        <table class="table table-bordered">
-            <thead>
-                <tr>
+        <div class="table-responsive">
+        <table class="table table align-items-center table-flush">
+            <thead class="thead-light">
+                <tr class="table-light">
                     <th scope="col">번호</th>
                     <th scope="col">제목</th>
                     <th scope="col">조회수</th>
                     <th scope="col">추천수</th>
                     <th scope="col">작성자</th>
+                    <th scope="col">작성일</th>
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="post : ${posts}">
+                <tr class="table-light" th:each="post : ${posts}">
                     <td th:text="${postStat.count}"></td>
                     <td>
                         <span th:if="${post.depth gt 0}">
@@ -35,9 +37,10 @@
                 </tr>
             </tbody>
         </table>
-        <button class="btn btn-info" type="button" onclick="location.href='/posts/new'">게시물 등록</button>
+        </div>
+        <button class="btn btn-primary" type="button" onclick="location.href='/posts/new'">게시물 등록</button>
         <nav aria-label="Page navigation example m-3">
-            <ul class="pagination">
+            <ul class="pagination justify-content-center">
                 <li class="page-item">
                     <a class="page-link" href="#" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>

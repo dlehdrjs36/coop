@@ -83,14 +83,14 @@ public class OrderController {
 
     @PostMapping("/{orderId}/apply")
     @ResponseBody
-    public Map<String, Object> orderApply(@PathVariable("orderId") Long orderId, @RequestBody ProductForm productForm) {
+    public Map<String, Object> orderApply(@Login MemberSessionDto loginMember, @PathVariable("orderId") Long orderId, @RequestBody ProductForm productForm) {
         Map<String, Object> result = new HashMap<>();
         result.put("applyAt", "N");
         if (productForm.getType().equals(ProductType.BACKGROUND)) {
-            purchaseListService.orderBackgroundApply(orderId);
+            purchaseListService.orderBackgroundApply(loginMember, orderId);
             result.put("applyAt", "Y");
         } else {
-            purchaseListService.orderIconApply(orderId);
+            purchaseListService.orderIconApply(loginMember, orderId);
             result.put("applyAt", "Y");
         }
 
@@ -99,11 +99,11 @@ public class OrderController {
 
     @PostMapping("/{orderId}/unapply")
     @ResponseBody
-    public Map<String, Object> orderUnApply(@PathVariable("orderId") Long orderId) {
+    public Map<String, Object> orderUnApply(@Login MemberSessionDto loginMember, @PathVariable("orderId") Long orderId) {
         Map<String, Object> result = new HashMap<>();
         result.put("applyAt", "N");
 
-        purchaseListService.orderUnapply(orderId);
+        purchaseListService.orderUnapply(loginMember, orderId);
         result.put("applyAt", "Y");
 
         return result;

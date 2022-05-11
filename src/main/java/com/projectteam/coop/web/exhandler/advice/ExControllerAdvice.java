@@ -64,6 +64,14 @@ public class ExControllerAdvice {
 
     @ExceptionHandler
     @ResponseBody
+    public ResponseEntity<ErrorResult> authorityExHandler(NoAuthorityException e) {
+        log.error("[exceptionHandler] ex", e);
+        ErrorResult errorResult = new ErrorResult("NO_AUTHORITY", e.getMessage());
+        return new ResponseEntity<>(errorResult, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler
+    @ResponseBody
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorResult exHandler(Exception e) {
         log.error("[exceptionHandler] ex", e);

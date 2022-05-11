@@ -42,18 +42,18 @@ public class PurchaseListService {
     }
 
     //상품(배경) 적용
-    public void orderBackgroundApply(Long id) {
-        purchaseListRepository.orderBackgroundApply(id);
+    public void orderBackgroundApply(MemberSessionDto loginMember, Long id) {
+        purchaseListRepository.orderBackgroundApply(loginMember, id);
     }
 
     //상품(아이콘) 적용
-    public void orderIconApply(Long id) {
-        purchaseListRepository.orderIconApply(id);
+    public void orderIconApply(MemberSessionDto loginMember, Long id) {
+        purchaseListRepository.orderIconApply(loginMember, id);
     }
 
     //상품(배경, 아이콘) 미적용
-    public void orderUnapply(Long id) {
-        purchaseListRepository.orderUnapply(id);
+    public void orderUnapply(MemberSessionDto loginMember, Long id) {
+        purchaseListRepository.orderUnapply(loginMember, id);
     }
 
     public int totalSize() {

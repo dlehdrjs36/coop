@@ -1,6 +1,12 @@
 package com.projectteam.coop.web.order;
 
-import com.projectteam.coop.domain.*;
+import com.projectteam.coop.domain.Member;
+import com.projectteam.coop.domain.Product;
+import com.projectteam.coop.domain.ProductType;
+import com.projectteam.coop.domain.PurchaseList;
+import com.projectteam.coop.exception.DuplicatePurchaseProductException;
+import com.projectteam.coop.exception.NoMemberSessionException;
+import com.projectteam.coop.exception.NoPointException;
 import com.projectteam.coop.service.member.MemberService;
 import com.projectteam.coop.service.product.ProductService;
 import com.projectteam.coop.service.purchaselist.PurchaseListService;
@@ -27,25 +33,38 @@ public class OrderController {
     private final MemberService memberService;
     private final PurchaseListService purchaseListService;
 
-    @PostMapping("/{id}")
-    public String buy(@Login MemberSessionDto loginMember, @PathVariable Long id) {
+    @PostMapping("/{productId}")
+    @ResponseBody
+    public Map<String, Object> buy(@Login MemberSessionDto loginMember, @PathVariable Long productId) {
 
-        Product product = productService.findProduct(id);
+        Map<String, Object> result = new HashMap<>();
+
+        Product product = productService.findProduct(productId);
         Member member = memberService.findMember(loginMember.getId());
+
+        List<PurchaseList> purchaseLists = purchaseListService.memberPurchaseList(member.getEmail());
+        long purchaseCount = purchaseLists.stream()
+                .filter(purchaseList -> purchaseList.getProduct().getId() == productId)
+                .count();
+
+        if (purchaseCount >= 1) {
+            throw new DuplicatePurchaseProductException("이미 구매한 상품입니다.");
+        }
+
         if (member != null) {
             if (member.buyProduct(product.getPrice())) {
                 //구매성공
                 purchaseListService.addPurchaseList(product, member);
-                memberService.updateMember(member);
                 loginMember.setPoint(member.getPoint());
-                return "redirect:/";
+                result.put("code", "Y");
+                result.put("message", "상품을 구매하였습니다.");
+                return result;
             }
             //포인트 부족
-            return "redirect:/shop";
-
+            throw new NoPointException("포인트가 부족합니다.");
         }
-        //회원 정보 없음
-        return "redirect:/login";
+        //회원 세션정보 없음
+        throw new NoMemberSessionException("로그인 정보가 없습니다.");
     }
 
     @GetMapping

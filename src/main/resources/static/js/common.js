@@ -37,12 +37,26 @@ function logout() {
     form.submit();
 }
 
-function buyProduct(id) {
-    var form = document.createElement("form");
-    form.setAttribute("method", "post");
-    form.setAttribute("action", "/orders/" + id);
-    document.body.appendChild(form);
-    form.submit();
+function buyProduct() {
+    const productId = this.dataset.productid;
+
+    fetch("/orders/" + productId, { // url 입력 및 [options] 값 설정
+        method: 'post',
+        headers: {
+            'Accept': 'application/json'
+        }
+    }).then(res => {
+        return res.json();
+    }).then(data => { //응답 결과를 json으로 파싱
+        alert(data.message);
+        if (data.code == "Y") {
+            location.href = "/shop";
+        }else if (data.code == "NO_SESSION") {
+            location.href = "/login";
+        }
+    }).catch(err => { // 오류 발생시 오류를 담아서 보여줌
+        console.log('Fetch Error', err);
+    });
 }
 
 function orderApply() {
@@ -138,6 +152,12 @@ function recommend(id){
 
 document.addEventListener("DOMContentLoaded", ready)
 function ready() {
+    //상품 구매
+    const buyBtn = document.querySelectorAll(".productBuy");
+    for (let i = 0; i < buyBtn.length; i++) {
+        buyBtn[i].addEventListener('click', buyProduct);
+    }
+
     //상품 적용
     const applyBtn = document.querySelectorAll(".productApply");
     for (let i = 0; i < applyBtn.length; i++) {

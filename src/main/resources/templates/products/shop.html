@@ -9,7 +9,7 @@
         <div class="row justify-content-start">
             <div class="col-6 align-self-start mt-4" th:each="product : ${products}">
                 <div class="card border border-success" style="max-width: 540px;">
-                    <div class="row g-0">
+                    <div class="row g-0" th:classappend="${purchaseProducts['__${product.id}__'] ne null} ? 'bg-warning'">
                         <div class="col-md-4">
                             <img class="img-thumbnail img-fluid rounded-start h-100" th:src="'/img/product/' + ${product.path}" alt="...">
                         </div>
@@ -20,7 +20,8 @@
                             <div class="card-body">
                                 <h5 class="card-title" th:text="${product.name}"></h5>
                                 <p class="card-text"><small class="text-muted" th:text="|가격: ${product.price}포인트|"></small></p>
-                                <button type="button" class="btn btn-success" th:onclick="'buyProduct(' + ${product.id} + ')'">구매</button>
+                                <button th:if="${purchaseProducts['__${product.id}__'] eq null}" type="button" class="btn btn-success productBuy" th:data-productid="${product.id}">구매</button>
+                                <p th:if="${purchaseProducts['__${product.id}__'] ne null}">구매 완료</p>
                             </div>
                         </div>
                     </div>

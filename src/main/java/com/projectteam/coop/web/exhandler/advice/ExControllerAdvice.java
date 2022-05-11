@@ -1,7 +1,6 @@
 package com.projectteam.coop.web.exhandler.advice;
 
-import com.projectteam.coop.exception.CommentNotFoundException;
-import com.projectteam.coop.exception.MisMatchedPasswordException;
+import com.projectteam.coop.exception.*;
 import com.projectteam.coop.web.exhandler.ErrorResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -36,6 +35,30 @@ public class ExControllerAdvice {
     public ResponseEntity<ErrorResult> commentExHandler(MisMatchedPasswordException e) {
         log.error("[exceptionHandler] ex", e);
         ErrorResult errorResult = new ErrorResult("MISMATCHED_PASSWORD", e.getMessage());
+        return new ResponseEntity<>(errorResult, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler
+    @ResponseBody
+    public ResponseEntity<ErrorResult> purchaseListExHandler(NoPointException e) {
+        log.error("[exceptionHandler] ex", e);
+        ErrorResult errorResult = new ErrorResult("NO_POINT", e.getMessage());
+        return new ResponseEntity<>(errorResult, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler
+    @ResponseBody
+    public ResponseEntity<ErrorResult> memberSessionExHandler(NoMemberSessionException e) {
+        log.error("[exceptionHandler] ex", e);
+        ErrorResult errorResult = new ErrorResult("NO_SESSION", e.getMessage());
+        return new ResponseEntity<>(errorResult, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler
+    @ResponseBody
+    public ResponseEntity<ErrorResult> productExHandler(DuplicatePurchaseProductException e) {
+        log.error("[exceptionHandler] ex", e);
+        ErrorResult errorResult = new ErrorResult("PURCHASE_DUPLICATE", e.getMessage());
         return new ResponseEntity<>(errorResult, HttpStatus.BAD_REQUEST);
     }
 

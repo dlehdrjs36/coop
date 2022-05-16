@@ -5,6 +5,7 @@ import com.projectteam.coop.domain.Post;
 import com.projectteam.coop.domain.Recommend;
 import com.projectteam.coop.repository.member.MemberRepository;
 import com.projectteam.coop.repository.post.PostRepository;
+import com.projectteam.coop.web.post.PostSearch;
 import com.projectteam.coop.repository.recommed.RecommendRepository;
 import com.projectteam.coop.web.post.PostCreateForm;
 import com.projectteam.coop.web.post.PostUpdateForm;
@@ -62,8 +63,8 @@ public class PostService {
     }
 
     @Transactional(transactionManager = "h2TxManager", readOnly = true)
-    public List<Post> findPosts(int offset, int size) {
-        return postRepository.findPosts(offset, size);
+    public List<Post> findPosts(PostSearch postSearch, int offset, int size) {
+        return postRepository.findPosts(postSearch, offset, size);
     }
 
     public Post findPost(Long id) {
@@ -87,6 +88,7 @@ public class PostService {
         }
     }
 
+    //전체 게시물 수
     public int totalSize() {
         return postRepository.getTotalSize();
     }

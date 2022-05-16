@@ -1,11 +1,17 @@
 package com.projectteam.coop.repository.post;
 
 import com.projectteam.coop.domain.Post;
+import com.projectteam.coop.web.post.PostSearch;
+import com.projectteam.coop.web.post.PostSearchType;
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
+
+import static com.projectteam.coop.domain.QPost.post;
 
 @Repository
 public class PostRepository {
@@ -48,13 +54,53 @@ public class PostRepository {
     }
 
     //목록 조회
-    public List<Post> findPosts(int offset, int size) {
-        List<Post> findPosts = em.createQuery("select p from Post p left join fetch p.createMember order by p.group desc, p.order asc, p.depth asc", Post.class)
-                .setFirstResult(offset)
-                .setMaxResults(size)
-                .getResultList();
+    public List<Post> findPosts(PostSearch postSearch, int offset, int size) {
+        JPAQueryFactory queryFactory = new JPAQueryFactory(em);
+        List<Post> findPosts = queryFactory
+                .selectFrom(post)
+                .where(
+                        postSearchCond(postSearch.getSearchType(), postSearch.getSearchValue())
+                )
+                .orderBy(
+                        post.group.desc(),
+                        post.order.asc(),
+                        post.depth.asc()
+                )
+                .offset(offset)
+                .limit(size)
+                .fetch();
 
         return findPosts;
+    }
+
+    private BooleanBuilder contentCt(String contentCond) {
+        return contentCond != null ? new BooleanBuilder(post.content.contains(contentCond)) : new BooleanBuilder();
+    }
+
+    private BooleanBuilder titleCt(String titleCond) {
+        return titleCond != null ? new BooleanBuilder(post.title.contains(titleCond)) : new BooleanBuilder();
+    }
+
+    private BooleanBuilder createMemberNameCt(String createMemberNameCond) {
+        return createMemberNameCond != null ? new BooleanBuilder(post.createMember.name.contains(createMemberNameCond)) : new BooleanBuilder();
+    }
+
+    private BooleanBuilder nicknameCt(String nicknameCond) {
+        return nicknameCond != null ? new BooleanBuilder(post.nickname.contains(nicknameCond)) : new BooleanBuilder();
+    }
+
+    private BooleanBuilder postSearchCond(PostSearchType searchType, String searchValue) {
+        if (searchType == PostSearchType.TITLE) {
+            return titleCt(searchValue);
+        } else if (searchType == PostSearchType.CONTENT) {
+            return contentCt(searchValue);
+        } else if (searchType == PostSearchType.TITLE_CONTENT) {
+            return titleCt(searchValue).or(contentCt(searchValue));
+        } else if (searchType == PostSearchType.CREATE_MEMBER) {
+            return createMemberNameCt(searchValue).or(nicknameCt(searchValue)); //and 하위로 nickname query 들어가는 문제 수정필요
+        } else {
+            return new BooleanBuilder();
+        }
     }
 
     //전체 개수

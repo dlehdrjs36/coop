@@ -3,8 +3,6 @@
 <head th:replace="templates/fragments/header.html :: header"></head>
 <body>
     <header th:replace="templates/fragments/bodyHeader.html :: bodyHeader"></header>
-
-
     <div class="container mt-5">
         <form th:object="${postSearch}" class="row g-1">
             <div class="col-2">
@@ -69,6 +67,7 @@
                 </li>
             </ul>
         </nav>
+        <footer th:replace="templates/fragments/footer.html :: footer"></footer>
     </div>
 </body>
 </html>

@@ -1,15 +1,24 @@
-<html lang="ko" xmlns:th="http://www.thymleaf.org">
-<head th:fragment="header">
+<head th:fragment="header(title)">
+    <title th:replace="${title}">롤토체스 정보 사이트 롤체인포</title>
     <meta charset="UTF-8">
-    <title>롤토체스 정보 사이트 롤체인포</title>
     <link th:href="@{/css/bootstrap/bootstrap.min.css}" rel="stylesheet">
     <link th:href="@{/css/bootstrap/theme.css}" rel="stylesheet">
     <link th:href="@{/css/fragments/bodyHeader.css}" rel="stylesheet">
     <link th:href="@{/css/login/loginForm.css}" rel="stylesheet">
+    <link th:href="@{/css/fragments/layoutIndexPage.css}" rel="stylesheet">
+
+    <link th:href="@{/css/fragments/layoutAugmentsListPage.css}" rel="stylesheet">
+    <link th:href="@{/css/fragments/layoutChampionListPage.css}" rel="stylesheet">
+    <link th:href="@{/css/fragments/tftContents.css}" rel="stylesheet">
+    <link th:href="@{/css/fragments/layoutGuidePage.css}" rel="stylesheet">
+    <link th:href="@{/css/fragments/sumonner.css}" rel="stylesheet">
+    <link th:href="@{/css/fragments/layoutSynergyListPage.css}" rel="stylesheet">
+
     <!-- FontAwesome JS-->
     <script defer th:src="@{/js/plugins/fontawesome/js/all.min.js}"></script>
     <script th:src="@{/js/bootstrap/bootstrap.bundle.js}"></script>
     <script th:src="@{/js/common.js}"></script>
+    <script th:src="@{/js/tft/bodyHeader.js}"></script>
 
     <link rel="shortcut icon" href="/img/favicon/favicon.ico">
     <link rel="apple-touch-icon" sizes="57x57" href="/img/favicon/apple-icon-57x57.png">
@@ -30,4 +39,3 @@
     <meta name="msapplication-TileImage" content="/img/favicon/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
 </head>
-</html>

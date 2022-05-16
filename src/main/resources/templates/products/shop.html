@@ -1,55 +1,56 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="templates/fragments/header.html :: header"></head>
+<html th:replace="~{templates/layouts/baseLayout :: baseLayout(~{::title}, ~{::section})}" xmlns:th="http://www.thymleaf.org">
+<head>
+    <title>롤토체스 정보 사이트 롤체인포 - 상점</title>
+</head>
 <body>
-<header th:replace="templates/fragments/bodyHeader.html :: bodyHeader"></header>
-
-<div class="container">
-    <div th:if="${#lists.size(products) > 0}">
-        <div class="row justify-content-start">
-            <div class="col-6 align-self-start mt-4" th:each="product : ${products}">
-                <div class="card border border-success" style="max-width: 540px;">
-                    <div class="row g-0" th:classappend="${purchaseProducts['__${product.id}__'] ne null} ? 'bg-warning'">
-                        <div class="col-md-4">
-                            <img class="img-thumbnail img-fluid rounded-start h-100" th:src="'/img/product/' + ${product.path}" alt="...">
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-header bg-transparent border-success">
-                                <span th:text="${product.type.description}"></span>
-                            </div>
-                            <div class="card-body">
-                                <h5 class="card-title" th:text="${product.name}"></h5>
-                                <p class="card-text"><small class="text-muted" th:text="|가격: ${product.price}포인트|"></small></p>
-                                <button th:if="${purchaseProducts['__${product.id}__'] eq null}" type="button" class="btn btn-success productBuy" th:data-productid="${product.id}">구매</button>
-                                <p th:if="${purchaseProducts['__${product.id}__'] ne null}">구매 완료</p>
+    <section>
+        <div class="container">
+            <div th:if="${#lists.size(products) > 0}">
+                <div class="row justify-content-start">
+                    <div class="col-6 align-self-start mt-4" th:each="product : ${products}">
+                        <div class="card border border-success" style="max-width: 540px;">
+                            <div class="row g-0" th:classappend="${purchaseProducts['__${product.id}__'] ne null} ? 'bg-warning'">
+                                <div class="col-md-4">
+                                    <img class="img-thumbnail img-fluid rounded-start h-100" th:src="'/img/product/' + ${product.path}" alt="...">
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-header bg-transparent border-success">
+                                        <span th:text="${product.type.description}"></span>
+                                    </div>
+                                    <div class="card-body">
+                                        <h5 class="card-title" th:text="${product.name}"></h5>
+                                        <p class="card-text"><small class="text-muted" th:text="|가격: ${product.price}포인트|"></small></p>
+                                        <button th:if="${purchaseProducts['__${product.id}__'] eq null}" type="button" class="btn btn-success productBuy" th:data-productid="${product.id}">구매</button>
+                                        <p th:if="${purchaseProducts['__${product.id}__'] ne null}">구매 완료</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item" th:each="num : ${#numbers.sequence(0, paging.endPage-1)}">
+                            <a class="page-link" href="/shop" th:href="${'/shop?page=' + numStat.count}" th:text="${numStat.count}">1</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="row justify-content-start" th:unless="${#lists.size(products) > 0}">
+                <h3>현재 상품이 등록되어 있지 않습니다.</h3>
             </div>
         </div>
-        <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-center">
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                <li class="page-item" th:each="num : ${#numbers.sequence(0, paging.endPage-1)}">
-                    <a class="page-link" href="/shop" th:href="${'/shop?page=' + numStat.count}" th:text="${numStat.count}">1</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </div>
-    <div class="row justify-content-start" th:unless="${#lists.size(products) > 0}">
-        <h3>현재 상품이 등록되어 있지 않습니다.</h3>
-    </div>
-</div>
-<footer th:replace="templates/fragments/footer.html :: footer"></footer>
+    </section>
 </body>
 </html>

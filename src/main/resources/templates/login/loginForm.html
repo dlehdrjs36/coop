@@ -1,43 +1,42 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="templates/fragments/header.html :: header"></head>
-<body class="text-center">
-<header th:replace="templates/fragments/bodyHeader.html :: bodyHeader"></header>
-
-<div class="form-signin">
-    <form th:action th:object="${loginForm}" method="post">
-        <img class="mb-4" src="/img/login/logo.png" alt="" width="72" height="57">
-
-        <div class="form-floating">
-            <input type="email" class="form-control" th:errorclass="'border border-danger'" th:field="*{email}" placeholder="name@example.com">
-            <label th:for="email">Email address</label>
-            <div class="text-danger" th:errors="*{email}">
-                이메일 오류
-            </div>
+<html th:replace="~{templates/layouts/baseLayout :: baseLayout(~{::title}, ~{::section})}" xmlns:th="http://www.thymleaf.org">
+<head>
+    <title>롤토체스 정보 사이트 롤체인포 - 로그인</title>
+</head>
+<body>
+    <section>
+        <div class="form-signin text-center">
+            <form th:action th:object="${loginForm}" method="post">
+                <img class="mb-4" src="/img/login/logo.png" alt="" width="72" height="57">
+                <div class="form-floating">
+                    <input type="email" class="form-control" th:errorclass="'border border-danger'" th:field="*{email}" placeholder="name@example.com">
+                    <label th:for="email">Email address</label>
+                    <div class="text-danger" th:errors="*{email}">
+                        이메일 오류
+                    </div>
+                </div>
+                <div class="form-floating">
+                    <input type="password" class="form-control" th:errorclass="'border border-danger'" th:field="*{password}" placeholder="비밀번호를 입력하세요">
+                    <label th:for="password">Password</label>
+                    <div class="text-danger" th:errors="*{password}">
+                        패스워드 오류
+                    </div>
+                </div>
+                <div th:if="${#fields.hasGlobalErrors()}">
+                    <p class="text-danger" th:each="err : ${#fields.globalErrors()}" th:text="${err}">글로벌 오류 메시지</p>
+                </div>
+                <div class="checkbox mb-3">
+                    <label>
+                        <input type="checkbox" value="remember-me"> Remember me
+                    </label>
+                </div>
+                <button class="w-100 mb-1 btn btn-lg btn-primary" type="submit">로그인</button>
+                <button class="w-100 mb-1 btn btn-lg btn-dark" type="button" onclick="location.href='/members/new'">회원가입</button>
+                <div class="row justify-content-sm-end w-100">
+                    <a class="btn col-sm-6" type="button" href="/mail">비밀번호 찾기</a>
+                </div>
+            </form>
         </div>
-        <div class="form-floating">
-            <input type="password" class="form-control" th:errorclass="'border border-danger'" th:field="*{password}" placeholder="비밀번호를 입력하세요">
-            <label th:for="password">Password</label>
-            <div class="text-danger" th:errors="*{password}">
-                패스워드 오류
-            </div>
-        </div>
-        <div th:if="${#fields.hasGlobalErrors()}">
-            <p class="text-danger" th:each="err : ${#fields.globalErrors()}" th:text="${err}">글로벌 오류 메시지</p>
-        </div>
-        <div class="checkbox mb-3">
-            <label>
-                <input type="checkbox" value="remember-me"> Remember me
-            </label>
-        </div>
-        <button class="w-100 mb-1 btn btn-lg btn-primary" type="submit">로그인</button>
-        <button class="w-100 mb-1 btn btn-lg btn-dark" type="button" onclick="location.href='/members/new'">회원가입</button>
-        <div class="row justify-content-sm-end w-100">
-            <a class="btn col-sm-6" type="button" href="/mail">비밀번호 찾기</a>
-        </div>
-    </form>
-</div>
-<br/>
-<footer th:replace="templates/fragments/footer.html :: footer"></footer>
+    </section>
 </body>
 </html>

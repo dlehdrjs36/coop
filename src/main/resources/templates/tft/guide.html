@@ -1,274 +1,274 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymleaf.org">
-<head th:replace="templates/fragments/header.html :: header"></head>
-<link th:href="@{/css/fragments/layoutGuidePage.css}" rel="stylesheet">
-<link th:href="@{/css/fragments/tftContents.css}" rel="stylesheet">
+<html th:replace="~{templates/layouts/baseLayout :: baseLayout(~{::title}, ~{::section})}" xmlns:th="http://www.thymleaf.org">
+<head>
+    <title>롤토체스 정보 사이트 롤체인포 - 가이드</title>
+</head>
 <body>
-<header th:replace="templates/fragments/bodyHeader.html :: bodyHeader"></header>
-<div id="backgroundImage">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4 offset-1 bg-light border border-dark border-5 contentsBox">
-                <div class="contentsPadding">
-                    <h5>레벨별 필요 경험치</h5>
-                    <div class="contentsPadding">
-                        <div class="row">
-                            <span class="col-md-3 border-bottom border-dark border-3 text-center">레벨</span>
-                            <span class="col-md-9 border-bottom border-dark border-3 text-center">경험치</span>
-                        </div>
-                        <div class="row border-bottom border-dark border-3">
-                            <span class="col-md-3 text-center">2</span>
-                            <span class="col-md-9 border-start border-dark border-3 text-center">2Xp</span>
-                        </div>
-                        <div class="row border-bottom border-dark border-3">
-                            <span class="col-md-3 text-center">3</span>
-                            <span class="col-md-9 border-start border-dark border-3 text-center">6Xp</span>
-                        </div>
-                        <div class="row border-bottom border-dark border-3">
-                            <span class="col-md-3 text-center">4</span>
-                            <span class="col-md-9 border-start border-dark border-3 text-center">10Xp</span>
-                        </div>
-                        <div class="row border-bottom border-dark border-3">
-                            <span class="col-md-3 text-center">5</span>
-                            <span class="col-md-9 border-start border-dark border-3 text-center">20Xp</span>
-                        </div>
-                        <div class="row border-bottom border-dark border-3">
-                            <span class="col-md-3 text-center">6</span>
-                            <span class="col-md-9 border-start border-dark border-3 text-center">36Xp</span>
-                        </div>
-                        <div class="row border-bottom border-dark border-3">
-                            <span class="col-md-3 text-center">7</span>
-                            <span class="col-md-9 border-start border-dark border-3 text-center">56Xp</span>
-                        </div>
-                        <div class="row border-bottom border-dark border-3">
-                            <span class="col-md-3 text-center">8</span>
-                            <span class="col-md-9 border-start border-dark border-3 text-center">80Xp</span>
-                        </div>
-                        <div class="row border-bottom border-dark border-3">
-                            <span class="col-md-3 text-center">9</span>
-                            <span class="col-md-9 border-start border-dark border-3 text-center">100Xp</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 offset-2">
-                <div class="contentsPadding bg-light border border-dark border-5 contentsBox">
-                    <h5>경험치 구매 비용및 획득량</h5>
-                    <div class="contentsPadding">
-                        <ul>
-                            <li>라운드 종료시 2Xp 획득</li>
-                            <li>골드 4를 소모해서 4Xp 획득가능</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="contentsPadding bg-light border border-dark border-5 contentsBox">
-                    <h5>새로고침 비용</h5>
-                    <div class="contentsPadding">
-                        <ul>
-                            <li>2골드</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-10 offset-1 bg-light border border-dark border-5 contentsBox">
-                <div class="contentsPadding">
-                    <h5>단계별 리롤 확률</h5>
-                    <div class="contentsPadding">
-                        <div class="row">
-                            <span class="col-md-1 border-bottom border-dark border-3 text-center">레벨</span>
-                            <span class="col-md-2 border-bottom border-dark border-3 text-center">1티어</span>
-                            <span class="col-md-2 border-bottom border-dark border-3 text-center">2티어</span>
-                            <span class="col-md-2 border-bottom border-dark border-3 text-center">3티어</span>
-                            <span class="col-md-2 border-bottom border-dark border-3 text-center">4티어</span>
-                            <span class="col-md-2 border-bottom border-dark border-3 text-center">5티어</span>
-                        </div>
-                        <div class="row">
-                            <span class="col-md-1 border-bottom border-dark border-3 text-center">1</span>
-                            <span class="col-md-2 border-bottom border-dark border-3 text-center">100%</span>
-                            <span class="col-md-2 border-bottom border-dark border-3 text-center">0%</span>
-                            <span class="col-md-2 border-bottom border-dark border-3 text-center">0%</span>
-                            <span class="col-md-2 border-bottom border-dark border-3 text-center">0%</span>
-                            <span class="col-md-2 border-bottom border-dark border-3 text-center">0%</span>
-                        </div>
-                        <div class="row">
-                            <span class="col-md-1 border-bottom border-dark border-3 text-center">2</span>
-                            <span class="col-md-2 border-bottom border-dark border-3 text-center">100%</span>
-                            <span class="col-md-2 border-bottom border-dark border-3 text-center">0%</span>
-                            <span class="col-md-2 border-bottom border-dark border-3 text-center">0%</span>
-                            <span class="col-md-2 border-bottom border-dark border-3 text-center">0%</span>
-                            <span class="col-md-2 border-bottom border-dark border-3 text-center">0%</span>
-                        </div>
-                        <div class="row">
-                            <span class="col-md-1 border-bottom border-dark border-3 text-center">3</span>
-                            <span class="col-md-2 border-bottom border-dark border-3 text-center">75%</span>
-                            <span class="col-md-2 border-bottom border-dark border-3 text-center">25%</span>
-                            <span class="col-md-2 border-bottom border-dark border-3 text-center">0%</span>
-                            <span class="col-md-2 border-bottom border-dark border-3 text-center">0%</span>
-                            <span class="col-md-2 border-bottom border-dark border-3 text-center">0%</span>
-                        </div>
-                        <div class="row">
-                            <span class="col-md-1 border-bottom border-dark border-3 text-center">4</span>
-                            <span class="col-md-2 border-bottom border-dark border-3 text-center">55%</span>
-                            <span class="col-md-2 border-bottom border-dark border-3 text-center">30%</span>
-                            <span class="col-md-2 border-bottom border-dark border-3 text-center">15%</span>
-                            <span class="col-md-2 border-bottom border-dark border-3 text-center">0%</span>
-                            <span class="col-md-2 border-bottom border-dark border-3 text-center">0%</span>
-                        </div>
-                        <div class="row">
-                            <span class="col-md-1 border-bottom border-dark border-3 text-center">5</span>
-                            <span class="col-md-2 border-bottom border-dark border-3 text-center">45%</span>
-                            <span class="col-md-2 border-bottom border-dark border-3 text-center">33%</span>
-                            <span class="col-md-2 border-bottom border-dark border-3 text-center">20%</span>
-                            <span class="col-md-2 border-bottom border-dark border-3 text-center">2%</span>
-                            <span class="col-md-2 border-bottom border-dark border-3 text-center">0%</span>
-                        </div>
-                        <div class="row">
-                            <span class="col-md-1 border-bottom border-dark border-3 text-center">6</span>
-                            <span class="col-md-2 border-bottom border-dark border-3 text-center">25%</span>
-                            <span class="col-md-2 border-bottom border-dark border-3 text-center">40%</span>
-                            <span class="col-md-2 border-bottom border-dark border-3 text-center">30%</span>
-                            <span class="col-md-2 border-bottom border-dark border-3 text-center">5%</span>
-                            <span class="col-md-2 border-bottom border-dark border-3 text-center">0%</span>
-                        </div>
-                        <div class="row">
-                            <span class="col-md-1 border-bottom border-dark border-3 text-center">7</span>
-                            <span class="col-md-2 border-bottom border-dark border-3 text-center">19%</span>
-                            <span class="col-md-2 border-bottom border-dark border-3 text-center">30%</span>
-                            <span class="col-md-2 border-bottom border-dark border-3 text-center">35%</span>
-                            <span class="col-md-2 border-bottom border-dark border-3 text-center">15%</span>
-                            <span class="col-md-2 border-bottom border-dark border-3 text-center">1%</span>
-                        </div>
-                        <div class="row">
-                            <span class="col-md-1 border-bottom border-dark border-3 text-center">8</span>
-                            <span class="col-md-2 border-bottom border-dark border-3 text-center">16%</span>
-                            <span class="col-md-2 border-bottom border-dark border-3 text-center">20%</span>
-                            <span class="col-md-2 border-bottom border-dark border-3 text-center">35%</span>
-                            <span class="col-md-2 border-bottom border-dark border-3 text-center">25%</span>
-                            <span class="col-md-2 border-bottom border-dark border-3 text-center">4%</span>
-                        </div>
-                        <div class="row">
-                            <span class="col-md-1 border-bottom border-dark border-3 text-center">9</span>
-                            <span class="col-md-2 border-bottom border-dark border-3 text-center">9%</span>
-                            <span class="col-md-2 border-bottom border-dark border-3 text-center">15%</span>
-                            <span class="col-md-2 border-bottom border-dark border-3 text-center">30%</span>
-                            <span class="col-md-2 border-bottom border-dark border-3 text-center">30%</span>
-                            <span class="col-md-2 border-bottom border-dark border-3 text-center">25%</span>
-                        </div>
-                        <div class="row">
-                            <span class="col-md-1 border-bottom border-dark border-3 text-center">10</span>
-                            <span class="col-md-2 border-bottom border-dark border-3 text-center">5%</span>
-                            <span class="col-md-2 border-bottom border-dark border-3 text-center">10%</span>
-                            <span class="col-md-2 border-bottom border-dark border-3 text-center">20%</span>
-                            <span class="col-md-2 border-bottom border-dark border-3 text-center">40%</span>
-                            <span class="col-md-2 border-bottom border-dark border-3 text-center">25%</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-7 offset-1 bg-light border border-dark border-5 contentsBox">
-                <div class="contentsPadding">
-                    <h5>골드 수급</h5>
-                    <div class="contentsPadding">
-                        라운드 골드( 매 라운드가 종료후 얻는 골드  )
+    <section>
+        <div id="backgroundImage">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 offset-1 bg-light border border-dark border-5 contentsBox">
                         <div class="contentsPadding">
-                            <ul>
-                                <li>1-1, 1-2라운드 종료후 2골드</li>
-                                <li>1-3라운드 종료후 3골드</li>
-                                <li>1-4라운드 종료후 4골드</li>
-                                <li>이외의 라운드가 종료후 5골드</li>
-                            </ul>
+                            <h5>레벨별 필요 경험치</h5>
+                            <div class="contentsPadding">
+                                <div class="row">
+                                    <span class="col-md-3 border-bottom border-dark border-3 text-center">레벨</span>
+                                    <span class="col-md-9 border-bottom border-dark border-3 text-center">경험치</span>
+                                </div>
+                                <div class="row border-bottom border-dark border-3">
+                                    <span class="col-md-3 text-center">2</span>
+                                    <span class="col-md-9 border-start border-dark border-3 text-center">2Xp</span>
+                                </div>
+                                <div class="row border-bottom border-dark border-3">
+                                    <span class="col-md-3 text-center">3</span>
+                                    <span class="col-md-9 border-start border-dark border-3 text-center">6Xp</span>
+                                </div>
+                                <div class="row border-bottom border-dark border-3">
+                                    <span class="col-md-3 text-center">4</span>
+                                    <span class="col-md-9 border-start border-dark border-3 text-center">10Xp</span>
+                                </div>
+                                <div class="row border-bottom border-dark border-3">
+                                    <span class="col-md-3 text-center">5</span>
+                                    <span class="col-md-9 border-start border-dark border-3 text-center">20Xp</span>
+                                </div>
+                                <div class="row border-bottom border-dark border-3">
+                                    <span class="col-md-3 text-center">6</span>
+                                    <span class="col-md-9 border-start border-dark border-3 text-center">36Xp</span>
+                                </div>
+                                <div class="row border-bottom border-dark border-3">
+                                    <span class="col-md-3 text-center">7</span>
+                                    <span class="col-md-9 border-start border-dark border-3 text-center">56Xp</span>
+                                </div>
+                                <div class="row border-bottom border-dark border-3">
+                                    <span class="col-md-3 text-center">8</span>
+                                    <span class="col-md-9 border-start border-dark border-3 text-center">80Xp</span>
+                                </div>
+                                <div class="row border-bottom border-dark border-3">
+                                    <span class="col-md-3 text-center">9</span>
+                                    <span class="col-md-9 border-start border-dark border-3 text-center">100Xp</span>
+                                </div>
+                            </div>
                         </div>
-                        연승/연패 보너스( 표기는 승으로 하나 승패 둘다 적용 )
+                    </div>
+                    <div class="col-md-4 offset-2">
+                        <div class="contentsPadding bg-light border border-dark border-5 contentsBox">
+                            <h5>경험치 구매 비용및 획득량</h5>
+                            <div class="contentsPadding">
+                                <ul>
+                                    <li>라운드 종료시 2Xp 획득</li>
+                                    <li>골드 4를 소모해서 4Xp 획득가능</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="contentsPadding bg-light border border-dark border-5 contentsBox">
+                            <h5>새로고침 비용</h5>
+                            <div class="contentsPadding">
+                                <ul>
+                                    <li>2골드</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10 offset-1 bg-light border border-dark border-5 contentsBox">
                         <div class="contentsPadding">
-                            <ul>
-                                <li>2연승 혹은 3연승시 1골드 추가</li>
-                                <li>4연승시 2골드 추가</li>
-                                <li>5연승이후 3골드 추가</li>
-                            </ul>
+                            <h5>단계별 리롤 확률</h5>
+                            <div class="contentsPadding">
+                                <div class="row">
+                                    <span class="col-md-1 border-bottom border-dark border-3 text-center">레벨</span>
+                                    <span class="col-md-2 border-bottom border-dark border-3 text-center">1티어</span>
+                                    <span class="col-md-2 border-bottom border-dark border-3 text-center">2티어</span>
+                                    <span class="col-md-2 border-bottom border-dark border-3 text-center">3티어</span>
+                                    <span class="col-md-2 border-bottom border-dark border-3 text-center">4티어</span>
+                                    <span class="col-md-2 border-bottom border-dark border-3 text-center">5티어</span>
+                                </div>
+                                <div class="row">
+                                    <span class="col-md-1 border-bottom border-dark border-3 text-center">1</span>
+                                    <span class="col-md-2 border-bottom border-dark border-3 text-center">100%</span>
+                                    <span class="col-md-2 border-bottom border-dark border-3 text-center">0%</span>
+                                    <span class="col-md-2 border-bottom border-dark border-3 text-center">0%</span>
+                                    <span class="col-md-2 border-bottom border-dark border-3 text-center">0%</span>
+                                    <span class="col-md-2 border-bottom border-dark border-3 text-center">0%</span>
+                                </div>
+                                <div class="row">
+                                    <span class="col-md-1 border-bottom border-dark border-3 text-center">2</span>
+                                    <span class="col-md-2 border-bottom border-dark border-3 text-center">100%</span>
+                                    <span class="col-md-2 border-bottom border-dark border-3 text-center">0%</span>
+                                    <span class="col-md-2 border-bottom border-dark border-3 text-center">0%</span>
+                                    <span class="col-md-2 border-bottom border-dark border-3 text-center">0%</span>
+                                    <span class="col-md-2 border-bottom border-dark border-3 text-center">0%</span>
+                                </div>
+                                <div class="row">
+                                    <span class="col-md-1 border-bottom border-dark border-3 text-center">3</span>
+                                    <span class="col-md-2 border-bottom border-dark border-3 text-center">75%</span>
+                                    <span class="col-md-2 border-bottom border-dark border-3 text-center">25%</span>
+                                    <span class="col-md-2 border-bottom border-dark border-3 text-center">0%</span>
+                                    <span class="col-md-2 border-bottom border-dark border-3 text-center">0%</span>
+                                    <span class="col-md-2 border-bottom border-dark border-3 text-center">0%</span>
+                                </div>
+                                <div class="row">
+                                    <span class="col-md-1 border-bottom border-dark border-3 text-center">4</span>
+                                    <span class="col-md-2 border-bottom border-dark border-3 text-center">55%</span>
+                                    <span class="col-md-2 border-bottom border-dark border-3 text-center">30%</span>
+                                    <span class="col-md-2 border-bottom border-dark border-3 text-center">15%</span>
+                                    <span class="col-md-2 border-bottom border-dark border-3 text-center">0%</span>
+                                    <span class="col-md-2 border-bottom border-dark border-3 text-center">0%</span>
+                                </div>
+                                <div class="row">
+                                    <span class="col-md-1 border-bottom border-dark border-3 text-center">5</span>
+                                    <span class="col-md-2 border-bottom border-dark border-3 text-center">45%</span>
+                                    <span class="col-md-2 border-bottom border-dark border-3 text-center">33%</span>
+                                    <span class="col-md-2 border-bottom border-dark border-3 text-center">20%</span>
+                                    <span class="col-md-2 border-bottom border-dark border-3 text-center">2%</span>
+                                    <span class="col-md-2 border-bottom border-dark border-3 text-center">0%</span>
+                                </div>
+                                <div class="row">
+                                    <span class="col-md-1 border-bottom border-dark border-3 text-center">6</span>
+                                    <span class="col-md-2 border-bottom border-dark border-3 text-center">25%</span>
+                                    <span class="col-md-2 border-bottom border-dark border-3 text-center">40%</span>
+                                    <span class="col-md-2 border-bottom border-dark border-3 text-center">30%</span>
+                                    <span class="col-md-2 border-bottom border-dark border-3 text-center">5%</span>
+                                    <span class="col-md-2 border-bottom border-dark border-3 text-center">0%</span>
+                                </div>
+                                <div class="row">
+                                    <span class="col-md-1 border-bottom border-dark border-3 text-center">7</span>
+                                    <span class="col-md-2 border-bottom border-dark border-3 text-center">19%</span>
+                                    <span class="col-md-2 border-bottom border-dark border-3 text-center">30%</span>
+                                    <span class="col-md-2 border-bottom border-dark border-3 text-center">35%</span>
+                                    <span class="col-md-2 border-bottom border-dark border-3 text-center">15%</span>
+                                    <span class="col-md-2 border-bottom border-dark border-3 text-center">1%</span>
+                                </div>
+                                <div class="row">
+                                    <span class="col-md-1 border-bottom border-dark border-3 text-center">8</span>
+                                    <span class="col-md-2 border-bottom border-dark border-3 text-center">16%</span>
+                                    <span class="col-md-2 border-bottom border-dark border-3 text-center">20%</span>
+                                    <span class="col-md-2 border-bottom border-dark border-3 text-center">35%</span>
+                                    <span class="col-md-2 border-bottom border-dark border-3 text-center">25%</span>
+                                    <span class="col-md-2 border-bottom border-dark border-3 text-center">4%</span>
+                                </div>
+                                <div class="row">
+                                    <span class="col-md-1 border-bottom border-dark border-3 text-center">9</span>
+                                    <span class="col-md-2 border-bottom border-dark border-3 text-center">9%</span>
+                                    <span class="col-md-2 border-bottom border-dark border-3 text-center">15%</span>
+                                    <span class="col-md-2 border-bottom border-dark border-3 text-center">30%</span>
+                                    <span class="col-md-2 border-bottom border-dark border-3 text-center">30%</span>
+                                    <span class="col-md-2 border-bottom border-dark border-3 text-center">25%</span>
+                                </div>
+                                <div class="row">
+                                    <span class="col-md-1 border-bottom border-dark border-3 text-center">10</span>
+                                    <span class="col-md-2 border-bottom border-dark border-3 text-center">5%</span>
+                                    <span class="col-md-2 border-bottom border-dark border-3 text-center">10%</span>
+                                    <span class="col-md-2 border-bottom border-dark border-3 text-center">20%</span>
+                                    <span class="col-md-2 border-bottom border-dark border-3 text-center">40%</span>
+                                    <span class="col-md-2 border-bottom border-dark border-3 text-center">25%</span>
+                                </div>
+                            </div>
                         </div>
-                        골드 이자 보너스( 라운드 종료시 소지한 골드 )
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-7 offset-1 bg-light border border-dark border-5 contentsBox">
                         <div class="contentsPadding">
-                            <ul>
-                                <li>10 ~ 19골드 보유시 1골드 추가</li>
-                                <li>20 ~ 29골드 보유시 2골드 추가</li>
-                                <li>30 ~ 39골드 보유시 3골드 추가</li>
-                                <li>40 ~ 49골드 보유시 4골드 추가</li>
-                                <li>50골드 이상 보유시 5골드 추가</li>
-                            </ul>
+                            <h5>골드 수급</h5>
+                            <div class="contentsPadding">
+                                라운드 골드( 매 라운드가 종료후 얻는 골드  )
+                                <div class="contentsPadding">
+                                    <ul>
+                                        <li>1-1, 1-2라운드 종료후 2골드</li>
+                                        <li>1-3라운드 종료후 3골드</li>
+                                        <li>1-4라운드 종료후 4골드</li>
+                                        <li>이외의 라운드가 종료후 5골드</li>
+                                    </ul>
+                                </div>
+                                연승/연패 보너스( 표기는 승으로 하나 승패 둘다 적용 )
+                                <div class="contentsPadding">
+                                    <ul>
+                                        <li>2연승 혹은 3연승시 1골드 추가</li>
+                                        <li>4연승시 2골드 추가</li>
+                                        <li>5연승이후 3골드 추가</li>
+                                    </ul>
+                                </div>
+                                골드 이자 보너스( 라운드 종료시 소지한 골드 )
+                                <div class="contentsPadding">
+                                    <ul>
+                                        <li>10 ~ 19골드 보유시 1골드 추가</li>
+                                        <li>20 ~ 29골드 보유시 2골드 추가</li>
+                                        <li>30 ~ 39골드 보유시 3골드 추가</li>
+                                        <li>40 ~ 49골드 보유시 4골드 추가</li>
+                                        <li>50골드 이상 보유시 5골드 추가</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-7 offset-1 bg-light border border-dark border-5 contentsBox">
+                        <div class="contentsPadding">
+                            <h5>등급별 챔피언 구매 판매 비용( 티어 무관 )</h5>
+                            <div class="contentsPadding">
+                                <ul>
+                                    <li>1등급 판매시 기물의 구매액과 동일</li>
+                                    <li>2등급 판매시 기물의 구매액의 -1골드</li>
+                                    <li>3등급 판매시 기물의 구매액의 -1골드</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-7 offset-1 bg-light border border-dark border-5 contentsBox">
+                        <div class="contentsPadding">
+                            <h5>PVE 라운드 목록</h5>
+                            <div class="contentsPadding">
+                                <div class="row">
+                                    <span class="col-md-3 border-bottom border-dark border-3 text-center">라운드</span>
+                                    <span class="col-md-9 border-bottom border-dark border-3 text-center">이벤트/적</span>
+                                </div>
+                                <div class="row border-bottom border-dark border-3">
+                                    <span class="col-md-3 text-center">1-2</span>
+                                    <span class="col-md-9 border-start border-dark border-3 text-center">근접 미니언 2마리</span>
+                                </div>
+                                <div class="row border-bottom border-dark border-3">
+                                    <span class="col-md-3 text-center">1-3</span>
+                                    <span class="col-md-9 border-start border-dark border-3 text-center">근접 미니언 2마리와 원거리 미니언 1마리</span>
+                                </div>
+                                <div class="row border-bottom border-dark border-3">
+                                    <span class="col-md-3 text-center">1-4</span>
+                                    <span class="col-md-9 border-start border-dark border-3 text-center">근접 미니언 2마리와 원거리 미니언 2마리</span>
+                                </div>
+                                <div class="row border-bottom border-dark border-3">
+                                    <span class="col-md-3 text-center">2-7</span>
+                                    <span class="col-md-9 border-start border-dark border-3 text-center">골렘 3마리</span>
+                                </div>
+                                <div class="row border-bottom border-dark border-3">
+                                    <span class="col-md-3 text-center">3-7</span>
+                                    <span class="col-md-9 border-start border-dark border-3 text-center">상급 늑대 1마리 일반 늑대 4마리</span>
+                                </div>
+                                <div class="row border-bottom border-dark border-3">
+                                    <span class="col-md-3 text-center">4-7</span>
+                                    <span class="col-md-9 border-start border-dark border-3 text-center">크림슨 랩터 1마리와 랩터 4마리</span>
+                                </div>
+                                <div class="row border-bottom border-dark border-3">
+                                    <span class="col-md-3 text-center">5-7</span>
+                                    <span class="col-md-9 border-start border-dark border-3 text-center">화학공학 드래곤</span>
+                                </div>
+                                <div class="row border-bottom border-dark border-3">
+                                    <span class="col-md-3 text-center">6-7</span>
+                                    <span class="col-md-9 border-start border-dark border-3 text-center">전령</span>
+                                </div>
+                                <div class="row border-bottom border-dark border-3">
+                                    <span class="col-md-3 text-center">7-7</span>
+                                    <span class="col-md-9 border-start border-dark border-3 text-center">전령</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-7 offset-1 bg-light border border-dark border-5 contentsBox">
-                <div class="contentsPadding">
-                    <h5>등급별 챔피언 구매 판매 비용( 티어 무관 )</h5>
-                    <div class="contentsPadding">
-                        <ul>
-                            <li>1등급 판매시 기물의 구매액과 동일</li>
-                            <li>2등급 판매시 기물의 구매액의 -1골드</li>
-                            <li>3등급 판매시 기물의 구매액의 -1골드</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-7 offset-1 bg-light border border-dark border-5 contentsBox">
-                <div class="contentsPadding">
-                    <h5>PVE 라운드 목록</h5>
-                    <div class="contentsPadding">
-                        <div class="row">
-                            <span class="col-md-3 border-bottom border-dark border-3 text-center">라운드</span>
-                            <span class="col-md-9 border-bottom border-dark border-3 text-center">이벤트/적</span>
-                        </div>
-                        <div class="row border-bottom border-dark border-3">
-                            <span class="col-md-3 text-center">1-2</span>
-                            <span class="col-md-9 border-start border-dark border-3 text-center">근접 미니언 2마리</span>
-                        </div>
-                        <div class="row border-bottom border-dark border-3">
-                            <span class="col-md-3 text-center">1-3</span>
-                            <span class="col-md-9 border-start border-dark border-3 text-center">근접 미니언 2마리와 원거리 미니언 1마리</span>
-                        </div>
-                        <div class="row border-bottom border-dark border-3">
-                            <span class="col-md-3 text-center">1-4</span>
-                            <span class="col-md-9 border-start border-dark border-3 text-center">근접 미니언 2마리와 원거리 미니언 2마리</span>
-                        </div>
-                        <div class="row border-bottom border-dark border-3">
-                            <span class="col-md-3 text-center">2-7</span>
-                            <span class="col-md-9 border-start border-dark border-3 text-center">골렘 3마리</span>
-                        </div>
-                        <div class="row border-bottom border-dark border-3">
-                            <span class="col-md-3 text-center">3-7</span>
-                            <span class="col-md-9 border-start border-dark border-3 text-center">상급 늑대 1마리 일반 늑대 4마리</span>
-                        </div>
-                        <div class="row border-bottom border-dark border-3">
-                            <span class="col-md-3 text-center">4-7</span>
-                            <span class="col-md-9 border-start border-dark border-3 text-center">크림슨 랩터 1마리와 랩터 4마리</span>
-                        </div>
-                        <div class="row border-bottom border-dark border-3">
-                            <span class="col-md-3 text-center">5-7</span>
-                            <span class="col-md-9 border-start border-dark border-3 text-center">화학공학 드래곤</span>
-                        </div>
-                        <div class="row border-bottom border-dark border-3">
-                            <span class="col-md-3 text-center">6-7</span>
-                            <span class="col-md-9 border-start border-dark border-3 text-center">전령</span>
-                        </div>
-                        <div class="row border-bottom border-dark border-3">
-                            <span class="col-md-3 text-center">7-7</span>
-                            <span class="col-md-9 border-start border-dark border-3 text-center">전령</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <footer th:replace="templates/fragments/footer.html :: footer"></footer>
-    </div>
-</div>
+    </section>
 </body>
 </html>

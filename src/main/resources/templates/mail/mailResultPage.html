@@ -1,15 +1,16 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="templates/fragments/header.html :: header"></head>
-<body class="text-center">
-<header th:replace="templates/fragments/bodyHeader.html :: bodyHeader"></header>
-
-<div class="form-signin">
-    <form>
-        <img class="mb-4" src="/img/login/logo.png" alt="" width="72" height="57">
-        <div class="text-start mb-1">이메일 전송이 완료되었습니다. 입력하신 이메일을 확인해 주십시오</div>
-    </form>
-</div>
-<footer th:replace="templates/fragments/footer.html :: footer"></footer>
+<html th:replace="~{templates/layouts/baseLayout :: baseLayout(~{::title}, ~{::section})}" xmlns:th="http://www.thymleaf.org">
+<head>
+    <title>롤토체스 정보 사이트 롤체인포 - 비밀번호 찾기</title>
+</head>
+<body>
+    <section>
+        <div class="form-signin text-center">
+            <form>
+                <img class="mb-4" src="/img/login/logo.png" alt="" width="72" height="57">
+                <div class="text-start mb-1">이메일 전송이 완료되었습니다. 입력하신 이메일을 확인해 주십시오</div>
+            </form>
+        </div>
+    </section>
 </body>
 </html>

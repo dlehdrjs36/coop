@@ -1,44 +1,45 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymleaf.org">
-<head th:replace="templates/fragments/header.html :: header"></head>
-<link th:href="@{/css/fragments/layoutSynergyListPage.css}" rel="stylesheet">
+<html th:replace="~{templates/layouts/baseLayout :: baseLayout(~{::title}, ~{::section})}" xmlns:th="http://www.thymleaf.org">
+<head>
+    <title>롤토체스 정보 사이트 롤체인포 - 시너지</title>
+</head>
 <body>
-    <header th:replace="templates/fragments/bodyHeader.html :: bodyHeader"></header>
-    <div th:replace="templates/tft/hidden/synergyHidden.html :: hidden"></div>
-    <div id="main-background">
-        <div class="container bg-dark synergy-contentsAtt">
-            <div class="row container">
-                <div class="btn-group-synergy col-sm-2">
-                    <div th:each="synergyNameForm : ${synergyNameForm}">
-                        <input type="radio" class="btn-check" name="btnradio" th:id="${synergyNameForm.traitsName}" onclick=getSynergyData(this.id) autocomplete="off" checked>
-                        <label class="btn btn-primary col-sm-12" th:for="${synergyNameForm.traitsName}"><span th:text="${synergyNameForm.traitsNameKr}"></span></label>
+    <section>
+        <div th:replace="templates/tft/hidden/synergyHidden.html :: hidden"></div>
+        <div id="main-background">
+            <div class="container bg-dark synergy-contentsAtt">
+                <div class="row container">
+                    <div class="btn-group-synergy col-sm-2">
+                        <div th:each="synergyNameForm : ${synergyNameForm}">
+                            <input type="radio" class="btn-check" name="btnradio" th:id="${synergyNameForm.traitsName}" onclick=getSynergyData(this.id) autocomplete="off" checked>
+                            <label class="btn btn-primary col-sm-12" th:for="${synergyNameForm.traitsName}"><span th:text="${synergyNameForm.traitsNameKr}"></span></label>
+                        </div>
                     </div>
-                </div>
-                <div class="col-sm-8 container">
-                    <div class="row">
-                        <div class="col-md-5 bg-light contentsPadding contentsTextSize" id="traitsName"></div>
-                        <div class="offset-md-1 col-md-6 bg-light contentsPadding contentsTextSize" id="winRate"></div>
-                    </div>
-                    <div class="row contentsMargin">
-                        <div class="bg-light contentsPadding" id="traitsDesc"></div>
-                    </div>
-                    <div class="row bg-light contentsPadding contentsMargin">
-                        <h2 class="synergyContentsTitle">시너지 챔피언</h2>
-                        <div class=" synergyContentsList" id="traitsNumUnits"></div>
-                    </div>
-                    <div class="row bg-light contentsPadding contentsMargin">
-                        <h2 class="synergyContentsTitle">사용한 유닛 TOP5</h2>
-                        <div class=" synergyContentsList" id="usedAnotherUnit"></div>
-                    </div>
-                    <div class="row bg-light contentsPadding contentsMargin">
-                        <h2 class="synergyContentsTitle">사용한 증강체 TOP3</h2>
-                        <div class=" synergyContentsList" id="usedAugments"></div>
+                    <div class="col-sm-8 container">
+                        <div class="row">
+                            <div class="col-md-5 bg-light contentsPadding contentsTextSize" id="traitsName"></div>
+                            <div class="offset-md-1 col-md-6 bg-light contentsPadding contentsTextSize" id="winRate"></div>
+                        </div>
+                        <div class="row contentsMargin">
+                            <div class="bg-light contentsPadding" id="traitsDesc"></div>
+                        </div>
+                        <div class="row bg-light contentsPadding contentsMargin">
+                            <h2 class="synergyContentsTitle">시너지 챔피언</h2>
+                            <div class=" synergyContentsList" id="traitsNumUnits"></div>
+                        </div>
+                        <div class="row bg-light contentsPadding contentsMargin">
+                            <h2 class="synergyContentsTitle">사용한 유닛 TOP5</h2>
+                            <div class=" synergyContentsList" id="usedAnotherUnit"></div>
+                        </div>
+                        <div class="row bg-light contentsPadding contentsMargin">
+                            <h2 class="synergyContentsTitle">사용한 증강체 TOP3</h2>
+                            <div class=" synergyContentsList" id="usedAugments"></div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <footer th:replace="templates/fragments/footer.html :: footer"></footer>
         </div>
-    </div>
-    <script th:src="@{/js/tft/synergy/synergyList.js}"></script>
+        <script th:src="@{/js/tft/synergy/synergyList.js}"></script>
+    </section>
 </body>
 </html>

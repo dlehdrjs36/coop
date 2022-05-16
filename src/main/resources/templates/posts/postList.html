@@ -1,73 +1,75 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="templates/fragments/header.html :: header"></head>
+<html th:replace="~{templates/layouts/baseLayout :: baseLayout(~{::title}, ~{::section})}" xmlns:th="http://www.thymleaf.org">
+<head>
+    <title>롤토체스 정보 사이트 롤체인포 - 커뮤니티</title>
+</head>
 <body>
-    <header th:replace="templates/fragments/bodyHeader.html :: bodyHeader"></header>
-    <div class="container mt-5">
-        <form th:object="${postSearch}" class="row g-1">
-            <div class="col-2">
-                <select class="form-select" th:field="*{searchType}">
-                    <option th:each="type : ${postSearchTypes}" th:value="${type.name()}" th:text="${type.description}"></option>
-                </select>
-            </div>
-            <div class="col-5">
-                <input type="text" class="form-control" th:field="*{searchValue}">
-            </div>
-            <div class="col-2">
-                <button type="submit" class="btn btn-primary mb-2">검색</button>
-            </div>
-        </form>
-        <div class="table-responsive">
-            <table class="table table align-items-center table-flush">
-                <thead class="thead-light">
-                    <tr class="table-light">
-                        <th scope="col">번호</th>
-                        <th scope="col">제목</th>
-                        <th scope="col">조회수</th>
-                        <th scope="col">추천수</th>
-                        <th scope="col">작성자</th>
-                        <th scope="col">작성일</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="table-light" th:each="post : ${posts}">
-                        <td th:text="${postStat.count}"></td>
-                        <td>
-                            <span th:if="${post.depth gt 0}">
-                                <span th:each="num : ${#numbers.sequence(0, post.depth-1)}">
-                                    &nbsp;&nbsp;&nbsp;
+    <section>
+        <div class="container mt-5">
+            <form th:object="${postSearch}" class="row g-1">
+                <div class="col-2">
+                    <select class="form-select" th:field="*{searchType}">
+                        <option th:each="type : ${postSearchTypes}" th:value="${type.name()}" th:text="${type.description}"></option>
+                    </select>
+                </div>
+                <div class="col-5">
+                    <input type="text" class="form-control" th:field="*{searchValue}">
+                </div>
+                <div class="col-2">
+                    <button type="submit" class="btn btn-primary mb-2">검색</button>
+                </div>
+            </form>
+            <div class="table-responsive">
+                <table class="table table align-items-center table-flush">
+                    <thead class="thead-light">
+                        <tr class="table-light">
+                            <th scope="col">번호</th>
+                            <th scope="col">제목</th>
+                            <th scope="col">조회수</th>
+                            <th scope="col">추천수</th>
+                            <th scope="col">작성자</th>
+                            <th scope="col">작성일</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="table-light" th:each="post : ${posts}">
+                            <td th:text="${postStat.count}"></td>
+                            <td>
+                                <span th:if="${post.depth gt 0}">
+                                    <span th:each="num : ${#numbers.sequence(0, post.depth-1)}">
+                                        &nbsp;&nbsp;&nbsp;
+                                    </span>
+                                    [답글]
                                 </span>
-                                [답글]
-                            </span>
-                            <a th:text="${post.title}" th:href="'javascript:infoGet(\'posts\',' + ${post.postId} + ')'" href="#"></a>
-                        </td>
-                        <td th:text="${post.viewCount}"></td>
-                        <td th:text="${post.recommendCount}"></td>
-                        <td th:text="${post.nickname}"></td>
-                    <td></td>
-                    </tr>
-                </tbody>
-            </table>
+                                <a th:text="${post.title}" th:href="'javascript:infoGet(\'posts\',' + ${post.postId} + ')'" href="#"></a>
+                            </td>
+                            <td th:text="${post.viewCount}"></td>
+                            <td th:text="${post.recommendCount}"></td>
+                            <td th:text="${post.nickname}"></td>
+                        <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <button class="btn btn-primary" type="button" onclick="location.href='/posts/new'">게시물 등록</button>
+            <nav aria-label="Page navigation example m-3">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item" th:each="num : ${#numbers.sequence(0, paging.endPage-1)}">
+                        <a class="page-link" href="/posts" th:href="${'/posts?page=' + numStat.count}" th:text="${numStat.count}">1</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
         </div>
-        <button class="btn btn-primary" type="button" onclick="location.href='/posts/new'">게시물 등록</button>
-        <nav aria-label="Page navigation example m-3">
-            <ul class="pagination justify-content-center">
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                <li class="page-item" th:each="num : ${#numbers.sequence(0, paging.endPage-1)}">
-                    <a class="page-link" href="/posts" th:href="${'/posts?page=' + numStat.count}" th:text="${numStat.count}">1</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-        <footer th:replace="templates/fragments/footer.html :: footer"></footer>
-    </div>
+    </section>
 </body>
 </html>

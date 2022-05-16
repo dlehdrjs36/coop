@@ -67,6 +67,11 @@ class LoginServiceTest {
         loginService.addLoginLog(loginLog);
         assertNotEquals(0, loginRepository.findLoginLog(member));
         loginService.addPoint(member);
+        assertEquals(10, member.getPoint(), "일별 1회 로그인 시 포인트 10이 지급되어야 한다.");
+
+        loginService.addLoginLog(LoginLog.createLoginLog(member.getEmail()));
+        loginService.addPoint(member);
+        assertEquals(10, member.getPoint(), "일별 1회 로그인 시에만 포인트 10이 지급되어야 한다.");
 
         em.flush();
         Member changedMember = memberService.findMember(addMemberId);

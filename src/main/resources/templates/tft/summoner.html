@@ -1,145 +1,145 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="templates/fragments/header.html :: header"></head>
-<link th:href="@{/css/fragments/tftContents.css}" rel="stylesheet">
-<link th:href="@{/css/fragments/sumonner.css}" rel="stylesheet">
+<html th:replace="~{templates/layouts/baseLayout :: baseLayout(~{::title}, ~{::section})}" xmlns:th="http://www.thymleaf.org">
+<head>
+    <title>롤토체스 정보 사이트 롤체인포 - 소환사 검색</title>
+</head>
 <body>
-    <header th:replace="templates/fragments/bodyHeader.html :: bodyHeader"></header>
-    <div id="db-wrapper">
-        <div class="container" th:object="${summonerForm}">
-            <div class="bg-light-dark pt-10 pb-21"></div>
-            <div class="container-fluid mt-n22 px-6">
-                <div class="row">
-                    <div class="col-lg-12 col-md-12 col-12">
-                        <div>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="mb-2 mb-lg-0">
-                                    <img class="profileImg" th:src='@{/img/tft/profileicon/} + *{profileIconId} + @{.png}'>
-                                    <span class="text-dark h4 contentsTextPadding" th:text="|*{name} ( Lv*{summonerLevel} )|"></span>
+    <section>
+        <div id="db-wrapper">
+            <div class="container" th:object="${summonerForm}">
+                <div class="bg-light-dark pt-10 pb-21"></div>
+                <div class="container-fluid mt-n22 px-6">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-12">
+                            <div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="mb-2 mb-lg-0">
+                                        <img class="profileImg" th:src='@{/img/tft/profileicon/} + *{profileIconId} + @{.png}'>
+                                        <span class="text-dark h4 contentsTextPadding" th:text="|*{name} ( Lv*{summonerLevel} )|"></span>
+                                    </div>
+                                    <form name="summonerTitle" method="post">
+                                        <a onclick="recordUpdate()" class="btn btn-white">전적 갱신</a>
+                                        <input type="hidden" name="name" id="name" th:value="*{name}">
+                                        <input type="hidden" name="puuid" id="puuid" th:value="*{puuid}">
+                                    </form>
                                 </div>
-                                <form name="summonerTitle" method="post">
-                                    <a onclick="recordUpdate()" class="btn btn-white">전적 갱신</a>
-                                    <input type="hidden" name="name" id="name" th:value="*{name}">
-                                    <input type="hidden" name="puuid" id="puuid" th:value="*{puuid}">
-                                </form>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-6 col-md-12 col-12 mt-6">
-                        <div class="card ">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="col-xl-3 col-lg-6 col-md-12 col-12 mt-6">
+                            <div class="card ">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <div>
+                                            <h4 class="mb-0" th:text="|*{tier} *{rank}( *{leaguePoints}pt )|"></h4>
+                                        </div>
+                                    </div>
                                     <div>
-                                        <h4 class="mb-0" th:text="|*{tier} *{rank}( *{leaguePoints}pt )|"></h4>
+                                        <img class="tierImg" th:src="|/img/tft/tierEmblem/*{tier}.png|">
                                     </div>
                                 </div>
-                                <div>
-                                    <img class="tierImg" th:src="|/img/tft/tierEmblem/*{tier}.png|">
-                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-6 col-md-12 col-12 mt-6">
-                        <div class="card ">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="col-xl-3 col-lg-6 col-md-12 col-12 mt-6">
+                            <div class="card ">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <div>
+                                            <h4 class="mb-0">승</h4>
+                                        </div>
+                                    </div>
                                     <div>
-                                        <h4 class="mb-0">승</h4>
+                                        <h1 class="fw-bold" th:text="|*{wins}승|"></h1>
                                     </div>
                                 </div>
-                                <div>
-                                    <h1 class="fw-bold" th:text="|*{wins}승|"></h1>
-                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-6 col-md-12 col-12 mt-6">
-                        <div class="card ">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="col-xl-3 col-lg-6 col-md-12 col-12 mt-6">
+                            <div class="card ">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <div>
+                                            <h4 class="mb-0">패</h4>
+                                        </div>
+                                    </div>
                                     <div>
-                                        <h4 class="mb-0">패</h4>
+                                        <h1 class="fw-bold" th:text="|*{losses}패|"></h1>
                                     </div>
                                 </div>
-                                <div>
-                                    <h1 class="fw-bold" th:text="|*{losses}패|"></h1>
-                                </div>
                             </div>
-                        </div>
 
-                    </div>
-                    <div class="col-xl-3 col-lg-6 col-md-12 col-12 mt-6">
-                        <div class="card ">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-center mb-3">
-                                    <div>
-                                        <h4 class="mb-0">4등 이내( 최근 20경기 이내 )</h4>
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-12 col-12 mt-6">
+                            <div class="card ">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <div>
+                                            <h4 class="mb-0">4등 이내( 최근 20경기 이내 )</h4>
+                                        </div>
                                     </div>
-                                </div>
-                                <div>
-                                    <h1 class="fw-bold" th:text="|*{rankDefense}회|"></h1>
+                                    <div>
+                                        <h1 class="fw-bold" th:text="|*{rankDefense}회|"></h1>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="row mt-6">
-                    <div class="col-md-12 col-12">
-                        <div class="card">
-                            <div class="card-header bg-white py-4">
-                                <h4 class="mb-0">경기 기록</h4>
-                            </div>
-                            <div id="matchTable" class="table text-nowrap mb-0">
-                                <div th:id="|table${matchData.matchDesc.metadateMatchId}|" th:if="${sommonerMatchDescFormList.size() != 0}" th:each="matchData : ${sommonerMatchDescFormList}">
-                                    <div class="row">
-                                        <span class="col-md-3 align-self-sm-center">
-                                            <div class="d-flex justify-content-sm-center">
-                                                <div class="ms-1 lh-1">
-                                                    <h5 class="mb-1">
-                                                        <a th:if="${matchData.matchDesc.queueId} == 1090" th:text="|일반 게임 (${matchData.gameDatetime})|"></a>
-                                                        <a th:if="${matchData.matchDesc.queueId} == 1100" th:text="|랭크 게임 (${matchData.gameDatetime})|"></a>
-                                                        <a th:if="${matchData.matchDesc.queueId} == 1110" th:text="|튜토리얼 (${matchData.gameDatetime})|"></a>
-                                                        <a th:if="${matchData.matchDesc.queueId} == 1111" th:text="|사용자 설정 게임 (${matchData.gameDatetime})|"></a>
-                                                        <a th:if="${matchData.matchDesc.tftGameType} == 'pairs'">(더블업)</a>
-                                                    </h5>
-                                                </div>
-                                            </div>
-                                        </span>
-                                        <span class="col-md-1 align-self-sm-center"><span th:text="|${matchData.matchDesc.placement}등|"></span></span>
-                                        <span class="col-md-1 align-self-sm-center">
-                                            <span th:text="|${matchData.matchDesc.timeEliminated/60}:${matchData.matchDesc.timeEliminated%60}|"></span>
-                                        </span>
-                                        <span class="col-md-5 align-self-sm-center">
-                                            <div class="row avatar-group">
-                                                <div class="col-sm-1 text-center" th:each="units : ${matchData.units}">
-                                                    <div class="tierHeight" th:if="${units.tier} == @{'1'}">*</div>
-                                                    <div class="tierHeight" th:if="${units.tier} == @{'2'}">**</div>
-                                                    <div class="tierHeight" th:if="${units.tier} == @{'3'}">***</div>
-                                                    <div>
-                                                        <img class="descImg" th:src="@{/img/tft/champion/} + ${units.characterId} + @{.png}" alt="">
+                    <div class="row mt-6">
+                        <div class="col-md-12 col-12">
+                            <div class="card">
+                                <div class="card-header bg-white py-4">
+                                    <h4 class="mb-0">경기 기록</h4>
+                                </div>
+                                <div id="matchTable" class="table text-nowrap mb-0">
+                                    <div th:id="|table${matchData.matchDesc.metadateMatchId}|" th:if="${sommonerMatchDescFormList.size() != 0}" th:each="matchData : ${sommonerMatchDescFormList}">
+                                        <div class="row">
+                                            <span class="col-md-3 align-self-sm-center">
+                                                <div class="d-flex justify-content-sm-center">
+                                                    <div class="ms-1 lh-1">
+                                                        <h5 class="mb-1">
+                                                            <a th:if="${matchData.matchDesc.queueId} == 1090" th:text="|일반 게임 (${matchData.gameDatetime})|"></a>
+                                                            <a th:if="${matchData.matchDesc.queueId} == 1100" th:text="|랭크 게임 (${matchData.gameDatetime})|"></a>
+                                                            <a th:if="${matchData.matchDesc.queueId} == 1110" th:text="|튜토리얼 (${matchData.gameDatetime})|"></a>
+                                                            <a th:if="${matchData.matchDesc.queueId} == 1111" th:text="|사용자 설정 게임 (${matchData.gameDatetime})|"></a>
+                                                            <a th:if="${matchData.matchDesc.tftGameType} == 'pairs'">(더블업)</a>
+                                                        </h5>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </span>
-                                        <span class="col-md-1 align-self-sm-center text-dark">
-                                            <button class="btn btn-white" th:id="${matchData.matchDesc.metadateMatchId}" onclick="changeViewRecord(this.id)">상세</button>
-                                        </span>
+                                            </span>
+                                            <span class="col-md-1 align-self-sm-center"><span th:text="|${matchData.matchDesc.placement}등|"></span></span>
+                                            <span class="col-md-1 align-self-sm-center">
+                                                <span th:text="|${matchData.matchDesc.timeEliminated/60}:${matchData.matchDesc.timeEliminated%60}|"></span>
+                                            </span>
+                                            <span class="col-md-5 align-self-sm-center">
+                                                <div class="row avatar-group">
+                                                    <div class="col-sm-1 text-center" th:each="units : ${matchData.units}">
+                                                        <div class="tierHeight" th:if="${units.tier} == @{'1'}">*</div>
+                                                        <div class="tierHeight" th:if="${units.tier} == @{'2'}">**</div>
+                                                        <div class="tierHeight" th:if="${units.tier} == @{'3'}">***</div>
+                                                        <div>
+                                                            <img class="descImg" th:src="@{/img/tft/champion/} + ${units.characterId} + @{.png}" alt="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </span>
+                                            <span class="col-md-1 align-self-sm-center text-dark">
+                                                <button class="btn btn-white" th:id="${matchData.matchDesc.metadateMatchId}" onclick="changeViewRecord(this.id)">상세</button>
+                                            </span>
+                                        </div>
+                                        <div th:id="|${matchData.matchDesc.metadateMatchId}Desc|"></div>
                                     </div>
-                                    <div th:id="|${matchData.matchDesc.metadateMatchId}Desc|"></div>
                                 </div>
-                            </div>
-                            <div id="moreMatchSpin"></div>
-                            <div id="moreMatch" class="card-footer bg-white text-center">
-                                <a type="button" onclick="addMatchData()" class="link-primary">더보기</a>
-                                <input type="hidden" name="page" id="page" value="1">
+                                <div id="moreMatchSpin"></div>
+                                <div id="moreMatch" class="card-footer bg-white text-center">
+                                    <a type="button" onclick="addMatchData()" class="link-primary">더보기</a>
+                                    <input type="hidden" name="page" id="page" value="1">
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-           </div>
-            <footer th:replace="templates/fragments/footer.html :: footer"></footer>
+               </div>
+            </div>
         </div>
-    </div>
-    <script th:src="@{/js/tft/summoner/summoner.js}"></script>
+        <script th:src="@{/js/tft/summoner/summoner.js}"></script>
+    </section>
 </body>
 </html>

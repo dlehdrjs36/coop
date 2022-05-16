@@ -1,48 +1,49 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="templates/fragments/header.html :: header"></head>
+<html th:replace="~{templates/layouts/baseLayout :: baseLayout(~{::title}, ~{::section})}" xmlns:th="http://www.thymleaf.org">
+<head>
+    <title>롤토체스 정보 사이트 롤체인포 - 구매목록</title>
+</head>
 <body>
-    <header th:replace="templates/fragments/bodyHeader.html :: bodyHeader"></header>
-
-    <div class="container">
-        <div th:if="${#lists.size(purchaseList) > 0}">
-            <div class="row justify-content-start">
-                <div class="col-6 align-self-start mt-4" th:each="order : ${purchaseList}">
-                    <div class="card m-auto">
-                        <img class="card-img-top" th:src="'/img/product/' + ${order.product.path}" alt="..." th:width="192px" th:height="108px">
-                        <div class="card-body">
-                            <h5 class="card-title" th:text="${order.product.name}"></h5>
-                            <h6 class="card-subtitle mb-2 text-muted" th:text="${order.status.description}"></h6>
-                            <p th:text="|상품 구매일: ${#temporals.format(order.productPurchaseDate, 'yyyy-MM-dd HH:mm:ss')}|"></p>
-                            <p th:text="|상품 가격: ${order.product.price}|"></p>
-                            <button type="button" class="productApply btn btn-success" th:data-type="${order.product.type.name()}" th:data-status="${order.status.description}" th:data-orderid="${order.id}">적용</button>
-                            <button type="button" class="productUnApply btn btn-danger" th:data-type="${order.product.type.name()}" th:data-status="${order.status.description}" th:data-orderid="${order.id}">미적용</button>
+    <section>
+        <div class="container">
+            <div th:if="${#lists.size(purchaseList) > 0}">
+                <div class="row justify-content-start">
+                    <div class="col-6 align-self-start mt-4" th:each="order : ${purchaseList}">
+                        <div class="card m-auto">
+                            <img class="card-img-top" th:src="'/img/product/' + ${order.product.path}" alt="..." th:width="192px" th:height="108px">
+                            <div class="card-body">
+                                <h5 class="card-title" th:text="${order.product.name}"></h5>
+                                <h6 class="card-subtitle mb-2 text-muted" th:text="${order.status.description}"></h6>
+                                <p th:text="|상품 구매일: ${#temporals.format(order.productPurchaseDate, 'yyyy-MM-dd HH:mm:ss')}|"></p>
+                                <p th:text="|상품 가격: ${order.product.price}|"></p>
+                                <button type="button" class="productApply btn btn-success" th:data-type="${order.product.type.name()}" th:data-status="${order.status.description}" th:data-orderid="${order.id}">적용</button>
+                                <button type="button" class="productUnApply btn btn-danger" th:data-type="${order.product.type.name()}" th:data-status="${order.status.description}" th:data-orderid="${order.id}">미적용</button>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item" th:each="num : ${#numbers.sequence(0, paging.endPage-1)}">
+                            <a class="page-link" href="/orders" th:href="${'/orders?page=' + numStat.count}" th:text="${numStat.count}">1</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
-            <nav aria-label="Page navigation example">
-                <ul class="pagination justify-content-center">
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    <li class="page-item" th:each="num : ${#numbers.sequence(0, paging.endPage-1)}">
-                        <a class="page-link" href="/orders" th:href="${'/orders?page=' + numStat.count}" th:text="${numStat.count}">1</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+            <div class="row justify-content-start mt-3" th:unless="${#lists.size(purchaseList) > 0}">
+                <h3>현재 구매한 상품이 없습니다.</h3>
+            </div>
         </div>
-        <div class="row justify-content-start mt-3" th:unless="${#lists.size(purchaseList) > 0}">
-            <h3>현재 구매한 상품이 없습니다.</h3>
-        </div>
-        <footer th:replace="templates/fragments/footer.html :: footer"></footer>
-    </div>
+    </section>
 </body>
 </html>

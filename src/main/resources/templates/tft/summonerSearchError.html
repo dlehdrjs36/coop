@@ -1,18 +1,18 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="templates/fragments/header.html :: header"></head>
-<link th:href="@{/css/fragments/tftContents.css}" rel="stylesheet">
-<link th:href="@{/css/fragments/sumonner.css}" rel="stylesheet">
+<html th:replace="~{templates/layouts/baseLayout :: baseLayout(~{::title}, ~{::section})}" xmlns:th="http://www.thymleaf.org">
+<head>
+    <title>롤토체스 정보 사이트 롤체인포 - 소환사 검색 실패</title>
+</head>
 <body>
-    <header th:replace="templates/fragments/bodyHeader.html :: bodyHeader"></header>
-    <div class="container text-center">
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <div th:text="|${searchName} 소환사는 검색 되지 않습니다.|"></div>
-        <footer th:replace="templates/fragments/footer.html :: footer"></footer>
-    </div>
+    <section>
+        <div class="container text-center">
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <div th:text="|${searchName} 소환사는 검색 되지 않습니다.|"></div>
+        </div>
+    </section>
 </body>
 </html>

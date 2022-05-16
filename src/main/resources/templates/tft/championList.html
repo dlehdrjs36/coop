@@ -1,39 +1,37 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymleaf.org">
-<head th:replace="templates/fragments/header.html :: header"></head>
-<link th:href="@{/css/fragments/layoutChampionListPage.css}" rel="stylesheet">
-<link th:href="@{/css/fragments/tftContents.css}" rel="stylesheet">
+<html th:replace="~{templates/layouts/baseLayout :: baseLayout(~{::title}, ~{::section})}" xmlns:th="http://www.thymleaf.org">
+<head>
+    <title>롤토체스 정보 사이트 롤체인포 - 챔피언</title>
+</head>
 <body>
-    <header th:replace="templates/fragments/bodyHeader.html :: bodyHeader"></header>
-    <input type="hidden" id="championName" th:value="*{championName}">
-    <input type="hidden" id="championListData" th:value="*{championListData}">
-    <input type="hidden" id="synergyListData" th:value="*{synergyListData}">
-    <div id="backgroundImage">
-        <div class="container">
-            <div class="championContentsAtt">
-                <div class="col-sm-4 offset-8">
-                    <input type="search" class="form-control" name="searchChampionList" id="searchChampionList" placeholder="챔피언 검색" aria-label="Search">
+    <section>
+        <input type="hidden" id="championName" th:value="*{championName}">
+        <input type="hidden" id="championListData" th:value="*{championListData}">
+        <input type="hidden" id="synergyListData" th:value="*{synergyListData}">
+        <div id="backgroundImage">
+            <div class="container">
+                <div class="championContentsAtt">
+                    <div class="col-sm-4 offset-8">
+                        <input type="search" class="form-control" name="searchChampionList" id="searchChampionList" placeholder="챔피언 검색" aria-label="Search">
+                    </div>
+                    <div class="contentsPadding championListField text-center">
+                        <div id="championList"></div>
+                    </div>
                 </div>
-                <div class="contentsPadding championListField text-center">
-                    <div id="championList"></div>
+            </div>
+            <div class="container">
+                <div class="championViewer">
+                    <div class="championViewerHeader">
+                        <div name="championViewerHeader" id="championViewerHeader"></div>
+                    </div>
+                </div>
+                <div class="championViewer">
+                    <div name="championAbility" id="championAbility"></div>
+                    <div name="synergyDesc" id="synergyDesc"></div>
                 </div>
             </div>
         </div>
-        <div class="container">
-            <div class="championViewer">
-                <div class="championViewerHeader">
-                    <div name="championViewerHeader" id="championViewerHeader"></div>
-                </div>
-            </div>
-            <div class="championViewer">
-                <div name="championAbility" id="championAbility"></div>
-                <div name="synergyDesc" id="synergyDesc"></div>
-            </div>
-        </div>
-        <div class="container">
-            <footer th:replace="templates/fragments/footer.html :: footer"></footer>
-        </div>
-    </div>
-    <script th:src="@{/js/tft/champion/championList.js}"></script>
+        <script th:src="@{/js/tft/champion/championList.js}"></script>
+    </section>
 </body>
 </html>

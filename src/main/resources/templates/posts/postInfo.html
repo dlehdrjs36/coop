@@ -1,34 +1,35 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="templates/fragments/header.html :: header"></head>
+<html th:replace="~{templates/layouts/baseLayout :: baseLayout(~{::title}, ~{::section})}" xmlns:th="http://www.thymleaf.org">
+<head>
+  <title>롤토체스 정보 사이트 롤체인포 - 게시물 상세화면</title>
+</head>
 <body>
-  <header th:replace="templates/fragments/bodyHeader.html :: bodyHeader"></header>
-  <div class="container mt-5">
-    <div class="mb-4" th:object="${post}">
-      <div class="form-group">
-        <label th:for="title">제목</label>
-        <p class="form-control" th:field="*{title}" th:text="*{title}"></p>
-      </div>
-      <div class="form-group">
-        <label th:for="title">작성자</label>
-        <p class="form-control" th:text="*{nickname}"></p>
+  <section>
+    <div class="container mt-5">
+      <div class="mb-4" th:object="${post}">
+        <div class="form-group">
+          <label th:for="title">제목</label>
+          <p class="form-control" th:field="*{title}" th:text="*{title}"></p>
+        </div>
+        <div class="form-group">
+          <label th:for="title">작성자</label>
+          <p class="form-control" th:text="*{nickname}"></p>
+        </div>
+
+        <div class="form-group">
+          <label th:for="content">내용</label>
+          <textarea th:field="*{content}" th:text="*{content}" class="form-control" style="resize: none; height: 200px;" readonly></textarea>
+        </div>
+        <h1 class="text-center mt-2">추천수(<span th:id="recommendCount" th:text="*{recommendCount}"></span>)</h1>
+        <div class="text-center">
+          <button th:onclick="'javascript:recommend(' + *{postId} + ')'">
+            <i class="fa fa-heart fa-6x recommendIcon" th:classappend="${recommendAt} ? 'text-danger' : _ " aria-hidden="true"></i>
+          </button>
+        </div>
       </div>
 
-      <div class="form-group">
-        <label th:for="content">내용</label>
-        <textarea th:field="*{content}" th:text="*{content}" class="form-control" style="resize: none; height: 200px;" readonly></textarea>
-      </div>
-      <h1 class="text-center mt-2">추천수(<span th:id="recommendCount" th:text="*{recommendCount}"></span>)</h1>
-      <div class="text-center">
-        <button th:onclick="'javascript:recommend(' + *{postId} + ')'">
-          <i class="fa fa-heart fa-6x recommendIcon" th:classappend="${recommendAt} ? 'text-danger' : _ " aria-hidden="true"></i>
-        </button>
-      </div>
-    </div>
-
-    <!-- 댓글 -->
-    <section class="mb-5">
-      <div class="card bg-light">
+      <!-- 댓글 -->
+      <div class="card bg-light mb-5">
         <div class="card-body">
           <!-- Comment form-->
           <form class="mb-4" th:action="@{/comments/{postId}(postId=${post.postId})}" th:object="${commentForm}" method="post">
@@ -69,7 +70,7 @@
                       <i class="fa fa-times-circle text-danger" aria-hidden="true"></i>
                     </span>
                     <span th:unless="${comment.status}">삭제된 댓글 입니다.</span>
-<!--                <span th:text="${#temporals.format(comment.createDate, 'yyyy-MM-dd HH:mm:ss')}"></span>-->
+  <!--                <span th:text="${#temporals.format(comment.createDate, 'yyyy-MM-dd HH:mm:ss')}"></span>-->
                   </div>
                 </th:block>
                 <!-- 자식 댓글 -->
@@ -88,7 +89,7 @@
                           <i class="fa fa-times-circle text-danger" aria-hidden="true"></i>
                         </span>
                         <span th:unless="${comment.status}">삭제된 댓글 입니다.</span>
-<!--                     <span th:text="${#temporals.format(comment.createDate, 'yyyy-MM-dd HH:mm:ss')}"></span>-->
+  <!--                     <span th:text="${#temporals.format(comment.createDate, 'yyyy-MM-dd HH:mm:ss')}"></span>-->
                       </div>
                     </div>
                   </div>
@@ -116,13 +117,12 @@
           </nav>
         </div>
       </div>
-    </section>
 
-    <button type="button" class="btn btn-primary mt-3" th:onclick="'javascript:updateGet(\'posts\',' + *{postId} + ')'">수정</button>
-    <button type="button" class="btn btn-primary mt-3" th:onclick="'javascript:replyGet(' + *{postId} + ')'">답글</button>
-    <button type="button" class="btn btn-primary mt-3" onclick="location.href='/posts'">목록</button>
-    <br/>
-  </div>
-  <footer th:replace="templates/fragments/footer.html :: footer"></footer>
+      <button type="button" class="btn btn-primary mt-3" th:onclick="'javascript:updateGet(\'posts\',' + *{postId} + ')'">수정</button>
+      <button type="button" class="btn btn-primary mt-3" th:onclick="'javascript:replyGet(' + *{postId} + ')'">답글</button>
+      <button type="button" class="btn btn-primary mt-3" onclick="location.href='/posts'">목록</button>
+      <br/>
+    </div>
+  </section>
 </body>
 </html>

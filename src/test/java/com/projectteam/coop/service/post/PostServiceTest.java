@@ -9,7 +9,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,7 +34,6 @@ class PostServiceTest {
 
     @Test
     @DisplayName("비회원 답글 게시물 등록 OK")
-    @Rollback(false)
     void nonmemberAddReplyPost() {
 
         PostCreateForm parentForm = getPostCreateForm("parentTitle", "password", "parent", "parentNickname");
@@ -73,7 +71,6 @@ class PostServiceTest {
 
     @Test
     @DisplayName("회원 답글 게시물 등록 OK")
-    @Rollback(false)
     void memberAddReplyPost() {
 
         Member member = Member.createMember("test@gmail.com", "테스트", "password", Boolean.TRUE);

@@ -1,6 +1,8 @@
 package com.projectteam.coop.domain;
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -11,6 +13,7 @@ import static javax.persistence.FetchType.LAZY;
 
 @Entity
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Post extends BaseEntity {
 
     @Id @GeneratedValue
@@ -62,8 +65,6 @@ public class Post extends BaseEntity {
 
     @Column(name = "UPDATE_MEMBER_ID")
     private String updateMemberId;
-
-    protected Post() {}
 
     public static Post createReplyPost(String title, String password, String content, String nickname, Post parent) {
         Post post = new Post();
@@ -154,7 +155,9 @@ public class Post extends BaseEntity {
         this.order = order + 1;
     }
 
+    //게시물 그룹
     public void initGroup() {
         this.group = this.postId;
     }
+
 }

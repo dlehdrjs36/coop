@@ -35,6 +35,11 @@ public class PostController {
     private final CommentService commentService;
     private final PurchaseListService purchaseListService;
 
+    @ModelAttribute("postSearchTypes")
+    public PostSearchType[] postSearchTypes(){
+        return PostSearchType.values();
+    }
+
     @GetMapping("/new")
     public String createForm(Model model) {
         model.addAttribute("postForm", new PostCreateForm());
@@ -77,11 +82,11 @@ public class PostController {
     }
 
     @GetMapping
-    public String postList(@RequestParam(value = "page", defaultValue = "1") Integer page, Model model) {
+    public String postList(@ModelAttribute("postSearch") PostSearch postSearch, @RequestParam(value = "page", defaultValue = "1") Integer page, Model model) {
         Paging paging = new Paging();
         paging.calculateTotalPage(postService.totalSize());
 
-        List<Post> findPosts = postService.findPosts(Paging.calculateStartOffset(page), Paging.calculateLastOffset(page));
+        List<Post> findPosts = postService.findPosts(postSearch, Paging.calculateStartOffset(page), Paging.calculateLastOffset(page));
 
         model.addAttribute("paging", paging);
         model.addAttribute("posts", findPosts);
@@ -114,7 +119,7 @@ public class PostController {
     }
 
     private Map<String, Object> getMemberApplyIcon(List<Comment> findComments) {
-        Map<String, Object> memberApplyIcon = new HashMap();
+        Map<String, Object> memberApplyIcon = new HashMap<>();
         findComments.stream()
             .filter((comment) -> comment.getCreateMember() != null)
             .forEach((comment) -> {

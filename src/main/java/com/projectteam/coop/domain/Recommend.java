@@ -1,11 +1,14 @@
 package com.projectteam.coop.domain;
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Recommend extends BaseEntity {
 
     @Id @GeneratedValue
@@ -19,8 +22,6 @@ public class Recommend extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
-
-    protected Recommend() {}
 
     public static Recommend createRecommed(Post post, Member member) {
         Recommend recommend = new Recommend();

@@ -1,6 +1,8 @@
 package com.projectteam.coop.domain;
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +17,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Board extends BaseEntity {
 
     @Id @GeneratedValue
@@ -36,6 +39,5 @@ public class Board extends BaseEntity {
     private Member createMember;
 
     private String updateMemberId;
-
 
 }

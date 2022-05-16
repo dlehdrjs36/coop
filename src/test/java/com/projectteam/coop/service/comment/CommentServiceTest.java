@@ -40,7 +40,6 @@ class CommentServiceTest {
 
     @Test
     @DisplayName("기존 댓글에 비회원이 대댓글 등록")
-    @Rollback(false)
     void nonmemberAddReplyComment() {
         PostCreateForm postForm = getPostCreateForm("parentTitle", "password", "parent", "parentNickname");
         Long postId = postService.addPost(postForm, null);
@@ -77,7 +76,6 @@ class CommentServiceTest {
 
     @Test
     @DisplayName("기존 댓글에 회원이 대댓글 등록")
-    @Rollback(false)
     void memberAddReplyComment() {
         Member member = Member.createMember("test@gmail.com", "테스트", "password", Boolean.TRUE);
         Long memberId = memberService.addMember(member);
@@ -121,7 +119,6 @@ class CommentServiceTest {
 
     @Test
     @DisplayName("게시물에 비회원이 댓글 등록")
-    @Rollback(false)
     void nonmemberAddComment() {
         PostCreateForm postForm = getPostCreateForm("parentTitle", "password", "parent", "parentNickname");
         Long postId = postService.addPost(postForm, null);
@@ -144,7 +141,6 @@ class CommentServiceTest {
 
     @Test
     @DisplayName("게시물에 회원이 댓글 등록")
-    @Rollback(false)
     void memberAddReplyPost() {
         Member member = Member.createMember("test@gmail.com", "테스트", "password", Boolean.TRUE);
         Long memberId = memberService.addMember(member);

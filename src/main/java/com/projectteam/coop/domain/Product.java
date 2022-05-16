@@ -1,6 +1,8 @@
 package com.projectteam.coop.domain;
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +14,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Product extends BaseEntity {
 
     @Id @GeneratedValue
@@ -33,7 +36,6 @@ public class Product extends BaseEntity {
     private String createMemberId;
 
     private String updateMemberId;
-
 
     //상품 등록
     public static Product createProduct(String name, String path, ProductType type, Integer price) {

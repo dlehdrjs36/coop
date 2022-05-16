@@ -41,6 +41,12 @@ public class PurchaseListRepository {
         return memberPurchaseList;
     }
 
+    //회원 구매목록 단건 조회
+    public PurchaseList findPurchaseList(Long id) {
+        PurchaseList purchaseList = em.find(PurchaseList.class, id);
+        return purchaseList;
+    }
+
     //회원 적용 아이콘 조회
     public PurchaseList memberApplyIcon(String email) {
         PurchaseList result = em.createQuery("select p from PurchaseList p join fetch p.product join fetch p.member where p.member.email = :email and p.status = 'APPLY' and p.product.type = 'ICON'", PurchaseList.class)
@@ -68,6 +74,8 @@ public class PurchaseListRepository {
 
     //회원 구매 배경 상품 적용
     public void orderBackgroundApply(MemberSessionDto loginMember, Long id) {
+//        em.createQuery("update PurchaseList p set p.status = 'UNAPPLY' where p.id <> :orderId");
+
         em.createQuery("select p from PurchaseList p where p.id <> :orderId and p.member.email = :email and p.product.type = 'BACKGROUND'", PurchaseList.class)
                 .setParameter("orderId", id)
                 .setParameter("email", loginMember.getEmail())

@@ -1,6 +1,8 @@
 package com.projectteam.coop.domain;
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,9 +14,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class PurchaseList {
 
     @Id @GeneratedValue
@@ -42,6 +46,10 @@ public class PurchaseList {
         purchaseList.member = member;
         purchaseList.productPurchaseDate = LocalDateTime.now();
         purchaseList.status = PurchaseListStatus.ORDER;
+
+        //양방향 연관관계 설정
+        List<PurchaseList> memberPurchaseLists = member.getPurchaseLists();
+        memberPurchaseLists.add(purchaseList);
 
         return purchaseList;
     }

@@ -36,8 +36,10 @@
             <div class="synergyHeader">시너지</div>
             <div name="synergyDesc" id="synergyDesc"></div>
         </div>
+        <div class="container">
+            <footer th:replace="templates/fragments/footer.html :: footer"></footer>
+        </div>
     </div>
-    <footer th:replace="templates/fragments/footer.html :: footer"></footer>
+    <script th:src="@{/js/tft/combination/combination.js}"></script>
 </body>
-<script th:src="@{/js/tft/combination/combination.js}"></script>
 </html>

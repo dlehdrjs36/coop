@@ -13,7 +13,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Member {
+public class Member extends BaseEntity{
 
     @Id @GeneratedValue
     @Column(name = "MEMBER_ID")
@@ -51,7 +51,6 @@ public class Member {
         member.type = MemberType.COMMON;
         member.status = MemberStatus.ACTIVE;
         member.point = 0;
-        member.createDate = LocalDateTime.now();
         member.emailReceptionType = emailReceptionType;
 
         return member;

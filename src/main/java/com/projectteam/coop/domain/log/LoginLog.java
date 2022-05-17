@@ -1,13 +1,16 @@
 package com.projectteam.coop.domain.log;
 
+import com.projectteam.coop.domain.BaseEntity;
 import lombok.Getter;
 
-import javax.persistence.*;
-import java.time.LocalDateTime;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 @Entity
 @Getter
-public class LoginLog {
+public class LoginLog extends BaseEntity {
 
     @Id @GeneratedValue
     @Column(name = "LOGIN_ID")
@@ -15,15 +18,11 @@ public class LoginLog {
 
     private String email;
 
-    @Column(name = "CREATE_DATE")
-    private LocalDateTime createDate;
-
     protected LoginLog() { }
 
     public static LoginLog createLoginLog(String email) {
         LoginLog loginLog = new LoginLog();
         loginLog.email = email;
-        loginLog.createDate = LocalDateTime.now();
         return loginLog;
     }
 }

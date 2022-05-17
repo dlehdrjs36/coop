@@ -46,7 +46,7 @@
                             <td th:text="${post.viewCount}"></td>
                             <td th:text="${post.recommendCount}"></td>
                             <td th:text="${post.nickname}"></td>
-                        <td></td>
+                            <td th:text="${#temporals.format(post.createDate, 'yyyy-MM-dd HH:mm')}"></td>
                         </tr>
                     </tbody>
                 </table>

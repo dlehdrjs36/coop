@@ -4,6 +4,7 @@ import com.projectteam.coop.domain.Member;
 import com.projectteam.coop.domain.Post;
 import com.projectteam.coop.domain.Product;
 import com.projectteam.coop.domain.ProductType;
+import com.projectteam.coop.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,8 +33,10 @@ public class InitDb {
 
         public void dbInit1() {
             //회원
-            Member member1 = Member.createMember("coop1@naver.com", "테스트1", "1234", Boolean.TRUE);
-            Member member2 = Member.createMember("coop2@naver.com", "테스트2", "1234", Boolean.TRUE);
+            String memberSalt1 = SecurityUtil.getSalt();
+            String memberSalt2 = SecurityUtil.getSalt();
+            Member member1 = Member.createMember("coop1@naver.com", "테스트1", SecurityUtil.encryptSHA256("1234", memberSalt1), memberSalt1, Boolean.TRUE);
+            Member member2 = Member.createMember("coop2@naver.com", "테스트2", SecurityUtil.encryptSHA256("1234", memberSalt2), memberSalt2, Boolean.TRUE);
             em.persist(member1);
             em.persist(member2);
 

@@ -39,89 +39,90 @@ function logout() {
 
 function buyProduct() {
     const productId = this.dataset.productid;
-
-    fetch("/orders/" + productId, { // url 입력 및 [options] 값 설정
-        method: 'post',
-        headers: {
-            'Accept': 'application/json'
-        }
-    }).then(res => {
-        return res.json();
-    }).then(data => { //응답 결과를 json으로 파싱
-        alert(data.message);
-        if (data.code == "Y") {
-            location.href = "/shop";
-        }else if (data.code == "NO_SESSION") {
-            location.href = "/login";
-        }
-    }).catch(err => { // 오류 발생시 오류를 담아서 보여줌
-        console.log('Fetch Error', err);
-    });
+    if(confirm("해당 상품을 구매하시겠습니까?")){
+        fetch("/orders/" + productId, { // url 입력 및 [options] 값 설정
+            method: 'post',
+            headers: {
+                'Accept': 'application/json'
+            }
+        }).then(res => {
+            return res.json();
+        }).then(data => { //응답 결과를 json으로 파싱
+            alert(data.message);
+            if (data.code == "Y") {
+                location.href = "/shop";
+            }else if (data.code == "NO_SESSION") {
+                location.href = "/login";
+            }
+        }).catch(err => { // 오류 발생시 오류를 담아서 보여줌
+            console.log('Fetch Error', err);
+        });
+    }
 }
 
 function orderApply() {
     const orderId = this.dataset.orderid;
-    const orderStatus = this.dataset.status;
     const productType = this.dataset.type;
     const buttonElement = this;
 
-    if(orderStatus == "적용") {
+    if(buttonElement.parentNode.childNodes[3].textContent == "적용") {
         alert("이미 적용된 상품 입니다.");
         return false;
     }
 
-    fetch("/orders/" + orderId + "/apply", {
-        method: 'post',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        },
-        body: JSON.stringify({
-            type : productType
-        })
-    }).then(res => {
-        return res.json();
-    }).then(data => { //응답 결과를 json으로 파싱
-        if (data.applyAt == "Y") {
-            buttonElement.parentNode.childNodes[3].textContent = "적용";
-            buttonElement.dataset.status = "적용";
-            alert("상품이 적용되었습니다.");
-        } else {
-            alert("상품 적용에 실패하였습니다.");
-        }
-    }).catch(err => { // 오류 발생시 오류를 담아서 보여줌
-        console.log('Fetch Error', err);
-    });
+    if (confirm("해당 상품을 적용하시겠습니까?")) {
+        fetch("/orders/" + orderId + "/apply", {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                type : productType
+            })
+        }).then(res => {
+            return res.json();
+        }).then(data => { //응답 결과를 json으로 파싱
+            if (data.applyAt == "Y") {
+                buttonElement.parentNode.childNodes[3].textContent = "적용";
+                alert("상품이 적용되었습니다.");
+            } else {
+                alert("상품 적용에 실패하였습니다.");
+            }
+        }).catch(err => { // 오류 발생시 오류를 담아서 보여줌
+            console.log('Fetch Error', err);
+        });
+    }
 }
 
 function orderUnapply() {
     const orderId = this.dataset.orderid;
-    const orderStatus = this.dataset.status;
     const buttonElement = this;
 
-    if(orderStatus == "미적용") {
+    if(buttonElement.parentNode.childNodes[3].textContent == "미적용") {
         alert("이미 미적용된 상품 입니다.");
         return false;
     }
 
-    fetch("/orders/" + orderId + "/unapply", {
-        method: 'post',
-        headers: {
-            'Accept': 'application/json'
-        }
-    }).then(res => {
-        return res.json();
-    }).then(data => { //응답 결과를 json으로 파싱
-        if (data.applyAt == "Y") {
-            buttonElement.parentNode.childNodes[3].textContent = "미적용";
-            buttonElement.dataset.status = "미적용";
-            alert("상품이 미적용되었습니다.");
-        } else {
-            alert("상품 미적용에 실패하였습니다.");
-        }
-    }).catch(err => { // 오류 발생시 오류를 담아서 보여줌
-        console.log('Fetch Error', err);
-    });
+    if (confirm("해당 상품을 미적용하시겠습니까?")) {
+        fetch("/orders/" + orderId + "/unapply", {
+            method: 'post',
+            headers: {
+                'Accept': 'application/json'
+            }
+        }).then(res => {
+            return res.json();
+        }).then(data => { //응답 결과를 json으로 파싱
+            if (data.applyAt == "Y") {
+                buttonElement.parentNode.childNodes[3].textContent = "미적용";
+                alert("상품이 미적용되었습니다.");
+            } else {
+                alert("상품 미적용에 실패하였습니다.");
+            }
+        }).catch(err => { // 오류 발생시 오류를 담아서 보여줌
+            console.log('Fetch Error', err);
+        });
+    }
 }
 
 function recommend(id){

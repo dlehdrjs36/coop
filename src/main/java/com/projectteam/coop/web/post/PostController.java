@@ -206,24 +206,4 @@ public class PostController {
 
         return "redirect:/posts/" + postForm.getPostId();
     }
-
-    @PostMapping("/{postId}/recommend")
-    @ResponseBody
-    public Map<String, Object> recommend(@Login MemberSessionDto loginMember, @PathVariable Long postId) {
-        Map<String, Object> result = new HashMap<>();
-        if (loginMember != null) {
-            changeMemberRecommend(loginMember, postId);
-            result.put("recommendAt", recommedService.isMemberRecommend(loginMember.getId(), postId));
-        }
-        result.put("recommendCount", recommedService.postRecommendCount(postId));
-        return result;
-    }
-
-    private void changeMemberRecommend(MemberSessionDto loginMember, Long postId) {
-        if (recommedService.isMemberRecommend(loginMember.getId(), postId)) {
-            recommedService.removeRecommend(loginMember.getId(), postId);
-        } else {
-            postService.recommend(loginMember.getId(), postId);
-        }
-    }
 }

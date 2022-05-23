@@ -16,8 +16,8 @@
                                 <h6 class="card-subtitle mb-2 text-muted" th:text="${order.status.description}"></h6>
                                 <p th:text="|상품 구매일: ${#temporals.format(order.productPurchaseDate, 'yyyy-MM-dd HH:mm:ss')}|"></p>
                                 <p th:text="|상품 가격: ${order.product.price}|"></p>
-                                <button type="button" class="productApply btn btn-success" th:data-type="${order.product.type.name()}" th:data-status="${order.status.description}" th:data-orderid="${order.id}">적용</button>
-                                <button type="button" class="productUnApply btn btn-danger" th:data-type="${order.product.type.name()}" th:data-status="${order.status.description}" th:data-orderid="${order.id}">미적용</button>
+                                <button type="button" class="productApply btn btn-success" th:data-type="${order.product.type.name()}" th:data-orderid="${order.id}">적용</button>
+                                <button type="button" class="productUnApply btn btn-danger" th:data-type="${order.product.type.name()}" th:data-orderid="${order.id}">미적용</button>
                             </div>
                         </div>
                     </div>

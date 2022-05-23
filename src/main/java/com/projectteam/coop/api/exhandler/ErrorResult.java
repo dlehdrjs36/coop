@@ -1,4 +1,4 @@
-package com.projectteam.coop.web.exhandler;
+package com.projectteam.coop.api.exhandler;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

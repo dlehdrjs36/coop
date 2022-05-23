@@ -1,7 +1,7 @@
-package com.projectteam.coop.web.exhandler.advice;
+package com.projectteam.coop.api.exhandler.advice;
 
 import com.projectteam.coop.exception.*;
-import com.projectteam.coop.web.exhandler.ErrorResult;
+import com.projectteam.coop.api.exhandler.ErrorResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

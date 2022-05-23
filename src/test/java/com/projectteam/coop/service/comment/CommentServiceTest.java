@@ -77,7 +77,9 @@ class CommentServiceTest {
     @Test
     @DisplayName("기존 댓글에 회원이 대댓글 등록")
     void memberAddReplyComment() {
-        Member member = Member.createMember("test@gmail.com", "테스트", "password", Boolean.TRUE);
+
+        String salt = SecurityUtil.getSalt();
+        Member member = Member.createMember("test@gmail.com", "테스트", SecurityUtil.encryptSHA256("1234", salt), salt, Boolean.TRUE);
         Long memberId = memberService.addMember(member);
         em.flush();
         Member findMember = memberService.findMember(memberId);
@@ -142,7 +144,9 @@ class CommentServiceTest {
     @Test
     @DisplayName("게시물에 회원이 댓글 등록")
     void memberAddReplyPost() {
-        Member member = Member.createMember("test@gmail.com", "테스트", "password", Boolean.TRUE);
+
+        String salt = SecurityUtil.getSalt();
+        Member member = Member.createMember("test@gmail.com", "테스트", SecurityUtil.encryptSHA256("1234", salt), salt, Boolean.TRUE);
         Long memberId = memberService.addMember(member);
         em.flush();
         Member findMember = memberService.findMember(memberId);

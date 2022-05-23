@@ -3,6 +3,7 @@ package com.projectteam.coop.service.post;
 import com.projectteam.coop.domain.Member;
 import com.projectteam.coop.domain.Post;
 import com.projectteam.coop.service.member.MemberService;
+import com.projectteam.coop.util.SecurityUtil;
 import com.projectteam.coop.web.post.PostCreateForm;
 import com.projectteam.coop.web.session.MemberSessionDto;
 import org.junit.jupiter.api.DisplayName;
@@ -73,7 +74,8 @@ class PostServiceTest {
     @DisplayName("회원 답글 게시물 등록 OK")
     void memberAddReplyPost() {
 
-        Member member = Member.createMember("test@gmail.com", "테스트", "password", Boolean.TRUE);
+        String salt = SecurityUtil.getSalt();
+        Member member = Member.createMember("test@gmail.com", "테스트", SecurityUtil.encryptSHA256("1234", salt), salt, Boolean.TRUE);
         Long memberId = memberService.addMember(member);
         em.flush();
         assertEquals(member, memberService.findMember(memberId));
@@ -141,7 +143,8 @@ class PostServiceTest {
     @DisplayName("회원 게시물 등록 OK")
     void memberAddPost() {
 
-        Member member = Member.createMember("test@gmail.com", "테스트", "password", Boolean.TRUE);
+        String salt = SecurityUtil.getSalt();
+        Member member = Member.createMember("test@gmail.com", "테스트", SecurityUtil.encryptSHA256("1234", salt), salt, Boolean.TRUE);
         Long memberId = memberService.addMember(member);
         em.flush();
         assertEquals(member, memberService.findMember(memberId));
@@ -170,12 +173,15 @@ class PostServiceTest {
     @Test
     @DisplayName("회원이 등록한 게시물 추천 OK")
     void addMemberRecommend() {
-        Member member1 = Member.createMember("test@gmail.com", "테스트", "password", Boolean.TRUE);
+
+        String salt = SecurityUtil.getSalt();
+        Member member1 = Member.createMember("test@gmail.com", "테스트", SecurityUtil.encryptSHA256("1234", salt), salt, Boolean.TRUE);
         Long memberId1 = memberService.addMember(member1);
         em.flush();
         assertEquals(member1, memberService.findMember(memberId1));
 
-        Member member2 = Member.createMember("test2@gmail.com", "테스트2", "password", Boolean.TRUE);
+        String salt2 = SecurityUtil.getSalt();
+        Member member2 = Member.createMember("test2@gmail.com", "테스트2", SecurityUtil.encryptSHA256("1234", salt2), salt2, Boolean.TRUE);
         Long memberId2 = memberService.addMember(member2);
         em.flush();
         assertEquals(member2, memberService.findMember(memberId2));
@@ -197,12 +203,15 @@ class PostServiceTest {
     @Test
     @DisplayName("비회원이 등록한 게시물 추천 OK")
     void addNonmemberRecommend() {
-        Member member1 = Member.createMember("test@gmail.com", "테스트", "password", Boolean.TRUE);
+
+        String salt = SecurityUtil.getSalt();
+        Member member1 = Member.createMember("test@gmail.com", "테스트", SecurityUtil.encryptSHA256("1234", salt), salt, Boolean.TRUE);
         Long memberId1 = memberService.addMember(member1);
         em.flush();
         assertEquals(member1, memberService.findMember(memberId1));
 
-        Member member2 = Member.createMember("test2@gmail.com", "테스트2", "password", Boolean.TRUE);
+        String salt2 = SecurityUtil.getSalt();
+        Member member2 = Member.createMember("test2@gmail.com", "테스트2", SecurityUtil.encryptSHA256("1234", salt2), salt2, Boolean.TRUE);
         Long memberId2 = memberService.addMember(member2);
         em.flush();
         assertEquals(member2, memberService.findMember(memberId2));

@@ -2,6 +2,7 @@ package com.projectteam.coop.web.member;
 
 import com.projectteam.coop.domain.Member;
 import com.projectteam.coop.service.member.MemberService;
+import com.projectteam.coop.util.SecurityUtil;
 import com.projectteam.coop.web.argumentresolver.Login;
 import com.projectteam.coop.web.session.MemberSessionDto;
 import lombok.RequiredArgsConstructor;
@@ -34,9 +35,10 @@ public class MemberController {
             return "/templates/members/createMemberForm";
         }
 
-        Member member = Member.createMember(memberForm.getEmail(), memberForm.getName(), memberForm.getPassword(), Boolean.TRUE);
+        String salt = SecurityUtil.getSalt();
+        String password = SecurityUtil.encryptSHA256(memberForm.getPassword(), salt);
+        Member member = Member.createMember(memberForm.getEmail(), memberForm.getName(), password, salt, Boolean.TRUE);
         memberService.addMember(member);
-
 
         return "redirect:/";
     }
@@ -56,7 +58,6 @@ public class MemberController {
             memberForm.setName(member.getName());
             memberForm.setEmail(member.getEmail());
             memberForm.setEmailReceptionType(member.getEmailReceptionType());
-
 
             model.addAttribute("memberForm", memberForm);
             return "/templates/members/updateMemberForm";

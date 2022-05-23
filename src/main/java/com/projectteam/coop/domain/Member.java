@@ -25,6 +25,8 @@ public class Member extends BaseEntity{
 
     private String password;
 
+    private String salt;
+
     @Enumerated(EnumType.STRING)
     private MemberType type;
 
@@ -43,11 +45,12 @@ public class Member extends BaseEntity{
     private List<PurchaseList> purchaseLists = new ArrayList<>();
 
     //회원가입
-    public static Member createMember(String email, String name, String password, Boolean emailReceptionType) {
+    public static Member createMember(String email, String name, String password, String salt, Boolean emailReceptionType) {
         Member member = new Member();
         member.email = email;
         member.name = name;
         member.password = password;
+        member.salt = salt;
         member.type = MemberType.COMMON;
         member.status = MemberStatus.ACTIVE;
         member.point = 0;

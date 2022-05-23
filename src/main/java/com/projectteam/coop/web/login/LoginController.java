@@ -4,6 +4,7 @@ import com.projectteam.coop.domain.Member;
 import com.projectteam.coop.domain.log.LoginLog;
 import com.projectteam.coop.service.login.LoginService;
 import com.projectteam.coop.service.member.MemberService;
+import com.projectteam.coop.util.SecurityUtil;
 import com.projectteam.coop.web.argumentresolver.AdminLogin;
 import com.projectteam.coop.web.argumentresolver.Login;
 import com.projectteam.coop.web.session.MemberSessionDto;
@@ -51,8 +52,11 @@ public class LoginController {
             return "/templates/login/loginForm";
         }
 
+        Member member = memberService.findMemberForPassword(loginForm.getEmail());
+        String salt = member.getSalt();
         //이메일과 패스워드가 일치하는 회원 검색
-        Member findMember = memberService.findMember(loginForm.getEmail(), loginForm.getPassword());
+        Member findMember = memberService.findMember(loginForm.getEmail(), SecurityUtil.encryptSHA256(loginForm.getPassword(), salt));
+
         if(findMember == null) {
             bindingResult.reject("login");
             return "/templates/login/loginForm";
@@ -84,7 +88,11 @@ public class LoginController {
             return "/templates/login/adminLoginForm";
         }
 
-        Member findMember = memberService.findMember(loginForm.getEmail(), loginForm.getPassword());
+        Member member = memberService.findMemberForPassword(loginForm.getEmail());
+        String salt = member.getSalt();
+        //이메일과 패스워드가 일치하는 회원 검색
+        Member findMember = memberService.findMember(loginForm.getEmail(), SecurityUtil.encryptSHA256(loginForm.getPassword(), salt));
+
         if(findMember == null) {
             bindingResult.reject("login");
             return "/templates/login/adminLoginForm";

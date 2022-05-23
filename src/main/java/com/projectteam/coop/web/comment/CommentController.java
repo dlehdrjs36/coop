@@ -9,10 +9,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
-import java.util.Map;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/comments")
@@ -41,20 +41,5 @@ public class CommentController {
         }
 
         return "redirect:/posts/" + postId;
-    }
-
-    @DeleteMapping("/{commentId}")
-    @ResponseBody
-    public Map<String, Object> delete(@PathVariable("commentId") Long commentId,
-                                      @RequestBody CommentCreateForm removeForm) {
-
-        if (removeForm.getPassword() == null) {
-            throw new IllegalArgumentException("댓글 비밀번호 미입력");
-        }
-
-        Map<String, Object> result = new HashMap<>();
-        boolean isRemove = commentService.changeStateComment(commentId, removeForm.getPassword());
-        result.put("isRemove", isRemove);
-        return result;
     }
 }

@@ -4,20 +4,13 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "BOARD")
 public class Board extends BaseEntity {
 
     @Id @GeneratedValue
@@ -25,19 +18,24 @@ public class Board extends BaseEntity {
     private Long id;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "TYPE")
     private BoardType type;
 
+    @Column(name = "ATTACHMENT_CAPACITY_LIMIT")
     private Integer attachmentCapacityLimit;
 
+    @Column(name = "ATTACHMENT_ALLOW_EXTENSION")
     private String attachmentAllowExtension;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "STATUS")
     private BoardStatus status;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CREATE_MEMBER_ID")
     private Member createMember;
 
+    @Column(name = "UPDATE_MEMBER_ID")
     private String updateMemberId;
 
 }

@@ -11,6 +11,7 @@ import static javax.persistence.FetchType.LAZY;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "ATTACHMENT")
 public class Attachment extends BaseEntity {
 
     @Id
@@ -27,16 +28,22 @@ public class Attachment extends BaseEntity {
     private Board board;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "STATUS")
     private AttachmentStatus status;
 
+    @Column(name = "ORIGIN_NAME")
     private String originName;
 
+    @Column(name = "UPLOAD_NAME")
     private String uploadName;
 
+    @Column(name = "PATH")
     private String path;
 
+    @Column(name = "CAPACITY")
     private Integer capacity;
 
+    @Column(name = "DOWNLOAD_COUNT")
     private Integer downloadCount;
 
 }

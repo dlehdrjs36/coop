@@ -11,6 +11,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "COMMENTS")
 public class Comment extends BaseEntity {
 
     @Id @GeneratedValue
@@ -25,6 +26,7 @@ public class Comment extends BaseEntity {
     @JoinColumn(name = "BOARD_ID")
     private Board board;
 
+    @Column(name = "STATUS")
     private Boolean status;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -43,16 +45,20 @@ public class Comment extends BaseEntity {
     @Column(name = "COMMENT_DEPTH")
     private Long depth;
 
+    @Column(name = "CONTENT")
     private String content;
 
+    @Column(name = "PASSWORD")
     private String password;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CREATE_MEMBER_ID")
     private Member createMember;
 
+    @Column(name = "NICKNAME")
     private String nickname;
 
+    @Column(name = "UPDATE_MEMBER_ID")
     private String updateMemberId;
 
     public void orderSort() {

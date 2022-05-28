@@ -4,37 +4,40 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "PRODUCT")
 public class Product extends BaseEntity {
 
     @Id @GeneratedValue
     @Column(name = "PRODUCT_ID")
     private Long id;
 
+    @Column(name = "NAME")
     private String name;
 
+    @Column(name = "PATH")
     private String path;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "TYPE")
     private ProductType type;
 
+    @Column(name = "PRICE")
     private Integer price;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "STATUS")
     private ProductStatus status;
 
+    @Column(name = "CREATE_MEMBER_ID")
     private String createMemberId;
 
+    @Column(name = "UPDATE_MEMBER_ID")
     private String updateMemberId;
 
     //상품 등록

@@ -13,28 +13,37 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "MEMBER")
 public class Member extends BaseEntity{
 
     @Id @GeneratedValue
     @Column(name = "MEMBER_ID")
     private Long id;
 
+    @Column(name = "EMAIL")
     private String email;
 
+    @Column(name = "NAME")
     private String name;
 
+    @Column(name = "PASSWORD")
     private String password;
 
+    @Column(name = "SALT")
     private String salt;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "TYPE")
     private MemberType type;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "STATUS")
     private MemberStatus status;
 
+    @Column(name = "POINT")
     private int point;
 
+    @Column(name = "CREATE_DATE")
     private LocalDateTime createDate;
 
     @Column(name = "EMAIL_RECEPTION_AT")

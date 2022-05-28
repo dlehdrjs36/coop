@@ -14,6 +14,7 @@ import static javax.persistence.FetchType.LAZY;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "POST")
 public class Post extends BaseEntity {
 
     @Id @GeneratedValue
@@ -35,10 +36,13 @@ public class Post extends BaseEntity {
     @OneToMany(mappedBy = "parent")
     private List<Post> child = new ArrayList<>();
 
+    @Column(name = "PASSWORD")
     private String password;
 
+    @Column(name = "TITLE")
     private String title;
 
+    @Column(name = "NICKNAME")
     private String nickname;
 
     @Column(name = "POST_GROUP")
@@ -51,6 +55,7 @@ public class Post extends BaseEntity {
     private Long depth;
 
     @Lob
+    @Column(name = "CONTENT")
     private String content;
 
     @Column(name = "VIEW_COUNT")

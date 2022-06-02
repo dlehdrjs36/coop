@@ -60,7 +60,7 @@ public class CommentRepository {
     }
 
     //댓글 순서 정렬
-    public void orderSort(Long commentId) {
+    public void sortCommentsByOrder(Long commentId) {
         em.createQuery("select p from Comment p where p.parent.id = :commentId and p.depth > 0", Comment.class)
                 .setParameter("commentId", commentId)
                 .getResultList()

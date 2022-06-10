@@ -54,22 +54,27 @@ public class LoginController {
 
         Member member = memberService.findMemberForPassword(loginForm.getEmail());
         String salt = member.getSalt();
-        //이메일과 패스워드가 일치하는 회원 검색
-        Member findMember = memberService.findMember(loginForm.getEmail(), SecurityUtil.encryptSHA256(loginForm.getPassword(), salt));
 
+        Member findMember = memberService.findMember(loginForm.getEmail(), SecurityUtil.encryptSHA256(loginForm.getPassword(), salt));
         if(findMember == null) {
             bindingResult.reject("login");
             return "/templates/login/loginForm";
         } else {
-            //포인트 추가. 일별 로그인 1회만 추가
-            loginService.addLoginLog(LoginLog.createLoginLog(findMember.getEmail()));
-            loginService.addPoint(findMember);
-            //세션 생성
-            HttpSession session = request.getSession();
-            session.setAttribute(LOGIN_MEMBER, MemberSessionDto.createSession(findMember));
+            addMemberLogAndPoints(findMember);
+            addLoginInformationToSession(request, findMember);
 
             return "redirect:" + redirectURL;
         }
+    }
+
+    private void addMemberLogAndPoints(Member findMember) {
+        loginService.addLoginLog(LoginLog.createLoginLog(findMember.getEmail()));
+        loginService.addPoint(findMember);
+    }
+
+    private void addLoginInformationToSession(HttpServletRequest request, Member findMember) {
+        HttpSession session = request.getSession();
+        session.setAttribute(LOGIN_MEMBER, MemberSessionDto.createSession(findMember));
     }
 
     @GetMapping("/adminLogin")
@@ -90,18 +95,21 @@ public class LoginController {
 
         Member member = memberService.findMemberForPassword(loginForm.getEmail());
         String salt = member.getSalt();
-        //이메일과 패스워드가 일치하는 회원 검색
-        Member findMember = memberService.findMember(loginForm.getEmail(), SecurityUtil.encryptSHA256(loginForm.getPassword(), salt));
 
+        Member findMember = memberService.findMember(loginForm.getEmail(), SecurityUtil.encryptSHA256(loginForm.getPassword(), salt));
         if(findMember == null) {
             bindingResult.reject("login");
             return "/templates/login/adminLoginForm";
         }
-        //세션 생성
-        HttpSession session = request.getSession();
-        session.setAttribute(ADMIN_LOGIN_MEMBER, MemberSessionDto.createSession(findMember));
+
+        addAdminLoginInformationToSession(request, findMember);
 
         return "redirect:/admin";
+    }
+
+    private void addAdminLoginInformationToSession(HttpServletRequest request, Member findMember) {
+        HttpSession session = request.getSession();
+        session.setAttribute(ADMIN_LOGIN_MEMBER, MemberSessionDto.createSession(findMember));
     }
 
     @PostMapping("/logout")

@@ -68,30 +68,29 @@ public class MemberController {
 
     @PostMapping("/members/update")
     public String editPassword(@Login MemberSessionDto loginMember, HttpServletRequest httpRequest, Model model){
-        String currentPassword = httpRequest.getParameter("currentPassword");
-        String changePassword = httpRequest.getParameter("password");
+        String oldPassword = httpRequest.getParameter("currentPassword");
+        String newPassword = httpRequest.getParameter("password");
 
-        //이메일과 패스워드가 일치하는 회원 검색
-        Member findMember = memberService.findMember(loginMember.getEmail(), currentPassword);
         Member member = memberService.findMember(loginMember.getId());
-        MemberForm memberForm = new MemberForm();
-        memberForm.setId(member.getId());
-        memberForm.setName(member.getName());
-        memberForm.setEmail(member.getEmail());
-        memberForm.setEmailReceptionType(member.getEmailReceptionType());
-
-        if(findMember == null) {
-            if (loginMember != null) {
-                model.addAttribute("memberForm", memberForm);
-                model.addAttribute("errorMessage","입력한 현재 비밀번호가 일치하지 않습니다.");
-                return "/templates/members/updateMemberForm";
-            }
-            //회원 정보 없음
+        if(member == null) {
             return "redirect:/";
         }
 
-        memberForm.setPassword(changePassword);
-        memberService.updateMember(memberForm);
+        String encryptedOldPassword = SecurityUtil.encryptSHA256(oldPassword, member.getSalt());
+        if(isNotMatchedPassword(encryptedOldPassword, member.getPassword())) {
+            model.addAttribute("memberForm", loginMember);
+            model.addAttribute("errorMessage","입력한 현재 비밀번호가 일치하지 않습니다.");
+            return "/templates/members/updateMemberForm";
+        }
+
+        String encryptedNewPassword = SecurityUtil.encryptSHA256(newPassword, member.getSalt());
+        member.changePassword(encryptedNewPassword);
+        memberService.updateMember(member);
+
         return "redirect:/";
+    }
+
+    private boolean isNotMatchedPassword(String encryptedCurrentPassword, String memberPassword) {
+        return !encryptedCurrentPassword.equals(memberPassword);
     }
 }

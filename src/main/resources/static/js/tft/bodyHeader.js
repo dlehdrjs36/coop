@@ -3,6 +3,7 @@ const championNameKrList = ["아리","알리스타","애쉬","블리츠크랭크
 const searchChampionName = document.getElementById("searchChampionName");
 const keywords = document.querySelector(".championKeywords");
 let keywordsFlg = false;
+
 function searchChampion(e){
     let search = e.target.value;
     let keywords = document.querySelector(".championKeywords");
@@ -66,16 +67,21 @@ function indexSummonerSearch(){
     }
 }
 
-searchChampionName.addEventListener('input', searchChampion);
-searchChampionName.addEventListener('focus', searchChampion);
-keywords.addEventListener('mouseenter', function (){
-    keywordsFlg = true;
-});
-keywords.addEventListener('mouseleave', function (){
-    keywordsFlg = false;
-});
-searchChampionName.addEventListener('focusout', function (){
-    if(!keywordsFlg){
-        document.querySelector(".championKeywordArea").classList.add("hide");
-    }
-});
+if(searchChampionName != null) {
+    searchChampionName.addEventListener('input', searchChampion);
+    searchChampionName.addEventListener('focus', searchChampion);
+    searchChampionName.addEventListener('focusout', function (){
+        if(!keywordsFlg){
+            document.querySelector(".championKeywordArea").classList.add("hide");
+        }
+    });
+}
+
+if(keywords != null) {
+    keywords.addEventListener('mouseenter', function (){
+        keywordsFlg = true;
+    });
+    keywords.addEventListener('mouseleave', function (){
+        keywordsFlg = false;
+    });
+}

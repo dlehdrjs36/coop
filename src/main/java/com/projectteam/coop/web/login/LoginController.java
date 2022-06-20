@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import java.util.Optional;
+
 import static com.projectteam.coop.web.session.SessionConst.ADMIN_LOGIN_MEMBER;
 import static com.projectteam.coop.web.session.SessionConst.LOGIN_MEMBER;
 
@@ -52,8 +54,12 @@ public class LoginController {
             return "/templates/login/loginForm";
         }
 
-        Member member = memberService.findMemberForPassword(loginForm.getEmail());
-        String salt = member.getSalt();
+        Optional<Member> member = memberService.findMemberForPassword(loginForm.getEmail());
+        if(member.isEmpty()) {
+            bindingResult.reject("memberNotFound");
+            return "/templates/login/loginForm";
+        }
+        String salt = member.get().getSalt();
 
         Member findMember = memberService.findMember(loginForm.getEmail(), SecurityUtil.encryptSHA256(loginForm.getPassword(), salt));
         if(findMember == null) {
@@ -93,8 +99,12 @@ public class LoginController {
             return "/templates/login/adminLoginForm";
         }
 
-        Member member = memberService.findMemberForPassword(loginForm.getEmail());
-        String salt = member.getSalt();
+        Optional<Member> member = memberService.findMemberForPassword(loginForm.getEmail());
+        if(member.isEmpty()) {
+            bindingResult.reject("memberNotFound");
+            return "/templates/login/adminLoginForm";
+        }
+        String salt = member.get().getSalt();
 
         Member findMember = memberService.findMember(loginForm.getEmail(), SecurityUtil.encryptSHA256(loginForm.getPassword(), salt));
         if(findMember == null) {

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -41,14 +42,14 @@ public class EmailController {
             return "/templates/mail/forgotPassword";
         }
 
-        Member findMember = memberService.findMemberForPassword(emailForm.getEmail());
-        if(findMember == null){
+        Optional<Member> findMember = memberService.findMemberForPassword(emailForm.getEmail());
+        if(findMember.isEmpty()){
             bindingResult.reject("memberNotFound");
             return "/templates/mail/forgotPassword";
         }
 
         String tempPassword = RandomStringUtils.randomAlphanumeric(12);
-        changeMemberPasswordToTemporaryPassword(findMember, tempPassword);
+        changeMemberPasswordToTemporaryPassword(findMember.get(), tempPassword);
 
         try {
             sendTemporaryPasswordEmailToMember(emailForm.getEmail(), tempPassword);

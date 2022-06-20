@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -21,6 +22,12 @@ public class MemberService {
     public Long addMember(Member member) {
         validateDuplicateMember(member);
         return memberRepository.addMember(member);
+    }
+
+    //회원 중복 검사
+    public boolean isNotDuplicateMember(Member member) {
+        List<Member> findMembers = memberRepository.findByEmail(member.getEmail());
+        return findMembers.isEmpty();
     }
 
     //회원 중복 검사
@@ -53,7 +60,7 @@ public class MemberService {
 
     //이메일 조회( 이메일 단독으로 조회 -> [임시 비밀번호 등록용] )
     @Transactional(transactionManager = "h2TxManager", readOnly = true)
-    public Member findMemberForPassword(String Email) {
-        return memberRepository.findMemberForPassword(Email);
+    public Optional<Member> findMemberForPassword(String Email) {
+        return Optional.ofNullable(memberRepository.findMemberForPassword(Email));
     }
 }

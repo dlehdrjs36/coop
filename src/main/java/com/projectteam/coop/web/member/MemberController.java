@@ -38,9 +38,13 @@ public class MemberController {
         String salt = SecurityUtil.getSalt();
         String password = SecurityUtil.encryptSHA256(memberForm.getPassword(), salt);
         Member member = Member.createMember(memberForm.getEmail(), memberForm.getName(), password, salt, Boolean.TRUE);
-        memberService.addMember(member);
+        if(memberService.isNotDuplicateMember(member)) {
+            memberService.addMember(member);
+            return "redirect:/";
+        }
 
-        return "redirect:/";
+        bindingResult.rejectValue("email", "memberDuplicate");
+        return "/templates/members/createMemberForm";
     }
 
     @GetMapping("/members/update")

@@ -4,11 +4,6 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
     <!-- Web layer -->
-
-
-    <!-- Spring MVC 구성 요소를 활성화하는 데 사용됩니다.
-    참고 : https://javabeat.net/spring-mvc-component-scan-annotations/
-    -->
     <!-- mvc 리소스 경로 지정 -->
     <mvc:resources mapping="/img/**" location="classpath:/static/img/" />
     <mvc:resources mapping="/css/**" location="classpath:/static/css/" />
@@ -52,5 +47,4 @@
         <property name="viewNames" value="/templates/*" />
     </bean>
     <!-- //thymeleaf 설정 -->
-
 </beans>

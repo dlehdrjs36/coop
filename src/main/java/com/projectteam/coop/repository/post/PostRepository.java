@@ -21,11 +21,9 @@ public class PostRepository {
 
     //등록
     public Long addPost(Post post) {
+        em.persist(post);
         if (post.getParent() == null) {
-            em.persist(post);
             post.initGroup();
-        }else {
-            em.persist(post);
         }
         return post.getPostId();
     }
@@ -106,7 +104,8 @@ public class PostRepository {
     //전체 개수
     public int getTotalSize() {
         int size = em.createQuery("select p from Post p", Post.class)
-                .getResultList().size();
+                .getResultList()
+                .size();
 
         return size;
     }

@@ -43,18 +43,19 @@ function buyProduct() {
         fetch("/orders/" + productId, { // url 입력 및 [options] 값 설정
             method: 'post',
             headers: {
+                'Content-Type': 'application/json',
                 'Accept': 'application/json'
             }
         }).then(res => {
             return res.json();
         }).then(data => { //응답 결과를 json으로 파싱
-            alert(data.message);
-            if (data.code == "Y") {
+            if(data.success == true) {
                 location.href = "/shop";
-            }else if (data.code == "NO_SESSION") {
+            }else {
                 location.href = "/login";
             }
         }).catch(err => { // 오류 발생시 오류를 담아서 보여줌
+            alert("상품 구매에 실패하였습니다.");
             console.log('Fetch Error', err);
         });
     }
@@ -83,13 +84,14 @@ function orderApply() {
         }).then(res => {
             return res.json();
         }).then(data => { //응답 결과를 json으로 파싱
-            if (data.applyAt == "Y") {
+            if (data.success == true) {
                 buttonElement.parentNode.childNodes[3].textContent = "적용";
                 alert("상품이 적용되었습니다.");
             } else {
                 alert("상품 적용에 실패하였습니다.");
             }
         }).catch(err => { // 오류 발생시 오류를 담아서 보여줌
+            alert("상품 구매에 실패하였습니다.");
             console.log('Fetch Error', err);
         });
     }
@@ -113,13 +115,14 @@ function orderUnapply() {
         }).then(res => {
             return res.json();
         }).then(data => { //응답 결과를 json으로 파싱
-            if (data.applyAt == "Y") {
+            if (data.success == true) {
                 buttonElement.parentNode.childNodes[3].textContent = "미적용";
                 alert("상품이 미적용되었습니다.");
             } else {
                 alert("상품 미적용에 실패하였습니다.");
             }
         }).catch(err => { // 오류 발생시 오류를 담아서 보여줌
+            alert("상품 구매에 실패하였습니다.");
             console.log('Fetch Error', err);
         });
     }
@@ -146,6 +149,7 @@ function recommend(id){
         }
 
     }).catch(err => { // 오류 발생시 오류를 담아서 보여줌
+        alert("상품 구매에 실패하였습니다.");
         console.log('Fetch Error', err);
     });
 }
@@ -344,6 +348,7 @@ function removeComment() {
             alert("댓글이 삭제에 실패하였습니다.");
         }
     }).catch(err => { // 오류 발생시 오류를 담아서 보여줌
+        alert("상품 구매에 실패하였습니다.");
         console.log('Fetch Error', err);
     });
 }

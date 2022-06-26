@@ -10,8 +10,7 @@ import com.projectteam.coop.web.session.MemberSessionDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 
@@ -23,31 +22,33 @@ public class HomeController {
     private final MemberService memberService;
     private final PurchaseListService purchaseListService;
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @GetMapping("/")
     public String home(@Login MemberSessionDto loginMember, Model model) {
-
         List<Post> recommendPosts = postService.findRecommendPosts();
         model.addAttribute("recommendPosts", recommendPosts);
 
-        //세션에 회원 데이터 있는 경우
         if (loginMember != null) {
             Member member = memberService.findMember(loginMember.getId());
-            PurchaseList memberPurchaseList = purchaseListService.memberPurchaseList(member.getEmail())
+            purchaseListService.memberPurchaseList(member.getEmail())
                     .stream()
-                    .filter(purchaseList -> purchaseList.getProduct().getType() == ProductType.BACKGROUND)
-                    .filter(purchaseList -> purchaseList.getStatus() == PurchaseListStatus.APPLY)
+                    .filter(purchaseList -> isBackgroundItem(purchaseList))
+                    .filter(purchaseList -> isApply(purchaseList))
                     .findAny()
-                    .orElseGet(() -> null);
-
-            if (memberPurchaseList != null) {
-                model.addAttribute("memberPurchaseProduct", memberPurchaseList.getProduct());
-            }
+                    .ifPresent(memberPurchaseList -> model.addAttribute("memberPurchaseProduct", memberPurchaseList.getProduct()));
         }
-
         return "/templates/index";
     }
 
-    @RequestMapping(value = "/admin", method = RequestMethod.GET)
+    private boolean isApply(PurchaseList purchaseList) {
+        return purchaseList.getStatus() == PurchaseListStatus.APPLY;
+    }
+
+    private boolean isBackgroundItem(PurchaseList purchaseList) {
+        return purchaseList.getProduct().getType() == ProductType.BACKGROUND;
+    }
+
+    //TODO 관리자 페이지 구현 필요
+    @GetMapping("/admin")
     public String adminHome(@AdminLogin MemberSessionDto loginMember, Model model) {
         return "/templates/admin/main";
     }

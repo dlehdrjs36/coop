@@ -54,7 +54,7 @@ public class PurchaseListRepository {
                 .getResultList()
                 .stream()
                 .findAny()
-                .orElseGet(() -> null);;
+                .orElseGet(() -> null);
 
         return result;
     }
@@ -73,35 +73,23 @@ public class PurchaseListRepository {
     }
 
     //회원 구매 배경 상품 적용
-    public void orderBackgroundApply(MemberSessionDto loginMember, Long id) {
-//        em.createQuery("update PurchaseList p set p.status = 'UNAPPLY' where p.id <> :orderId");
-
-        em.createQuery("select p from PurchaseList p where p.id <> :orderId and p.member.email = :email and p.product.type = 'BACKGROUND'", PurchaseList.class)
+    public List<PurchaseList> memberBackgroundList(MemberSessionDto loginMember, Long id) {
+        List<PurchaseList> resultList = em.createQuery("select p from PurchaseList p where p.id <> :orderId and p.member.email = :email and p.product.type = 'BACKGROUND'", PurchaseList.class)
                 .setParameter("orderId", id)
                 .setParameter("email", loginMember.getEmail())
-                .getResultList()
-                .forEach((purchaseList) -> purchaseList.unapply());
+                .getResultList();
 
-        PurchaseList purchaseList = findPurchaseList(loginMember.getEmail(), id);
-        if (purchaseList == null) {
-            throw new NoAuthorityException("권한이 없습니다.");
-        }
-        purchaseList.apply();
+        return resultList;
     }
 
     //회원 구매 아이콘 상품 적용
-    public void orderIconApply(MemberSessionDto loginMember, Long id) {
-        em.createQuery("select p from PurchaseList p where p.id <> :orderId and p.member.email = :email and p.product.type = 'ICON'", PurchaseList.class)
+    public List<PurchaseList> memberIconList(MemberSessionDto loginMember, Long id) {
+        List<PurchaseList> resultList = em.createQuery("select p from PurchaseList p where p.id <> :orderId and p.member.email = :email and p.product.type = 'ICON'", PurchaseList.class)
                 .setParameter("orderId", id)
                 .setParameter("email", loginMember.getEmail())
-                .getResultList()
-                .forEach((purchaseList) -> purchaseList.unapply());
+                .getResultList();
 
-        PurchaseList purchaseList = findPurchaseList(loginMember.getEmail(), id);
-        if (purchaseList == null) {
-            throw new NoAuthorityException("권한이 없습니다.");
-        }
-        purchaseList.apply();
+        return resultList;
     }
 
     //회원 구매 배경, 아이콘 상품 미적용

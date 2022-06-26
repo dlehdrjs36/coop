@@ -70,7 +70,6 @@ public class PostController {
 
     @PostMapping("/reply")
     public String reply(@Login MemberSessionDto loginMember, @Validated @ModelAttribute("postForm") PostCreateForm postForm, BindingResult bindingResult) {
-
         postService.addReplyPost(postForm, loginMember);
 
         if (bindingResult.hasErrors()) {
@@ -95,7 +94,9 @@ public class PostController {
     }
 
     @GetMapping("/{postId}")
-    public String info(@Login MemberSessionDto loginMember, @RequestParam(value = "page", defaultValue = "1") Integer page, @PathVariable Long postId, Model model) {
+    public String info(@Login MemberSessionDto loginMember,
+                       @RequestParam(value = "page", defaultValue = "1") Integer page,
+                       @PathVariable Long postId, Model model) {
         Post post = postService.findPost(postId);
         model.addAttribute("post", post);
 
@@ -113,7 +114,10 @@ public class PostController {
         model.addAttribute("paging", paging);
         model.addAttribute("comments", findComments);
         model.addAttribute("commentsIcon", memberApplyIcon);
-        model.addAttribute("commentForm", new CommentCreateForm());
+
+        if(!model.containsAttribute("commentForm")) {
+            model.addAttribute("commentForm", new CommentCreateForm());
+        }
 
         return "/templates/posts/postInfo";
     }

@@ -32,10 +32,7 @@ public class RecommendService {
     @Transactional(transactionManager = "h2TxManager", readOnly = true)
     public boolean isMemberRecommend(Long memberId, Long postId) {
         Recommend recommend = recommedRepository.findMemberRecommend(memberId, postId);
-        if (recommend == null) {
-            return false;
-        }
-        return true;
+        return recommend != null;
     }
     public Recommend findRecommend(Long memberId, Long postId) {
         return recommedRepository.findMemberRecommend(memberId, postId);

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/comments")
@@ -26,10 +27,14 @@ public class CommentController {
     public String create(@Login MemberSessionDto loginMember,
                          @Validated @ModelAttribute("commentForm") CommentCreateForm commentCreateForm,
                          BindingResult bindingResult,
-                         @PathVariable Long postId) {
+                         @PathVariable Long postId,
+                         RedirectAttributes redirectAttributes) {
 
         if (bindingResult.hasErrors()) {
             if (!(bindingResult.getErrorCount() == 1 && loginMember != null && bindingResult.getFieldError("nickname") != null)) {
+                redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.commentForm", bindingResult);
+                redirectAttributes.addFlashAttribute("commentForm", commentCreateForm);
+
                 return "redirect:/posts/" + postId;
             }
         }

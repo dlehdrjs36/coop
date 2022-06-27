@@ -8,7 +8,9 @@ import org.springframework.http.HttpStatus;
 @RequiredArgsConstructor
 @Getter
 @Setter
-public class OrderApiDto {
+public class PostApiDto {
     private final String message;
     private final HttpStatus status;
+    private final boolean recommendAt;
+    private final Long recommendCount;
 }

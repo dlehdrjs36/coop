@@ -48,13 +48,12 @@ public class PostController {
 
     @PostMapping("/new")
     public String create(@Login MemberSessionDto loginMember, @Validated @ModelAttribute("postForm") PostCreateForm postForm, BindingResult bindingResult, Model model) {
-
-        postService.addPost(postForm, loginMember);
-
         if (bindingResult.hasErrors()) {
             log.info("bindingResult.hasErrors={}", bindingResult);
             return "/templates/posts/createPostForm";
         }
+
+        postService.addPost(postForm, loginMember);
 
         return "redirect:/posts";
     }
@@ -70,12 +69,12 @@ public class PostController {
 
     @PostMapping("/reply")
     public String reply(@Login MemberSessionDto loginMember, @Validated @ModelAttribute("postForm") PostCreateForm postForm, BindingResult bindingResult) {
-        postService.addReplyPost(postForm, loginMember);
-
         if (bindingResult.hasErrors()) {
             log.info("bindingResult.hasErrors={}", bindingResult);
             return "/templates/posts/replyPostForm";
         }
+
+        postService.addReplyPost(postForm, loginMember);
 
         return "redirect:/posts";
     }
@@ -182,14 +181,13 @@ public class PostController {
                          BindingResult bindingResult,
                          Model model) {
 
-        Post post = postService.findPost(postForm.getPostId());
-
         if (bindingResult.hasErrors()) {
             log.info("bindingResult.hasErrors={}", bindingResult);
             return "/posts/" + postForm.getPostId() + "/edit";
         }
-
+        Post post = postService.findPost(postForm.getPostId());
         Member postCreateMember = post.getCreateMember();
+        
         if (loginMember == null) {
             if (postCreateMember == null) {
                 postService.updatePost(postForm);

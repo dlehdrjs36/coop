@@ -91,7 +91,7 @@ function orderApply() {
                 alert("상품 적용에 실패하였습니다.");
             }
         }).catch(err => { // 오류 발생시 오류를 담아서 보여줌
-            alert("상품 구매에 실패하였습니다.");
+            alert("상품 적용에 실패하였습니다.");
             console.log('Fetch Error', err);
         });
     }
@@ -122,13 +122,14 @@ function orderUnapply() {
                 alert("상품 미적용에 실패하였습니다.");
             }
         }).catch(err => { // 오류 발생시 오류를 담아서 보여줌
-            alert("상품 구매에 실패하였습니다.");
+            alert("상품 미적용에 실패하였습니다.");
             console.log('Fetch Error', err);
         });
     }
 }
 
 function recommend(id){
+
     fetch("/posts/" + id + "/recommend", { // url 입력 및 [options] 값 설정
         method: 'post',
         headers: {
@@ -138,22 +139,23 @@ function recommend(id){
         return res.json();
     }).then(data => { //응답 결과를 json으로 파싱
         const recommendCount = document.querySelector("#recommendCount");
-        // [ data.키값 ] 이런 형태로 value 추출 가능
         recommendCount.innerText = data.recommendCount;
-
         const recommendIcon = document.querySelector(".recommendIcon");
-        if (data.recommendAt) {
+        if (data.recommendAt == true) {
+            alert("게시물을 추천하였습니다.");
             recommendIcon.classList.add("text-danger");
-        } else {
+        } else if(data.recommendAt == false) {
+            alert("게시물 추천을 취소하였습니다.");
             recommendIcon.classList.remove("text-danger");
+        } else {
+            alert("인증이 필요합니다.");
         }
 
     }).catch(err => { // 오류 발생시 오류를 담아서 보여줌
-        alert("상품 구매에 실패하였습니다.");
+        alert("추천에 실패하였습니다.");
         console.log('Fetch Error', err);
     });
 }
-
 
 document.addEventListener("DOMContentLoaded", ready)
 function ready() {
@@ -177,12 +179,12 @@ function ready() {
 
     //대댓글 입력 폼
     const comments = document.querySelectorAll(".parentComment");
-    for (var i = 0; i < comments.length; i++) {
+    for (let i = 0; i < comments.length; i++) {
         comments[i].addEventListener('click', createCommentForm);
     }
     //댓글 삭제 폼
     const removeIcons = document.querySelectorAll(".removeComment");
-    for (var j = 0; j < removeIcons.length; j++) {
+    for (let i = 0; i < removeIcons.length; i++) {
         removeIcons[j].addEventListener('click', removeCommentForm);
     }
 }
@@ -343,12 +345,12 @@ function removeComment() {
                 iconDiv.appendChild(imgElement);
             }
             removeForm.remove(); //댓글 삭제 폼 삭제
-            alert("댓글이 삭제되었습니다.");
+            alert("댓글 삭제되었습니다.");
         } else {
-            alert("댓글이 삭제에 실패하였습니다.");
+            alert("댓글 삭제에 실패하였습니다.");
         }
     }).catch(err => { // 오류 발생시 오류를 담아서 보여줌
-        alert("상품 구매에 실패하였습니다.");
+        alert("댓글 삭제에 실패하였습니다.");
         console.log('Fetch Error', err);
     });
 }

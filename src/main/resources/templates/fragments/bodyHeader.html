@@ -49,6 +49,7 @@
                 <div class="login d-flex">
                     <div th:if="${session.loginMember eq null}">
                         <button type="button" class="btn btn-outline-dark me-2" onclick="location.href='/login'">로그인</button>
+                        <button type="button" class="btn btn-outline-dark me-2" onclick="location.href='/members/new'">회원가입</button>
                     </div>
                     <div th:if="${session.loginMember ne null}">
                         <p th:text="|${session.loginMember.name}님 보유포인트: ${session.loginMember.point}|"></p>

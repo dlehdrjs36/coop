@@ -14,32 +14,28 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class RecommendService {
 
-    private final RecommendRepository recommedRepository;
+    private final RecommendRepository recommendRepository;
     private final PostRepository postRepository;
 
     public Long addRecommend(Post post, Member member) {
-        return recommedRepository.addRecommend(Recommend.createRecommed(post, member));
+        return recommendRepository.addRecommend(Recommend.createRecommed(post, member));
     }
 
     public void removeRecommend(Long memberId, Long postId) {
-        Recommend memberRecommend = recommedRepository.findMemberRecommend(memberId, postId);
-        recommedRepository.removeRecommend(memberRecommend.getId());
+        Recommend memberRecommend = recommendRepository.findMemberRecommend(memberId, postId);
+        recommendRepository.removeRecommend(memberRecommend.getId());
 
         Post post = postRepository.findPost(postId);
-        post.recommend(recommedRepository.getPostRecommendCount(postId));
+        post.recommend(recommendRepository.getPostRecommendCount(postId));
     }
 
     @Transactional(transactionManager = "h2TxManager", readOnly = true)
     public boolean isMemberRecommend(Long memberId, Long postId) {
-        Recommend recommend = recommedRepository.findMemberRecommend(memberId, postId);
-        return recommend != null;
-    }
-    public Recommend findRecommend(Long memberId, Long postId) {
-        return recommedRepository.findMemberRecommend(memberId, postId);
+        return recommendRepository.findMemberRecommend(memberId, postId) != null;
     }
 
     public Long postRecommendCount(Long postId) {
-        return recommedRepository.getPostRecommendCount(postId);
+        return recommendRepository.getPostRecommendCount(postId);
     }
 
 }

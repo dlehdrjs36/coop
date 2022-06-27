@@ -20,7 +20,7 @@ import java.util.Map;
 @Slf4j
 public class PostApiController {
 
-    private final RecommendService recommedService;
+    private final RecommendService recommendService;
     private final PostService postService;
 
     @PostMapping("/{postId}/recommend")
@@ -28,15 +28,18 @@ public class PostApiController {
         Map<String, Object> result = new HashMap<>();
         if (loginMember != null) {
             changeMemberRecommend(loginMember, postId);
-            result.put("recommendAt", recommedService.isMemberRecommend(loginMember.getId(), postId));
+            boolean recommendAt = recommendService.isMemberRecommend(loginMember.getId(), postId);
+            result.put("recommendAt", recommendAt);
         }
-        result.put("recommendCount", recommedService.postRecommendCount(postId));
+        Long recommendCount = recommendService.postRecommendCount(postId);
+        result.put("recommendCount", recommendCount);
+
         return result;
     }
 
     private void changeMemberRecommend(MemberSessionDto loginMember, Long postId) {
-        if (recommedService.isMemberRecommend(loginMember.getId(), postId)) {
-            recommedService.removeRecommend(loginMember.getId(), postId);
+        if (recommendService.isMemberRecommend(loginMember.getId(), postId)) {
+            recommendService.removeRecommend(loginMember.getId(), postId);
         } else {
             postService.recommend(loginMember.getId(), postId);
         }

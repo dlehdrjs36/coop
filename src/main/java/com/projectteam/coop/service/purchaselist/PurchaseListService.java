@@ -4,7 +4,7 @@ import com.projectteam.coop.domain.Member;
 import com.projectteam.coop.domain.Product;
 import com.projectteam.coop.domain.PurchaseList;
 import com.projectteam.coop.exception.DuplicatePurchaseProductException;
-import com.projectteam.coop.exception.NoAuthorityException;
+import com.projectteam.coop.exception.NoAuthorizationException;
 import com.projectteam.coop.exception.NoPointException;
 import com.projectteam.coop.repository.member.MemberRepository;
 import com.projectteam.coop.repository.purchaselist.PurchaseListRepository;
@@ -76,7 +76,7 @@ public class PurchaseListService {
 
         PurchaseList purchaseList = purchaseListRepository.findPurchaseList(loginMember.getEmail(), id);
         if (purchaseList == null) {
-            throw new NoAuthorityException("권한이 없습니다.");
+            throw new NoAuthorizationException("권한이 없습니다.");
         }
         purchaseList.apply();
     }
@@ -88,14 +88,18 @@ public class PurchaseListService {
 
         PurchaseList purchaseList = purchaseListRepository.findPurchaseList(loginMember.getEmail(), id);
         if (purchaseList == null) {
-            throw new NoAuthorityException("권한이 없습니다.");
+            throw new NoAuthorizationException("권한이 없습니다.");
         }
         purchaseList.apply();
     }
 
     //상품(배경, 아이콘) 미적용
     public void orderUnapply(MemberSessionDto loginMember, Long id) {
-        purchaseListRepository.orderUnapply(loginMember, id);
+        PurchaseList purchaseList = purchaseListRepository.orderUnapply(loginMember, id);
+        if (purchaseList == null) {
+            throw new NoAuthorizationException("권한이 없습니다.");
+        }
+        purchaseList.unapply();
     }
 
     public int totalSize() {

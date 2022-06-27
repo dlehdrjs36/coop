@@ -185,7 +185,7 @@ function ready() {
     //댓글 삭제 폼
     const removeIcons = document.querySelectorAll(".removeComment");
     for (let i = 0; i < removeIcons.length; i++) {
-        removeIcons[j].addEventListener('click', removeCommentForm);
+        removeIcons[i].addEventListener('click', removeCommentForm);
     }
 }
 

@@ -2,9 +2,9 @@ package com.projectteam.coop.web.post;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.validator.constraints.Length;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Getter
 @Setter
@@ -14,13 +14,13 @@ public class CommentCreateForm {
 
     private Long postId;
 
-    @Length(min = 4, max = 4)
+    @Size(min = 4, max = 8)
     private String password;
 
-    @NotEmpty
+    @NotBlank
     private String nickname;
 
-    @NotEmpty
+    @NotBlank
     private String content;
 
     private Long upperCommentId;

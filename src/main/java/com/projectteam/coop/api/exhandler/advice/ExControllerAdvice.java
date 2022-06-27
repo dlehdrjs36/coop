@@ -58,9 +58,16 @@ public class ExControllerAdvice {
 
     @ExceptionHandler
     @ResponseBody
-    public ApiResult<?> authorityExHandler(NoAuthorityException e) {
+    public ApiResult<?> authorizationExHandler(NoAuthorizationException e) {
         log.error("[exceptionHandler] ex", e);
-        return ApiUtil.error("NO_AUTHORITY", e.getMessage(), HttpStatus.BAD_REQUEST);
+        return ApiUtil.error("NO_AUTHORIZATION", e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler
+    @ResponseBody
+    public ApiResult<?> authenticationExHandler(NoAuthenticationException e) {
+        log.error("[exceptionHandler] ex", e);
+        return ApiUtil.error("NO_AUTHENTICATION", e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler

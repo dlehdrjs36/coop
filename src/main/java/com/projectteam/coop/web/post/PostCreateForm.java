@@ -2,9 +2,9 @@ package com.projectteam.coop.web.post;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.validator.constraints.Length;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Getter
 @Setter
@@ -12,10 +12,10 @@ public class PostCreateForm {
 
     private Long postId;
 
-    @NotEmpty
+    @NotBlank
     private String title;
 
-    @Length(min = 4, max = 4)
+    @Size(min = 4, max = 8)
     private String password;
 
     private String nickname;

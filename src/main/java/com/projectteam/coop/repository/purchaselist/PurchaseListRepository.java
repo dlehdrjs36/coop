@@ -1,7 +1,7 @@
 package com.projectteam.coop.repository.purchaselist;
 
 import com.projectteam.coop.domain.PurchaseList;
-import com.projectteam.coop.exception.NoAuthorityException;
+import com.projectteam.coop.exception.NoAuthorizationException;
 import com.projectteam.coop.web.session.MemberSessionDto;
 import org.springframework.stereotype.Repository;
 
@@ -93,12 +93,9 @@ public class PurchaseListRepository {
     }
 
     //회원 구매 배경, 아이콘 상품 미적용
-    public void orderUnapply(MemberSessionDto loginMember, Long id) {
+    public PurchaseList orderUnapply(MemberSessionDto loginMember, Long id) {
         PurchaseList purchaseList = findPurchaseList(loginMember.getEmail(), id);
-        if (purchaseList == null) {
-            throw new NoAuthorityException("권한이 없습니다.");
-        }
-        purchaseList.unapply();
+        return purchaseList;
     }
 
     //전체 개수

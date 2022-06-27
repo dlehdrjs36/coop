@@ -48,7 +48,7 @@ function championSearch(){
     doc.action = "/tft/championList";
     doc.submit();
 }
-
+//소환사 검색
 function summonerSearch(){
     let doc = document.searchSummoner;
     let searchSummonerName = doc.searchSummonerName.value;

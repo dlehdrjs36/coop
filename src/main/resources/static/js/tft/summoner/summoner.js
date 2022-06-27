@@ -138,6 +138,7 @@ function matchDescHtml(usersData, gameTimeMinute, gameTimeSecond){
     return innerHtml;
 }
 
+//소환사검색 매칭 더보기
 function addMatchData(){
     let moreMatch = document.getElementById("moreMatchSpin");
     let page = parseInt(document.getElementById('page').value) + 1;
@@ -205,9 +206,10 @@ function setMatchGame(matchData){
             innerHtml += '</div>';
         }
         innerHtml += '</div></span>';
-        innerHtml += '<span class="col-md-1 align-self-sm-center text-dark">';
-        innerHtml += '<button class="btn btn-white" id="' + matchData[i].matchDesc.metadateMatchId + '" onclick="changeViewRecord(this.id)">상세</button>';
-        innerHtml += '</span></div>';
+        // innerHtml += '<span class="col-md-1 align-self-sm-center text-dark">';
+        // innerHtml += '<button class="btn btn-white" id="' + matchData[i].matchDesc.metadateMatchId + '" onclick="changeViewRecord(this.id)">상세</button>';
+        // innerHtml += '</span>';
+        innerHtml += '</div>';
         innerHtml += '<div id="'+ matchData[i].matchDesc.metadateMatchId +'Desc"></div></div>';
     }
     document.getElementById("matchTable").innerHTML += innerHtml;

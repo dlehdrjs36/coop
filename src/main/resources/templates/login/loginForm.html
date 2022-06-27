@@ -25,11 +25,11 @@
                 <div th:if="${#fields.hasGlobalErrors()}">
                     <p class="text-danger" th:each="err : ${#fields.globalErrors()}" th:text="${err}">글로벌 오류 메시지</p>
                 </div>
-                <div class="checkbox mb-3">
-                    <label>
-                        <input type="checkbox" value="remember-me"> Remember me
-                    </label>
-                </div>
+<!--                <div class="checkbox mb-3">-->
+<!--                    <label>-->
+<!--                        <input type="checkbox" value="remember-me"> Remember me-->
+<!--                    </label>-->
+<!--                </div>-->
                 <button class="w-100 mb-1 btn btn-lg btn-primary" type="submit">로그인</button>
                 <button class="w-100 mb-1 btn btn-lg btn-dark" type="button" onclick="location.href='/members/new'">회원가입</button>
                 <div class="row justify-content-sm-end w-100">

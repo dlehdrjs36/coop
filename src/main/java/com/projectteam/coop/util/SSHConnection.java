@@ -49,8 +49,7 @@ public class SSHConnection {
             channelExec.setCommand("ls -al >> 1.txt");
             channelExec.connect();
     */
-            //리눅스 SSH 터널링
-            //by security policy, you must connect through a fowarded port
+            //by security policy, you must connect through a fowarded port, 리눅스 SSH 터널링
             session.setPortForwardingL(BASTION_SERVER, BASTION_PORT, MYSQL_REMOTE_SERVER, MYSQL_REMOTE_PORT);
         } catch (JSchException e) {
             e.printStackTrace();

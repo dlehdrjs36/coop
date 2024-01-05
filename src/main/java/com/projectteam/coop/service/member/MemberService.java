@@ -12,7 +12,7 @@ import java.util.Optional;
 
 
 @Service
-@Transactional(transactionManager = "h2TxManager")
+@Transactional(transactionManager = "mysqlTxManager")
 @RequiredArgsConstructor
 public class MemberService {
 
@@ -48,18 +48,18 @@ public class MemberService {
         return memberRepository.updateMember(member);
     }
 
-    @Transactional(transactionManager = "h2TxManager", readOnly = true)
+    @Transactional(transactionManager = "mysqlTxManager", readOnly = true)
     public Member findMember(Long id) {
         return memberRepository.findMember(id);
     }
 
-    @Transactional(transactionManager = "h2TxManager", readOnly = true)
+    @Transactional(transactionManager = "mysqlTxManager", readOnly = true)
     public Member findMember(String email, String password) {
         return memberRepository.findMember(email, password);
     }
 
     //이메일 조회( 이메일 단독으로 조회 -> [임시 비밀번호 등록용] )
-    @Transactional(transactionManager = "h2TxManager", readOnly = true)
+    @Transactional(transactionManager = "mysqlTxManager", readOnly = true)
     public Optional<Member> findMemberForPassword(String Email) {
         return Optional.ofNullable(memberRepository.findMemberForPassword(Email));
     }

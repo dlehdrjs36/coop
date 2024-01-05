@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Transactional("h2TxManager")
+@Transactional("mysqlTxManager")
 public class JpaSampleServiceImpl implements JpaSampleService {
 
     private Logger logger = LoggerFactory.getLogger(JpaSampleServiceImpl.class);
@@ -41,13 +41,13 @@ public class JpaSampleServiceImpl implements JpaSampleService {
     }
 
     @Override
-    @Transactional(value = "h2TxManager", readOnly = true)
+    @Transactional(value = "mysqlTxManager", readOnly = true)
     public Optional<JpaSample> findMember(Long id) {
         return jpaSampleRepository.findById(id);
     }
 
     @Override
-    @Transactional(value = "h2TxManager", readOnly = true)
+    @Transactional(value = "mysqlTxManager", readOnly = true)
     public List<JpaSample> findMembers() {
         return jpaSampleRepository.findAll();
     }

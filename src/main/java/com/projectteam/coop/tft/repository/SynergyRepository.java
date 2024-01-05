@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 public class SynergyRepository {
-    @PersistenceContext(unitName = "h2Jpa")
+    @PersistenceContext(unitName = "mysqlJpa")
     private EntityManager em;
 
     public String addSynergy(Synergy synergy) {

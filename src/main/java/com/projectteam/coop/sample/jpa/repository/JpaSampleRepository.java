@@ -12,7 +12,7 @@ import java.util.Optional;
 @Repository
 public class JpaSampleRepository {
 
-    @PersistenceContext(unitName = "h2Jpa")
+    @PersistenceContext(unitName = "mysqlJpa")
     private EntityManager em;
     //EntityManagerFactory emf = Persistence.createEntityManagerFactory("memoryJpa"); //스프링 없이 사용하려면 직접 팩토리 만들어서 생성필요
 

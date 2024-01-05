@@ -61,12 +61,12 @@
     </bean>
 
     <!-- 메모리 db, 테스트 용 -->
-    <bean id="h2DataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
-        <property name="driverClassName" value="${spring.h2datasource.hikari.driverClassName}" />
-        <property name="jdbcUrl" value="${spring.h2datasource.hikari.jdbcUrl}" />
-        <property name="username" value="${spring.h2datasource.hikari.username}" />
-        <property name="password" value="${spring.h2datasource.hikari.password}" />
-    </bean>
+<!--    <bean id="h2DataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">-->
+<!--        <property name="driverClassName" value="${spring.h2datasource.hikari.driverClassName}" />-->
+<!--        <property name="jdbcUrl" value="${spring.h2datasource.hikari.jdbcUrl}" />-->
+<!--        <property name="username" value="${spring.h2datasource.hikari.username}" />-->
+<!--        <property name="password" value="${spring.h2datasource.hikari.password}" />-->
+<!--    </bean>-->
     <!-- //DBCP(HikariCP) -->
 
     <!-- mybatis -->
@@ -78,6 +78,8 @@
     <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
         <constructor-arg index="0" ref="sqlSessionFactory" />
     </bean>
+
+    <!-- JDBC 트랜잭션 관리 -->
     <bean id="mybatisTxManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <constructor-arg ref="mybatisDataSource" />
     </bean>
@@ -88,29 +90,29 @@
     <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
 
     <!-- h2 JPA 트랜잭션 관리자 설정 -->
-    <bean id="h2TxManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-        <property name="persistenceUnitName" value="h2Jpa"/>
-        <property name="dataSource" ref="h2DataSource" />
-    </bean>
+<!--    <bean id="h2TxManager" class="org.springframework.orm.jpa.JpaTransactionManager">-->
+<!--        <property name="persistenceUnitName" value="h2Jpa"/>-->
+<!--        <property name="dataSource" ref="h2DataSource" />-->
+<!--    </bean>-->
 
     <!-- Jpa 엔티티 매니저 팩토리 등록(테스트용, h2 메모리 데이터베이스) -->
-    <bean id="h2Jpa" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-        <property name="persistenceUnitName" value="h2Jpa"/>
-        <property name="dataSource" ref="h2DataSource" />
-        <property name="packagesToScan" value="com.projectteam.coop" />
-        <property name="jpaVendorAdapter">
-            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
-        </property>
-        <property name="jpaProperties">
-            <props>
-                <prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop> <!-- 방언 -->
-                <prop key="hibernate.format_sql">true</prop> <!-- SQL 보기 좋게 정리해서 출력 -->
-                <prop key="hibernate.use_sql_comments">true</prop> <!-- SQL 코멘트 보기 -->
-                <prop key="hibernate.id.new_generator_mappings">true</prop> <!-- JPA 표준에 맞춘 키 생성 전략여부 -->
-                <prop key="hibernate.hbm2ddl.auto">create</prop> <!-- DDL 자동생성 -->
-            </props>
-        </property>
-    </bean>
+<!--    <bean id="h2Jpa" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">-->
+<!--        <property name="persistenceUnitName" value="h2Jpa"/>-->
+<!--        <property name="dataSource" ref="h2DataSource" />-->
+<!--        <property name="packagesToScan" value="com.projectteam.coop" />-->
+<!--        <property name="jpaVendorAdapter">-->
+<!--            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />-->
+<!--        </property>-->
+<!--        <property name="jpaProperties">-->
+<!--            <props>-->
+<!--                <prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop> &lt;!&ndash; 방언 &ndash;&gt;-->
+<!--                <prop key="hibernate.format_sql">true</prop> &lt;!&ndash; SQL 보기 좋게 정리해서 출력 &ndash;&gt;-->
+<!--                <prop key="hibernate.use_sql_comments">true</prop> &lt;!&ndash; SQL 코멘트 보기 &ndash;&gt;-->
+<!--                <prop key="hibernate.id.new_generator_mappings">true</prop> &lt;!&ndash; JPA 표준에 맞춘 키 생성 전략여부 &ndash;&gt;-->
+<!--                <prop key="hibernate.hbm2ddl.auto">create</prop> &lt;!&ndash; DDL 자동생성 &ndash;&gt;-->
+<!--            </props>-->
+<!--        </property>-->
+<!--    </bean>-->
     <!-- hibernate 설정 종료 -->
 
     <!-- 스프링 메시지 -->
@@ -143,38 +145,38 @@
     </bean>
 
     <!-- datasource(운영 db, 실 서비스용) -->
-    <!--    <bean id="hibernateDataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">-->
-    <!--        <property name="driverClassName" value="${spring.datasource.hikari.driverClassName}" />-->
-    <!--        <property name="jdbcUrl" value="${spring.datasource.hikari.jdbcUrl}" />-->
-    <!--        <property name="username" value="${spring.datasource.hikari.username}" />-->
-    <!--        <property name="password" value="${spring.datasource.hikari.password}" />-->
-    <!--    </bean>-->
+        <bean id="hibernateDataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+            <property name="driverClassName" value="${spring.datasource.hikari.driverClassName}" />
+            <property name="jdbcUrl" value="${spring.datasource.hikari.jdbcUrl}" />
+            <property name="username" value="${spring.datasource.hikari.username}" />
+            <property name="password" value="${spring.datasource.hikari.password}" />
+        </bean>
     <!-- mysql JPA 트랜잭션 관리자 설정  -->
-    <!--    <bean id="mysqlTxManager" class="org.springframework.orm.jpa.JpaTransactionManager">-->
-    <!--        <property name="persistenceUnitName" value="mysqlJpa" />-->
-    <!--        <property name="dataSource" ref="hibernateDataSource" />-->
-    <!--    </bean>-->
+        <bean id="mysqlTxManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+            <property name="persistenceUnitName" value="mysqlJpa" />
+            <property name="dataSource" ref="hibernateDataSource" />
+        </bean>
     <!-- 서로 다른 DB가 하나의 트랜잭션으로 묶여서 동장해야한다면 JTA 관련해서 검색해보기 -->
     <!-- 현재는 서로 다른 DB 각각 개별로 트랜잭션이 돌고 있음 -->
     <!-- Jpa 엔티티 매니저 팩토리 등록(실서비스용, MySQL) -->
-    <!--    <bean id="mysqlJpa" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">-->
-    <!--        <property name="persistenceUnitName" value="mysqlJpa"/>-->
-    <!--        <property name="dataSource" ref="hibernateDataSource"/>-->
-    <!--        &lt;!&ndash; @Entity 탐색 시작 위치 &ndash;&gt;-->
-    <!--        <property name="packagesToScan" value="com.projectteam.coop" />-->
-    <!--        <property name="jpaVendorAdapter">-->
-    <!--            &lt;!&ndash; 하이버네이트 구현체 사용 &ndash;&gt;-->
-    <!--            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />-->
-    <!--        </property>-->
-    <!--        <property name="jpaProperties"> &lt;!&ndash; 하이버네이트 상세설정 &ndash;&gt;-->
-    <!--            <props>-->
-    <!--                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL8Dialect</prop> &lt;!&ndash; 방언 &ndash;&gt;-->
-    <!--                &lt;!&ndash; <prop key="hibernate.show_sql">true</prop> &ndash;&gt; &lt;!&ndash; SQL 보기(System.out) 성능 안좋음. logback 으로 표시 &ndash;&gt;-->
-    <!--                <prop key="hibernate.format_sql">true</prop> &lt;!&ndash; SQL 보기 좋게 정리해서 출력 &ndash;&gt;-->
-    <!--                <prop key="hibernate.use_sql_comments">true</prop> &lt;!&ndash; SQL 코멘트 보기 &ndash;&gt;-->
-    <!--                <prop key="hibernate.id.new_generator_mappings">true</prop> &lt;!&ndash; JPA 표준에 맞춘 키 생성 전략여부 &ndash;&gt;-->
-    <!--                &lt;!&ndash;                <prop key="hibernate.hbm2ddl.auto">create</prop> &lt;!&ndash; DDL 자동생성 &ndash;&gt;&ndash;&gt;-->
-    <!--            </props>-->
-    <!--        </property>-->
-    <!--    </bean>-->
+        <bean id="mysqlJpa" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+            <property name="persistenceUnitName" value="mysqlJpa"/>
+            <property name="dataSource" ref="hibernateDataSource"/>
+            <!-- @Entity 탐색 시작 위치 -->
+            <property name="packagesToScan" value="com.projectteam.coop" />
+            <property name="jpaVendorAdapter">
+                <!-- 하이버네이트 구현체 사용 -->
+                <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
+            </property>
+            <property name="jpaProperties"> <!-- 하이버네이트 상세설정 -->
+                <props>
+                    <prop key="hibernate.dialect">org.hibernate.dialect.MySQL8Dialect</prop> <!-- 방언 -->
+                    <!-- <prop key="hibernate.show_sql">true</prop> --> <!-- SQL 보기(System.out) 성능 안좋음. logback 으로 표시 -->
+                    <prop key="hibernate.format_sql">true</prop> <!-- SQL 보기 좋게 정리해서 출력 -->
+                    <prop key="hibernate.use_sql_comments">true</prop> <!-- SQL 코멘트 보기 -->
+                    <prop key="hibernate.id.new_generator_mappings">true</prop> <!-- JPA 표준에 맞춘 키 생성 전략여부 -->
+                    <!--                <prop key="hibernate.hbm2ddl.auto">create</prop> &lt;!&ndash; DDL 자동생성 &ndash;&gt;-->
+                </props>
+            </property>
+        </bean>
 </beans>

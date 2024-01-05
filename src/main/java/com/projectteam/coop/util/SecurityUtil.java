@@ -44,8 +44,8 @@ public class SecurityUtil {
     }
 
     public static String getSalt() {
-        SecureRandom secureRandom = new SecureRandom();
         byte[] bytes = new byte[64];
+        SecureRandom secureRandom = new SecureRandom();
         secureRandom.nextBytes(bytes);
 
         return new String(Base64.getEncoder().encode(bytes));

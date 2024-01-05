@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Transactional(transactionManager = "h2TxManager")
+@Transactional(transactionManager = "mysqlTxManager")
 @RequiredArgsConstructor
 public class RecommendService {
 
@@ -29,7 +29,7 @@ public class RecommendService {
         post.recommend(recommendRepository.getPostRecommendCount(postId));
     }
 
-    @Transactional(transactionManager = "h2TxManager", readOnly = true)
+    @Transactional(transactionManager = "mysqlTxManager", readOnly = true)
     public boolean isMemberRecommend(Long memberId, Long postId) {
         return recommendRepository.findMemberRecommend(memberId, postId) != null;
     }

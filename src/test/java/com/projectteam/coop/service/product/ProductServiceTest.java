@@ -17,10 +17,10 @@ import javax.persistence.PersistenceContext;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(locations = "file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml")
-@Transactional(transactionManager = "h2TxManager")
+@Transactional(transactionManager = "mysqlTxManager")
 class ProductServiceTest {
 
-    @PersistenceContext(unitName = "h2Jpa")
+    @PersistenceContext(unitName = "mysqlJpa")
     private EntityManager em;
 
     @Autowired

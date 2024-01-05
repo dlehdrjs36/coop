@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-@Transactional(transactionManager = "h2TxManager")
+@Transactional(transactionManager = "mysqlTxManager")
 @RequiredArgsConstructor
 public class PostService {
 
@@ -57,12 +57,12 @@ public class PostService {
         return postRepository.addPost(post);
     }
 
-    @Transactional(transactionManager = "h2TxManager", readOnly = true)
+    @Transactional(transactionManager = "mysqlTxManager", readOnly = true)
     public List<Post> findRecommendPosts() {
         return postRepository.findRecommendPosts();
     }
 
-    @Transactional(transactionManager = "h2TxManager", readOnly = true)
+    @Transactional(transactionManager = "mysqlTxManager", readOnly = true)
     public List<Post> findPosts(PostSearch postSearch, int offset, int size) {
         return postRepository.findPosts(postSearch, offset, size);
     }

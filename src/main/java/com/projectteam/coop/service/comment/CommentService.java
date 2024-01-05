@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-@Transactional(transactionManager = "h2TxManager")
+@Transactional(transactionManager = "mysqlTxManager")
 @RequiredArgsConstructor
 public class CommentService {
 
@@ -64,7 +64,7 @@ public class CommentService {
         return comment;
     }
 
-    @Transactional(transactionManager = "h2TxManager", readOnly = true)
+    @Transactional(transactionManager = "mysqlTxManager", readOnly = true)
     public List<Comment> findComments(int offset, int size, Long postId) {
         return commentRepository.findComments(offset, size, postId);
     }

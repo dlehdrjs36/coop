@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public class SummonerRepository {
 
-    @PersistenceContext(unitName = "h2Jpa")
+    @PersistenceContext(unitName = "mysqlJpa")
     private EntityManager em;
 
     public String addTftSummoner(Summoner summoner) {

@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-@Transactional(transactionManager = "h2TxManager")
+@Transactional(transactionManager = "mysqlTxManager")
 @RequiredArgsConstructor
 public class ProductService {
 
@@ -21,12 +21,12 @@ public class ProductService {
         return productRepository.addProduct(product);
     }
 
-    @Transactional(transactionManager = "h2TxManager", readOnly = true)
+    @Transactional(transactionManager = "mysqlTxManager", readOnly = true)
     public List<Product> findProducts(int offset, int size) {
         return productRepository.findProducts(offset, size);
     }
 
-    @Transactional(transactionManager = "h2TxManager", readOnly = true)
+    @Transactional(transactionManager = "mysqlTxManager", readOnly = true)
     public Product findProduct(Long id) {
         return productRepository.findProduct(id);
     }

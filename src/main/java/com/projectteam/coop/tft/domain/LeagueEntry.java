@@ -8,13 +8,13 @@ import javax.persistence.Id;
 @Entity
 @Getter
 public class LeagueEntry {
+    @Id
+    private String summonerName;
     private String leagueId;
     private String queueType;
     private String tier;
-    private String rank;
+    private String ranks;
     private String summonerId;
-    @Id
-    private String summonerName;
     private int leaguePoints;
     private int wins;
     private int losses;

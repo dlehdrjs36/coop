@@ -14,7 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-@Transactional(transactionManager = "h2TxManager")
+@Transactional(transactionManager = "mysqlTxManager")
 @RequiredArgsConstructor
 public class MatchDescService {
 

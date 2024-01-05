@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @Repository
 public class LoginRepository {
 
-    @PersistenceContext(unitName = "h2Jpa")
+    @PersistenceContext(unitName = "mysqlJpa")
     private EntityManager em;
 
     //등록

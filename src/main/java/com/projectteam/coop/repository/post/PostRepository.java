@@ -16,7 +16,7 @@ import static com.projectteam.coop.domain.QPost.post;
 @Repository
 public class PostRepository {
 
-    @PersistenceContext(unitName = "h2Jpa")
+    @PersistenceContext(unitName = "mysqlJpa")
     private EntityManager em;
 
     //등록

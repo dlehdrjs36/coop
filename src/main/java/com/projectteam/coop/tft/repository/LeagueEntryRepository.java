@@ -9,10 +9,10 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
-@Transactional("h2TxManager")
+@Transactional("mysqlTxManager")
 public class LeagueEntryRepository {
 
-    @PersistenceContext(unitName = "h2Jpa")
+    @PersistenceContext(unitName = "mysqlJpa")
     private EntityManager em;
 
     public String addTftLeagueEntry(LeagueEntry leagueEntry) {

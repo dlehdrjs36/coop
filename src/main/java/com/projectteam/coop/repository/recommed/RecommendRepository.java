@@ -10,7 +10,7 @@ import javax.persistence.PersistenceContext;
 @Repository
 public class RecommendRepository {
 
-    @PersistenceContext(unitName = "h2Jpa")
+    @PersistenceContext(unitName = "mysqlJpa")
     private EntityManager em;
 
     //등록

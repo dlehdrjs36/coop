@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-@Transactional(transactionManager = "h2TxManager")
+@Transactional(transactionManager = "mysqlTxManager")
 @RequiredArgsConstructor
 public class PurchaseListService {
 
@@ -40,7 +40,7 @@ public class PurchaseListService {
         return member.buyProduct(product.getPrice());
     }
 
-    @Transactional(transactionManager = "h2TxManager", readOnly = true)
+    @Transactional(transactionManager = "mysqlTxManager", readOnly = true)
     public boolean isDuplicatePurchase(String email, Long productId) {
         List<PurchaseList> purchaseLists = purchaseListRepository.memberPurchaseList(email);
         long purchaseCount = purchaseLists.stream()
@@ -54,17 +54,17 @@ public class PurchaseListService {
         return purchaseList.getProduct().getId() == productId;
     }
 
-    @Transactional(transactionManager = "h2TxManager", readOnly = true)
+    @Transactional(transactionManager = "mysqlTxManager", readOnly = true)
     public List<PurchaseList> findPurchaseList(MemberSessionDto loginMember, int offset, int size) {
         return purchaseListRepository.findPurchaseList(loginMember, offset, size);
     }
 
-    @Transactional(transactionManager = "h2TxManager", readOnly = true)
+    @Transactional(transactionManager = "mysqlTxManager", readOnly = true)
     public List<PurchaseList> memberPurchaseList(String email) {
         return purchaseListRepository.memberPurchaseList(email);
     }
 
-    @Transactional(transactionManager = "h2TxManager", readOnly = true)
+    @Transactional(transactionManager = "mysqlTxManager", readOnly = true)
     public PurchaseList memberApplyIcon(String email) {
         return purchaseListRepository.memberApplyIcon(email);
     }

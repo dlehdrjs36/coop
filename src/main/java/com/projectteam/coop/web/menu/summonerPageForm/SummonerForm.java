@@ -13,7 +13,7 @@ public class SummonerForm {
     private String puuid;
     private long summonerLevel;
     private String tier;
-    private String rank;
+    private String ranks;
     private int leaguePoints;
     private int wins;
     private int losses;

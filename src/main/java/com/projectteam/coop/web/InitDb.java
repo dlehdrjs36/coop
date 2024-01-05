@@ -22,13 +22,13 @@ public class InitDb {
 
     @PostConstruct
     public void init() {
-        initService.dbInit1();
+//        initService.dbInit1();
     }
 
-    @Transactional(transactionManager = "h2TxManager")
+    @Transactional(transactionManager = "mysqlTxManager")
     @Component
     static class InitService {
-        @PersistenceContext(unitName = "h2Jpa")
+        @PersistenceContext(unitName = "mysqlJpa")
         private EntityManager em;
 
         public void dbInit1() {

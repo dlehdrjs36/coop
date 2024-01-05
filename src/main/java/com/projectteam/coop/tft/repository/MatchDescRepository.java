@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public class MatchDescRepository {
 
-    @PersistenceContext(unitName = "h2Jpa")
+    @PersistenceContext(unitName = "mysqlJpa")
     private EntityManager em;
 
     public String addTftDescData(MatchDesc matchDesc) {

@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public class PurchaseListRepository {
 
-    @PersistenceContext(unitName = "h2Jpa")
+    @PersistenceContext(unitName = "mysqlJpa")
     private EntityManager em;
 
     //등록

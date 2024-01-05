@@ -109,7 +109,6 @@ public class MenuController {
         SommonerMatchDescForm sommonerMatchDescForm = new SommonerMatchDescForm();
 
         try {
-            summonerName = URLDecoder.decode(summonerName,"UTF-8");
 
             summoner = tftUtil.getTftSummoner(summonerName, apikey);
             leagueEntry = tftUtil.getTftSummonerEntry(summoner.getId(), apikey);
@@ -119,14 +118,13 @@ public class MenuController {
             summonerForm.setSummonerLevel(summoner.getSummonerLevel());
 
             summonerForm.setTier(leagueEntry.get(0).getTier());
-            summonerForm.setRank(leagueEntry.get(0).getRank());
+            summonerForm.setRanks(leagueEntry.get(0).getRanks());
             summonerForm.setLeaguePoints(leagueEntry.get(0).getLeaguePoints());
             summonerForm.setWins(leagueEntry.get(0).getWins());
             summonerForm.setLosses(leagueEntry.get(0).getLosses());
 
             sommonerMatchDescs = matchDescService.getMatchDescDataPuuid(summoner.getPuuid());
-            if(sommonerMatchDescs.size() == 0){
-            }else{
+            if(sommonerMatchDescs.size() != 0){
                 sommonerMatchDescFormList = sommonerMatchDescForm.createSommonerMatchDescForm(sommonerMatchDescs, 1);
                 summonerForm.setRankDefense(summonerForm.getRankDefense(sommonerMatchDescs));
             }

@@ -9,7 +9,11 @@ import javax.validation.constraints.NotBlank;
 @Getter
 @Setter
 public class MemberForm {
-    private Long id;
+    @NotBlank
+    private Long memberNo;
+
+    @NotBlank
+    private String memberId;
 
     @Email
     @NotBlank

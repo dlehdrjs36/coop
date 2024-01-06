@@ -55,7 +55,7 @@ class PurchaseListServiceTest {
         em.persist(product2);
 
         String salt = SecurityUtil.getSalt();
-        Member member = Member.createMember("test@gmail.com", "test", SecurityUtil.encryptSHA256("1234", salt), salt, Boolean.TRUE);
+        Member member = Member.createMember("aaaa","test@gmail.com", "test", SecurityUtil.encryptSHA256("1234", salt), salt, Boolean.TRUE);
         em.persist(member);
 
         NoPointException noPointException = assertThrows(NoPointException.class, () -> purchaseListService.addPurchaseList(product, member));
@@ -74,7 +74,7 @@ class PurchaseListServiceTest {
         em.persist(product3);
 
         String salt = SecurityUtil.getSalt();
-        Member member = Member.createMember("test@gmail.com", "test", SecurityUtil.encryptSHA256("1234", salt), salt, Boolean.TRUE);
+        Member member = Member.createMember("bbbb","test@gmail.com", "test", SecurityUtil.encryptSHA256("1234", salt), salt, Boolean.TRUE);
         em.persist(member);
 
         loginService.addLoginLog(LoginLog.createLoginLog(member.getEmail()));
@@ -101,7 +101,7 @@ class PurchaseListServiceTest {
         em.persist(product);
 
         String salt = SecurityUtil.getSalt();
-        Member member = Member.createMember("test@gmail.com", "test", SecurityUtil.encryptSHA256("1234", salt), salt, Boolean.TRUE);
+        Member member = Member.createMember("cccc","test@gmail.com", "test", SecurityUtil.encryptSHA256("1234", salt), salt, Boolean.TRUE);
         em.persist(member);
 
         loginService.addLoginLog(LoginLog.createLoginLog(member.getEmail()));
@@ -126,7 +126,7 @@ class PurchaseListServiceTest {
         em.persist(product);
 
         String salt = SecurityUtil.getSalt();
-        Member member = Member.createMember("test@gmail.com", "test", SecurityUtil.encryptSHA256("1234", salt), salt, Boolean.TRUE);
+        Member member = Member.createMember("dddd","test@gmail.com", "test", SecurityUtil.encryptSHA256("1234", salt), salt, Boolean.TRUE);
         em.persist(member);
 
         //포인트 추가. 일별 로그인 1회만 추가
@@ -152,7 +152,7 @@ class PurchaseListServiceTest {
         em.persist(product3);
 
         String salt = SecurityUtil.getSalt();
-        Member member = Member.createMember("test@gmail.com", "test", SecurityUtil.encryptSHA256("1234", salt), salt, Boolean.TRUE);
+        Member member = Member.createMember("eeee","test@gmail.com", "test", SecurityUtil.encryptSHA256("1234", salt), salt, Boolean.TRUE);
         Long memberId = memberService.addMember(member);
         em.flush();
         Member findMember = memberService.findMember(memberId);
@@ -206,7 +206,7 @@ class PurchaseListServiceTest {
         em.persist(product3);
 
         String salt = SecurityUtil.getSalt();
-        Member member = Member.createMember("test@gmail.com", "test", SecurityUtil.encryptSHA256("1234", salt), salt, Boolean.TRUE);
+        Member member = Member.createMember("ffff","test@gmail.com", "test", SecurityUtil.encryptSHA256("1234", salt), salt, Boolean.TRUE);
         Long memberId = memberService.addMember(member);
         em.flush();
         Member findMember = memberService.findMember(memberId);
@@ -260,7 +260,7 @@ class PurchaseListServiceTest {
         em.persist(product3);
 
         String salt = SecurityUtil.getSalt();
-        Member member = Member.createMember("test@gmail.com", "test", SecurityUtil.encryptSHA256("1234", salt), salt, Boolean.TRUE);
+        Member member = Member.createMember("gggg","test@gmail.com", "test", SecurityUtil.encryptSHA256("1234", salt), salt, Boolean.TRUE);
         Long memberId = memberService.addMember(member);
         em.flush();
         Member findMember = memberService.findMember(memberId);

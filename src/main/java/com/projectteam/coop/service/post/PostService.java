@@ -1,8 +1,10 @@
 package com.projectteam.coop.service.post;
 
+import com.projectteam.coop.domain.Board;
 import com.projectteam.coop.domain.Member;
 import com.projectteam.coop.domain.Post;
 import com.projectteam.coop.domain.Recommend;
+import com.projectteam.coop.repository.board.BoardRepository;
 import com.projectteam.coop.repository.member.MemberRepository;
 import com.projectteam.coop.repository.post.PostRepository;
 import com.projectteam.coop.web.post.PostSearch;
@@ -24,20 +26,23 @@ public class PostService {
     private final PostRepository postRepository;
     private final MemberRepository memberRepository;
     private final RecommendRepository recommendRepository;
+    private final BoardRepository boardRepository;
 
     public Long addReplyPost(PostCreateForm postForm, MemberSessionDto loginMember) {
+
+        Board board = boardRepository.findBoard(postForm.getBoardId());
 
         Post post;
         if(loginMember == null) {
             Post upperPost = postRepository.findPost(postForm.getUpperPostId());
             postRepository.orderSort(upperPost.getGroup());
-            post = Post.createReplyPost(postForm.getTitle(), postForm.getPassword(), postForm.getContent(), postForm.getNickname(), upperPost);
+            post = Post.createReplyPost(postForm.getTitle(), postForm.getPassword(), postForm.getContent(), postForm.getNickname(), upperPost, board);
         }else {
             MemberSessionDto session = loginMember;
             Member member = memberRepository.findMember(session.getId());
             Post upperPost = postRepository.findPost(postForm.getUpperPostId());
             postRepository.orderSort(upperPost.getGroup());
-            post = Post.createReplyPost(postForm.getTitle(), postForm.getPassword(), postForm.getContent(), member, upperPost);
+            post = Post.createReplyPost(postForm.getTitle(), postForm.getPassword(), postForm.getContent(), member, upperPost, board);
         }
 
         return postRepository.addPost(post);
@@ -45,13 +50,15 @@ public class PostService {
 
     public Long addPost(PostCreateForm postForm, MemberSessionDto loginMember) {
 
+        Board board = boardRepository.findBoard(postForm.getBoardId());
+
         Post post;
         if(loginMember == null) {
-            post = Post.createPost(postForm.getTitle(), postForm.getPassword(), postForm.getContent(), postForm.getNickname());
+            post = Post.createPost(postForm.getTitle(), postForm.getPassword(), postForm.getContent(), postForm.getNickname(), board);
         }else {
             MemberSessionDto session = loginMember;
             Member member = memberRepository.findMember(session.getId());
-            post = Post.createPost(postForm.getTitle(), postForm.getPassword(), postForm.getContent(), member);
+            post = Post.createPost(postForm.getTitle(), postForm.getPassword(), postForm.getContent(), member, board);
         }
 
         return postRepository.addPost(post);

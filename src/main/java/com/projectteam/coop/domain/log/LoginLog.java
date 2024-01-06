@@ -13,7 +13,8 @@ import javax.persistence.*;
 @Table(name = "LOGIN_LOG")
 public class LoginLog extends BaseEntity {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "LOGIN_ID")
     private Long id;
 

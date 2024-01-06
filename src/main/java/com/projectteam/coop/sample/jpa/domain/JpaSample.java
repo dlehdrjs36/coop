@@ -14,7 +14,8 @@ import javax.persistence.Table;
 @Getter @Setter
 public class JpaSample {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "SAMPLE_SEQ")
     private Long sampleSeq;
 

@@ -37,7 +37,7 @@ public class MemberController {
 
         String salt = SecurityUtil.getSalt();
         String password = SecurityUtil.encryptSHA256(memberForm.getPassword(), salt);
-        Member member = Member.createMember(memberForm.getEmail(), memberForm.getName(), password, salt, Boolean.TRUE);
+        Member member = Member.createMember(memberForm.getMemberId() ,memberForm.getEmail(), memberForm.getName(), password, salt, Boolean.TRUE);
         if(memberService.isNotDuplicateMember(member)) {
             memberService.addMember(member);
             return "redirect:/";
@@ -58,7 +58,7 @@ public class MemberController {
         Member member = memberService.findMember(loginMember.getId());
         if (member != null) {
             MemberForm memberForm = new MemberForm();
-            memberForm.setId(member.getId());
+            memberForm.setMemberId(member.getMemberId());
             memberForm.setName(member.getName());
             memberForm.setEmail(member.getEmail());
             memberForm.setEmailReceptionType(member.getEmailReceptionType());

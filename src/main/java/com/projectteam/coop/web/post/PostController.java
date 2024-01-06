@@ -152,7 +152,7 @@ public class PostController {
             if (postCreateMember != null) {
                 PostUpdateForm updateForm = createUpdateForm(post);
                 updateForm.setCreateMember(postCreateMember);
-                if (loginMember.getId() == postCreateMember.getId()) {
+                if (loginMember.getId() == postCreateMember.getMemberNo()) {
                     model.addAttribute("postForm", updateForm);
                     return "/templates/posts/updatePostForm";
                 }
@@ -194,7 +194,7 @@ public class PostController {
             }
         } else {
             if (postCreateMember != null) {
-                if (loginMember.getId() == postCreateMember.getId()) {
+                if (loginMember.getId() == postCreateMember.getMemberNo()) {
                     postForm.setNickname(loginMember.getName());
                     postService.updatePost(postForm);
                 }else {

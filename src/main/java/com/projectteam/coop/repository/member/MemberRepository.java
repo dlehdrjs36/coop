@@ -17,26 +17,25 @@ public class MemberRepository {
     //등록
     public Long addMember(Member member) {
         em.persist(member);
-        return member.getId();
+        return member.getMemberNo();
     }
 
     //수정(폼)
     public Long updateMember(MemberForm memberForm) {
-        Member findMember = em.find(Member.class, memberForm.getId());
+        Member findMember = em.find(Member.class, memberForm.getMemberNo());
         findMember.changeMember(memberForm);
-        return findMember.getId();
+        return findMember.getMemberNo();
     }
 
     //수정
     public Long updateMember(Member member) {
-        Member findMember = em.find(Member.class, member.getId());
+        Member findMember = em.find(Member.class, member.getMemberNo());
         findMember.changeMember(member);
-        return member.getId();
+        return member.getMemberNo();
     }
 
     //단건 조회
     public Member findMember(Long id) {
-
         Member findMember = em.createQuery("SELECT m FROM Member m left join fetch m.purchaseLists WHERE m.id = :id", Member.class)
                 .setParameter("id", id)
                 .getResultList()

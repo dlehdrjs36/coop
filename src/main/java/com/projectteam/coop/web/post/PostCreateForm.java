@@ -11,6 +11,7 @@ import javax.validation.constraints.Size;
 public class PostCreateForm {
 
     private Long postId;
+    private Long boardId;
 
     @NotBlank
     private String title;

@@ -17,7 +17,8 @@ import static javax.persistence.FetchType.LAZY;
 @Table(name = "POST")
 public class Post extends BaseEntity {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "POST_ID")
     private Long postId;
 
@@ -71,7 +72,7 @@ public class Post extends BaseEntity {
     @Column(name = "UPDATE_MEMBER_ID")
     private String updateMemberId;
 
-    public static Post createReplyPost(String title, String password, String content, String nickname, Post parent) {
+    public static Post createReplyPost(String title, String password, String content, String nickname, Post parent, Board board) {
         Post post = new Post();
         post.title = title;
         post.password = password;
@@ -84,11 +85,12 @@ public class Post extends BaseEntity {
         post.group = parent.getGroup();
         post.order = parent.getOrder();
         post.depth = parent.getDepth() + 1L;
+        post.board = board;
 
         return post;
     }
 
-    public static Post createReplyPost(String title, String password, String content, Member createMember, Post parent) {
+    public static Post createReplyPost(String title, String password, String content, Member createMember, Post parent, Board board) {
         Post post = new Post();
         post.title = title;
         post.password = password;
@@ -102,11 +104,12 @@ public class Post extends BaseEntity {
         post.group = parent.getGroup();
         post.order = parent.getOrder();
         post.depth = parent.getDepth() + 1L;
+        post.board = board;
 
         return post;
     }
 
-    public static Post createPost(String title, String password, String content, String nickname) {
+    public static Post createPost(String title, String password, String content, String nickname, Board board) {
         Post post = new Post();
         post.title = title;
         post.password = password;
@@ -117,11 +120,12 @@ public class Post extends BaseEntity {
         post.nickname = nickname;
         post.order = 0L;
         post.depth = 0L;
+        post.board = board;
 
         return post;
     }
 
-    public static Post createPost(String title, String password, String content, Member createMember) {
+    public static Post createPost(String title, String password, String content, Member createMember, Board board) {
         Post post = new Post();
         post.title = title;
         post.password = password;
@@ -133,6 +137,7 @@ public class Post extends BaseEntity {
         post.createMember = createMember;
         post.order = 0L;
         post.depth = 0L;
+        post.board = board;
 
         return post;
     }

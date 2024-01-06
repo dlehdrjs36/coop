@@ -1,9 +1,6 @@
 package com.projectteam.coop.web;
 
-import com.projectteam.coop.domain.Member;
-import com.projectteam.coop.domain.Post;
-import com.projectteam.coop.domain.Product;
-import com.projectteam.coop.domain.ProductType;
+import com.projectteam.coop.domain.*;
 import com.projectteam.coop.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -35,8 +32,8 @@ public class InitDb {
             //회원
             String memberSalt1 = SecurityUtil.getSalt();
             String memberSalt2 = SecurityUtil.getSalt();
-            Member member1 = Member.createMember("coop1@naver.com", "테스트1", SecurityUtil.encryptSHA256("1234", memberSalt1), memberSalt1, Boolean.TRUE);
-            Member member2 = Member.createMember("coop2@naver.com", "테스트2", SecurityUtil.encryptSHA256("1234", memberSalt2), memberSalt2, Boolean.TRUE);
+            Member member1 = Member.createMember("aaaa","coop1@naver.com", "테스트1", SecurityUtil.encryptSHA256("1234", memberSalt1), memberSalt1, Boolean.TRUE);
+            Member member2 = Member.createMember("bbbb", "coop2@naver.com", "테스트2", SecurityUtil.encryptSHA256("1234", memberSalt2), memberSalt2, Boolean.TRUE);
             em.persist(member1);
             em.persist(member2);
 
@@ -55,9 +52,13 @@ public class InitDb {
             em.persist(icon2);
             em.persist(icon3);
 
+            //게시판
+            Board board = Board.createBoard();
+            em.persist(board);
+
             //게시물
-            Post post1 = Post.createPost("테스트1", "1234", "테스트 내용입니다.", "닉네임1");
-            Post post2 = Post.createPost("테스트2", "1234", "테스트 내용입니다.", "닉네임2");
+            Post post1 = Post.createPost("테스트1", "1234", "테스트 내용입니다.", "닉네임1", board);
+            Post post2 = Post.createPost("테스트2", "1234", "테스트 내용입니다.", "닉네임2", board);
             em.persist(post1);
             em.persist(post2);
 

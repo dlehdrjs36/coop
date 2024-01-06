@@ -1,9 +1,11 @@
 package com.projectteam.coop.service.comment;
 
+import com.projectteam.coop.domain.Board;
 import com.projectteam.coop.domain.Comment;
 import com.projectteam.coop.domain.Member;
 import com.projectteam.coop.exception.CommentNotFoundException;
 import com.projectteam.coop.exception.MisMatchedPasswordException;
+import com.projectteam.coop.service.board.BoardService;
 import com.projectteam.coop.service.member.MemberService;
 import com.projectteam.coop.service.post.PostService;
 import com.projectteam.coop.util.SecurityUtil;
@@ -37,11 +39,16 @@ class CommentServiceTest {
     private MemberService memberService;
     @Autowired
     private CommentService commentService;
+    @Autowired
+    private BoardService boardService;
 
     @Test
     @DisplayName("기존 댓글에 비회원이 대댓글 등록")
     void nonmemberAddReplyComment() {
-        PostCreateForm postForm = getPostCreateForm("parentTitle", "password", "parent", "parentNickname");
+
+        Long boardId = boardService.addBoard(Board.createBoard());
+
+        PostCreateForm postForm = getPostCreateForm("parentTitle", "password", "parent", "parentNickname", boardId);
         Long postId = postService.addPost(postForm, null);
 
         CommentCreateForm parentForm = getCommentCreateForm(postId, "1234", "comment", "commentNickname");
@@ -79,14 +86,15 @@ class CommentServiceTest {
     void memberAddReplyComment() {
 
         String salt = SecurityUtil.getSalt();
-        Member member = Member.createMember("test@gmail.com", "테스트", SecurityUtil.encryptSHA256("1234", salt), salt, Boolean.TRUE);
+        Member member = Member.createMember("jjjj","test@gmail.com", "테스트", SecurityUtil.encryptSHA256("1234", salt), salt, Boolean.TRUE);
         Long memberId = memberService.addMember(member);
         em.flush();
         Member findMember = memberService.findMember(memberId);
         assertEquals(member, findMember);
         MemberSessionDto loginMember = MemberSessionDto.createSession(findMember);
 
-        PostCreateForm postForm = getPostCreateForm("parentTitle", "password", "parent", "parentNickname");
+        Long boardId = boardService.addBoard(Board.createBoard());
+        PostCreateForm postForm = getPostCreateForm("parentTitle", "password", "parent", "parentNickname", boardId);
         Long postId = postService.addPost(postForm, loginMember);
 
         CommentCreateForm parentForm = getCommentCreateForm(postId, "1234", "comment", "commentNickname");
@@ -122,7 +130,8 @@ class CommentServiceTest {
     @Test
     @DisplayName("게시물에 비회원이 댓글 등록")
     void nonmemberAddComment() {
-        PostCreateForm postForm = getPostCreateForm("parentTitle", "password", "parent", "parentNickname");
+        Long boardId = boardService.addBoard(Board.createBoard());
+        PostCreateForm postForm = getPostCreateForm("parentTitle", "password", "parent", "parentNickname", boardId);
         Long postId = postService.addPost(postForm, null);
 
         CommentCreateForm commentForm = getCommentCreateForm(postId, "1234", "comment", "commentNickname");
@@ -146,14 +155,15 @@ class CommentServiceTest {
     void memberAddReplyPost() {
 
         String salt = SecurityUtil.getSalt();
-        Member member = Member.createMember("test@gmail.com", "테스트", SecurityUtil.encryptSHA256("1234", salt), salt, Boolean.TRUE);
+        Member member = Member.createMember("kkkk","test@gmail.com", "테스트", SecurityUtil.encryptSHA256("1234", salt), salt, Boolean.TRUE);
         Long memberId = memberService.addMember(member);
         em.flush();
         Member findMember = memberService.findMember(memberId);
         assertEquals(member, findMember);
         MemberSessionDto loginMember = MemberSessionDto.createSession(findMember);
 
-        PostCreateForm postForm = getPostCreateForm("parentTitle", "password", "parent", "parentNickname");
+        Long boardId = boardService.addBoard(Board.createBoard());
+        PostCreateForm postForm = getPostCreateForm("parentTitle", "password", "parent", "parentNickname", boardId);
         Long postId = postService.addPost(postForm, loginMember);
 
         CommentCreateForm commentForm = getCommentCreateForm(postId, "1234", "comment", "commentNickname");
@@ -175,7 +185,8 @@ class CommentServiceTest {
     @Test
     @DisplayName("댓글 존재 비밀번호 일치 시 댓글 상태 변경")
     public void commentStatusChange() {
-        PostCreateForm postForm = getPostCreateForm("parentTitle", "password", "parent", "parentNickname");
+        Long boardId = boardService.addBoard(Board.createBoard());
+        PostCreateForm postForm = getPostCreateForm("parentTitle", "password", "parent", "parentNickname", boardId);
         Long postId = postService.addPost(postForm, null);
 
         CommentCreateForm commentForm = getCommentCreateForm(postId, "1234", "comment", "commentNickname");
@@ -190,7 +201,8 @@ class CommentServiceTest {
     @Test
     @DisplayName("댓글 존재 비밀번호 미일치 시 댓글 상태 미변경")
     public void commentStatusNotChange() {
-        PostCreateForm postForm = getPostCreateForm("parentTitle", "password", "parent", "parentNickname");
+        Long boardId = boardService.addBoard(Board.createBoard());
+        PostCreateForm postForm = getPostCreateForm("parentTitle", "password", "parent", "parentNickname", boardId);
         Long postId = postService.addPost(postForm, null);
 
         CommentCreateForm commentForm = getCommentCreateForm(postId, "1234", "comment", "commentNickname");
@@ -232,12 +244,13 @@ class CommentServiceTest {
         return commentForm;
     }
 
-    private PostCreateForm getPostCreateForm(String title, String password, String content, String nickname) {
+    private PostCreateForm getPostCreateForm(String title, String password, String content, String nickname, Long boardId) {
         PostCreateForm postForm = new PostCreateForm();
         postForm.setTitle(title);
         postForm.setPassword(password);
         postForm.setContent(content);
         postForm.setNickname(nickname);
+        postForm.setBoardId(boardId);
         return postForm;
     }
 

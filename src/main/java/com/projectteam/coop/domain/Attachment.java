@@ -15,7 +15,7 @@ import static javax.persistence.FetchType.LAZY;
 public class Attachment extends BaseEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ATTACHMENT_ID")
     private Long id;
 

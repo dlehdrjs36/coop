@@ -16,9 +16,13 @@ import java.util.List;
 @Table(name = "MEMBER")
 public class Member extends BaseEntity{
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "MEMBER_NO")
+    private Long memberNo;
+
     @Column(name = "MEMBER_ID")
-    private Long id;
+    private String memberId;
 
     @Column(name = "EMAIL")
     private String email;
@@ -54,8 +58,9 @@ public class Member extends BaseEntity{
     private List<PurchaseList> purchaseLists = new ArrayList<>();
 
     //회원가입
-    public static Member createMember(String email, String name, String password, String salt, Boolean emailReceptionType) {
+    public static Member createMember(String memberId, String email, String name, String password, String salt, Boolean emailReceptionType) {
         Member member = new Member();
+        member.memberId = memberId;
         member.email = email;
         member.name = name;
         member.password = password;

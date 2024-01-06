@@ -32,7 +32,7 @@ class MemberServiceTest {
     void addMember() {
 
         String salt = SecurityUtil.getSalt();
-        Member member = Member.createMember("test@gmail.com", "test", SecurityUtil.encryptSHA256("1234", salt), salt, Boolean.TRUE);
+        Member member = Member.createMember("aaaa","test@gmail.com", "test", SecurityUtil.encryptSHA256("1234", salt), salt, Boolean.TRUE);
 
         Long addMemberId = memberService.addMember(member);
         em.flush();
@@ -46,13 +46,13 @@ class MemberServiceTest {
     void duplicateMember() {
 
         String salt = SecurityUtil.getSalt();
-        Member member = Member.createMember("test@gmail.com", "test", SecurityUtil.encryptSHA256("1234", salt), salt, Boolean.TRUE);
+        Member member = Member.createMember("bbbb","test@gmail.com", "test", SecurityUtil.encryptSHA256("1234", salt), salt, Boolean.TRUE);
         Long addMemberId = memberService.addMember(member);
         em.flush();
         assertEquals(member, memberService.findMember(addMemberId));
 
         String salt2 = SecurityUtil.getSalt();
-        Member duplicateMember = Member.createMember("test@gmail.com", "test2", SecurityUtil.encryptSHA256("1234", salt2), salt2, Boolean.TRUE);
+        Member duplicateMember = Member.createMember("cccc","test@gmail.com", "test2", SecurityUtil.encryptSHA256("1234", salt2), salt2, Boolean.TRUE);
         em.flush();
 
         IllegalStateException exception = assertThrows(IllegalStateException.class, () -> memberService.addMember(duplicateMember));
@@ -65,13 +65,13 @@ class MemberServiceTest {
     void noDuplicateMember() {
 
         String salt = SecurityUtil.getSalt();
-        Member member = Member.createMember("test@gmail.com", "test", SecurityUtil.encryptSHA256("1234", salt), salt, Boolean.TRUE);
+        Member member = Member.createMember("dddd","test@gmail.com", "test", SecurityUtil.encryptSHA256("1234", salt), salt, Boolean.TRUE);
         Long addMemberId = memberService.addMember(member);
         em.flush();
         assertEquals(member, memberService.findMember(addMemberId));
 
         String salt2 = SecurityUtil.getSalt();
-        Member duplicateMember = Member.createMember("test2@gmail.com", "test2", SecurityUtil.encryptSHA256("1234", salt2), salt2, Boolean.TRUE);
+        Member duplicateMember = Member.createMember("eeee","test2@gmail.com", "test2", SecurityUtil.encryptSHA256("1234", salt2), salt2, Boolean.TRUE);
         em.flush();
 
         assertDoesNotThrow(() -> memberService.addMember(duplicateMember));
@@ -83,7 +83,7 @@ class MemberServiceTest {
     void updateMember() {
 
         String salt = SecurityUtil.getSalt();
-        Member member = Member.createMember("test@gmail.com", "test", SecurityUtil.encryptSHA256("1234", salt), salt, Boolean.TRUE);
+        Member member = Member.createMember("ffff","test@gmail.com", "test", SecurityUtil.encryptSHA256("1234", salt), salt, Boolean.TRUE);
         Long addMemberId = memberService.addMember(member);
         em.flush();
         Member findMember = memberService.findMember(addMemberId);
@@ -97,7 +97,7 @@ class MemberServiceTest {
         em.flush();
         Member changedMember = memberService.findMember(addMemberId);
 
-        assertEquals(findMember.getId(), changedMember.getId());
+        assertEquals(findMember.getMemberNo(), changedMember.getMemberNo());
         assertEquals(findMember.getEmail(), changedMember.getEmail());
         assertEquals(findMember.getName(), changedMember.getName());
         assertEquals("4444", changedMember.getPassword());

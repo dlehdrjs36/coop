@@ -1,7 +1,9 @@
 package com.projectteam.coop.service.post;
 
+import com.projectteam.coop.domain.Board;
 import com.projectteam.coop.domain.Member;
 import com.projectteam.coop.domain.Post;
+import com.projectteam.coop.service.board.BoardService;
 import com.projectteam.coop.service.member.MemberService;
 import com.projectteam.coop.util.SecurityUtil;
 import com.projectteam.coop.web.post.PostCreateForm;
@@ -32,28 +34,32 @@ class PostServiceTest {
     private PostService postService;
     @Autowired
     private MemberService memberService;
+    @Autowired
+    private BoardService boardService;
 
     @Test
     @DisplayName("비회원 답글 게시물 등록 OK")
     void nonmemberAddReplyPost() {
 
-        PostCreateForm parentForm = getPostCreateForm("parentTitle", "password", "parent", "parentNickname");
+        Long boardId = boardService.addBoard(Board.createBoard());
+
+        PostCreateForm parentForm = getPostCreateForm("parentTitle", "password", "parent", "parentNickname", boardId);
         Long parentPostId = postService.addPost(parentForm, null);
 
-        PostCreateForm postForm = getPostCreateForm("childTitle", "password", "child", "childNickname");
+        PostCreateForm postForm = getPostCreateForm("childTitle", "password", "child", "childNickname", boardId);
         postForm.setUpperPostId(parentPostId);
         Long childPostId = postService.addReplyPost(postForm, null);
         Post replyPost = em.find(Post.class, childPostId);
 
-        PostCreateForm postForm2 = getPostCreateForm("childTitle2", "password", "child2", "childNickname2");
+        PostCreateForm postForm2 = getPostCreateForm("childTitle2", "password", "child2", "childNickname2", boardId);
         postForm2.setUpperPostId(parentPostId);
         Long childPostId2 = postService.addReplyPost(postForm2, null);
 
-        PostCreateForm postForm3 = getPostCreateForm("childTitle3", "password", "child3", "childNickname3");
+        PostCreateForm postForm3 = getPostCreateForm("childTitle3", "password", "child3", "childNickname3", boardId);
         postForm3.setUpperPostId(parentPostId);
         postService.addReplyPost(postForm3, null);
 
-        PostCreateForm postForm4 = getPostCreateForm("childTitle2_1", "password", "child2_1", "childNickname2_1");
+        PostCreateForm postForm4 = getPostCreateForm("childTitle2_1", "password", "child2_1", "childNickname2_1", boardId);
         postForm4.setUpperPostId(childPostId2);
         postService.addReplyPost(postForm4, null);
 
@@ -75,7 +81,7 @@ class PostServiceTest {
     void memberAddReplyPost() {
 
         String salt = SecurityUtil.getSalt();
-        Member member = Member.createMember("test@gmail.com", "테스트", SecurityUtil.encryptSHA256("1234", salt), salt, Boolean.TRUE);
+        Member member = Member.createMember("cccc", "test@gmail.com", "테스트", SecurityUtil.encryptSHA256("1234", salt), salt, Boolean.TRUE);
         Long memberId = memberService.addMember(member);
         em.flush();
         assertEquals(member, memberService.findMember(memberId));
@@ -83,23 +89,24 @@ class PostServiceTest {
         Member findMember = memberService.findMember(memberId);
         MemberSessionDto loginMember = MemberSessionDto.createSession(findMember);
 
-        PostCreateForm parentForm = getPostCreateForm("parentTitle", "password", "parent", "parentNickname");
+        Long boardId = boardService.addBoard(Board.createBoard());
+        PostCreateForm parentForm = getPostCreateForm("parentTitle", "password", "parent", "parentNickname", boardId);
         Long parentPostId = postService.addPost(parentForm, loginMember);
 
-        PostCreateForm postForm = getPostCreateForm("childTitle", "password", "child", "childNickname");
+        PostCreateForm postForm = getPostCreateForm("childTitle", "password", "child", "childNickname", boardId);
         postForm.setUpperPostId(parentPostId);
         Long childPostId = postService.addReplyPost(postForm, loginMember);
         Post replyPost = em.find(Post.class, childPostId);
 
-        PostCreateForm postForm2 = getPostCreateForm("childTitle2", "password", "child2", "childNickname2");
+        PostCreateForm postForm2 = getPostCreateForm("childTitle2", "password", "child2", "childNickname2", boardId);
         postForm2.setUpperPostId(parentPostId);
         Long childPostId2 = postService.addReplyPost(postForm2, loginMember);
 
-        PostCreateForm postForm3 = getPostCreateForm("childTitle3", "password", "child3", "childNickname3");
+        PostCreateForm postForm3 = getPostCreateForm("childTitle3", "password", "child3", "childNickname3", boardId);
         postForm3.setUpperPostId(parentPostId);
         postService.addReplyPost(postForm3, loginMember);
 
-        PostCreateForm postForm4 = getPostCreateForm("childTitle2_1", "password", "child2_1", "childNickname2_1");
+        PostCreateForm postForm4 = getPostCreateForm("childTitle2_1", "password", "child2_1", "childNickname2_1", boardId);
         postForm4.setUpperPostId(childPostId2);
         postService.addReplyPost(postForm4, loginMember);
 
@@ -121,7 +128,8 @@ class PostServiceTest {
     @DisplayName("비회원 게시물 등록 OK")
     void nonmemberAddPost() {
 
-        PostCreateForm postForm = getPostCreateForm("title", "password", "test", "nickname");
+        Long boardId = boardService.addBoard(Board.createBoard());
+        PostCreateForm postForm = getPostCreateForm("title", "password", "test", "nickname", boardId);
 
         Long postId = postService.addPost(postForm, null);
         Post post = em.find(Post.class, postId);
@@ -144,14 +152,15 @@ class PostServiceTest {
     void memberAddPost() {
 
         String salt = SecurityUtil.getSalt();
-        Member member = Member.createMember("test@gmail.com", "테스트", SecurityUtil.encryptSHA256("1234", salt), salt, Boolean.TRUE);
+        Member member = Member.createMember("dddd","test@gmail.com", "테스트", SecurityUtil.encryptSHA256("1234", salt), salt, Boolean.TRUE);
         Long memberId = memberService.addMember(member);
         em.flush();
         assertEquals(member, memberService.findMember(memberId));
 
         Member findMember = memberService.findMember(memberId);
         MemberSessionDto loginMember = MemberSessionDto.createSession(findMember);
-        PostCreateForm postForm = getPostCreateForm("title", "password", "test", "nickname");
+        Long boardId = boardService.addBoard(Board.createBoard());
+        PostCreateForm postForm = getPostCreateForm("title", "password", "test", "nickname", boardId);
 
         Long postId = postService.addPost(postForm, loginMember);
         Post post = em.find(Post.class, postId);
@@ -175,19 +184,20 @@ class PostServiceTest {
     void addMemberRecommend() {
 
         String salt = SecurityUtil.getSalt();
-        Member member1 = Member.createMember("test@gmail.com", "테스트", SecurityUtil.encryptSHA256("1234", salt), salt, Boolean.TRUE);
+        Member member1 = Member.createMember("eeee","test@gmail.com", "테스트", SecurityUtil.encryptSHA256("1234", salt), salt, Boolean.TRUE);
         Long memberId1 = memberService.addMember(member1);
         em.flush();
         assertEquals(member1, memberService.findMember(memberId1));
 
         String salt2 = SecurityUtil.getSalt();
-        Member member2 = Member.createMember("test2@gmail.com", "테스트2", SecurityUtil.encryptSHA256("1234", salt2), salt2, Boolean.TRUE);
+        Member member2 = Member.createMember("ffff","test2@gmail.com", "테스트2", SecurityUtil.encryptSHA256("1234", salt2), salt2, Boolean.TRUE);
         Long memberId2 = memberService.addMember(member2);
         em.flush();
         assertEquals(member2, memberService.findMember(memberId2));
 
         MemberSessionDto loginMember = MemberSessionDto.createSession(member1);
-        PostCreateForm postForm = getPostCreateForm("title", "password", "test", "nickname");
+        Long boardId = boardService.addBoard(Board.createBoard());
+        PostCreateForm postForm = getPostCreateForm("title", "password", "test", "nickname", boardId);
 
         Long postId = postService.addPost(postForm, loginMember);
         Post post = em.find(Post.class, postId);
@@ -205,18 +215,19 @@ class PostServiceTest {
     void addNonmemberRecommend() {
 
         String salt = SecurityUtil.getSalt();
-        Member member1 = Member.createMember("test@gmail.com", "테스트", SecurityUtil.encryptSHA256("1234", salt), salt, Boolean.TRUE);
+        Member member1 = Member.createMember("gggg","test@gmail.com", "테스트", SecurityUtil.encryptSHA256("1234", salt), salt, Boolean.TRUE);
         Long memberId1 = memberService.addMember(member1);
         em.flush();
         assertEquals(member1, memberService.findMember(memberId1));
 
         String salt2 = SecurityUtil.getSalt();
-        Member member2 = Member.createMember("test2@gmail.com", "테스트2", SecurityUtil.encryptSHA256("1234", salt2), salt2, Boolean.TRUE);
+        Member member2 = Member.createMember("hhhh","test2@gmail.com", "테스트2", SecurityUtil.encryptSHA256("1234", salt2), salt2, Boolean.TRUE);
         Long memberId2 = memberService.addMember(member2);
         em.flush();
         assertEquals(member2, memberService.findMember(memberId2));
 
-        PostCreateForm postForm = getPostCreateForm("title", "password", "test", "nickname");
+        Long boardId = boardService.addBoard(Board.createBoard());
+        PostCreateForm postForm = getPostCreateForm("title", "password", "test", "nickname", boardId);
         Long postId = postService.addPost(postForm, null);
         Post post = em.find(Post.class, postId);
 
@@ -228,12 +239,13 @@ class PostServiceTest {
 
     }
 
-    private PostCreateForm getPostCreateForm(String title, String password, String content, String nickname) {
+    private PostCreateForm getPostCreateForm(String title, String password, String content, String nickname, Long boardId) {
         PostCreateForm postForm = new PostCreateForm();
         postForm.setTitle(title);
         postForm.setPassword(password);
         postForm.setContent(content);
         postForm.setNickname(nickname);
+        postForm.setBoardId(boardId);
         return postForm;
     }
 }

@@ -13,7 +13,8 @@ import java.time.LocalDateTime;
 @Table(name = "BOARD")
 public class Board extends BaseEntity {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "BOARD_ID")
     private Long id;
 
@@ -38,4 +39,11 @@ public class Board extends BaseEntity {
     @Column(name = "UPDATE_MEMBER_ID")
     private String updateMemberId;
 
+    //TODO : 게시판 타입별 생각해서 구현하기
+    public static Board createBoard() {
+        Board board = new Board();
+        board.status = BoardStatus.Y;
+
+        return board;
+    }
 }

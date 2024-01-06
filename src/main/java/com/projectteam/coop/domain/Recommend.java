@@ -12,8 +12,9 @@ import javax.persistence.*;
 @Table(name = "RECOMMEND")
 public class Recommend extends BaseEntity {
 
-    @Id @GeneratedValue
-    @Column(name = "RECOMMED_ID")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "RECOMMEND_ID")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)

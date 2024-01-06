@@ -20,7 +20,7 @@ public class MemberSessionDto {
 
     public static MemberSessionDto createSession(Member member) {
         MemberSessionDto session = new MemberSessionDto();
-        session.setId(member.getId());
+        session.setId(member.getMemberNo());
         session.setEmail(member.getEmail());
         session.setName(member.getName());
         session.setType(member.getType());

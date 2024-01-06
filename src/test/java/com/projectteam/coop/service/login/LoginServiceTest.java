@@ -11,6 +11,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,7 +43,7 @@ class LoginServiceTest {
     void noAddPoint() {
 
         String salt = SecurityUtil.getSalt();
-        Member member = Member.createMember("test@gmail.com", "test", SecurityUtil.encryptSHA256("1234", salt), salt, Boolean.TRUE);
+        Member member = Member.createMember("aaaa","test@gmail.com", "test", SecurityUtil.encryptSHA256("1234", salt), salt, Boolean.TRUE);
         Long addMemberId = memberService.addMember(member);
         em.flush();
 
@@ -63,7 +64,7 @@ class LoginServiceTest {
     void addPoint() {
 
         String salt = SecurityUtil.getSalt();
-        Member member = Member.createMember("test@gmail.com", "test", SecurityUtil.encryptSHA256("1234", salt), salt, Boolean.TRUE);
+        Member member = Member.createMember("bbbb","test@gmail.com", "test", SecurityUtil.encryptSHA256("1234", salt), salt, Boolean.TRUE);
         Long addMemberId = memberService.addMember(member);
 
         em.flush();
@@ -72,7 +73,9 @@ class LoginServiceTest {
 
         LoginLog loginLog = LoginLog.createLoginLog(member.getEmail());
         loginService.addLoginLog(loginLog);
-        assertNotEquals(0, loginRepository.findLoginLog(member));
+        em.flush();
+        Long findLoginLog = loginRepository.findLoginLog(member);
+        assertNotEquals(0, findLoginLog);
         loginService.addPoint(member);
         assertEquals(10, member.getPoint(), "일별 1회 로그인 시 포인트 10이 지급되어야 한다.");
 

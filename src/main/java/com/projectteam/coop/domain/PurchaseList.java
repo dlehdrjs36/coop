@@ -14,7 +14,8 @@ import java.util.List;
 @Table(name = "PURCHASE_LIST")
 public class PurchaseList {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "PURCHASELIST_ID")
     private Long id;
 

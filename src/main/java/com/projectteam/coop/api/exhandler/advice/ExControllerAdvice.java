@@ -9,79 +9,90 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 @ControllerAdvice
 @Slf4j
 public class ExControllerAdvice {
 
     @ExceptionHandler(IllegalArgumentException.class)
-    @ResponseBody
-    public ApiResult<?> illegalExHandler(IllegalArgumentException e) {
+//    @ResponseBody
+    public ModelAndView illegalExHandler(IllegalArgumentException e) {
         log.error("[exceptionHandler] ex", e);
-        return ApiUtil.error("BAD", e.getMessage(), HttpStatus.BAD_REQUEST);
+        return new ModelAndView("redirect:/error");
+//        return ApiUtil.error("BAD", e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler
-    @ResponseBody
-    public ApiResult<?> commentExHandler(CommentNotFoundException e) {
+//    @ResponseBody
+    public ModelAndView commentExHandler(CommentNotFoundException e) {
         log.error("[exceptionHandler] ex", e);
-        return ApiUtil.error("COMMENT_NOT_FOUND", e.getMessage(), HttpStatus.BAD_REQUEST);
+        return new ModelAndView("redirect:/error");
+//        return ApiUtil.error("COMMENT_NOT_FOUND", e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler
-    @ResponseBody
-    public ApiResult<?> commentExHandler(MisMatchedPasswordException e) {
+//    @ResponseBody
+    public ModelAndView commentExHandler(MisMatchedPasswordException e) {
         log.error("[exceptionHandler] ex", e);
-        return ApiUtil.error("MISMATCHED_PASSWORD", e.getMessage(), HttpStatus.BAD_REQUEST);
+        return new ModelAndView("redirect:/error");
+//        return ApiUtil.error("MISMATCHED_PASSWORD", e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler
-    @ResponseBody
-    public ApiResult<?> purchaseListExHandler(NoPointException e) {
+//    @ResponseBody
+    public ModelAndView purchaseListExHandler(NoPointException e) {
         log.error("[exceptionHandler] ex", e);
-        return ApiUtil.error("NO_POINT", e.getMessage(), HttpStatus.BAD_REQUEST);
+        return new ModelAndView("redirect:/error");
+//        return ApiUtil.error("NO_POINT", e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler
-    @ResponseBody
-    public ApiResult<?> memberSessionExHandler(NoMemberSessionException e) {
+//    @ResponseBody
+    public ModelAndView memberSessionExHandler(NoMemberSessionException e) {
         log.error("[exceptionHandler] ex", e);
-        return ApiUtil.error("NO_SESSION", e.getMessage(), HttpStatus.BAD_REQUEST);
+        return new ModelAndView("redirect:/error");
+//        return ApiUtil.error("NO_SESSION", e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler
-    @ResponseBody
-    public ApiResult<?> productExHandler(DuplicatePurchaseProductException e) {
+//    @ResponseBody
+    public ModelAndView productExHandler(DuplicatePurchaseProductException e) {
         log.error("[exceptionHandler] ex", e);
-        return ApiUtil.error("PURCHASE_DUPLICATE", e.getMessage(), HttpStatus.BAD_REQUEST);
+        return new ModelAndView("redirect:/error");
+//        return ApiUtil.error("PURCHASE_DUPLICATE", e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler
-    @ResponseBody
-    public ApiResult<?> authorizationExHandler(NoAuthorizationException e) {
+//    @ResponseBody
+    public ModelAndView authorizationExHandler(NoAuthorizationException e) {
         log.error("[exceptionHandler] ex", e);
-        return ApiUtil.error("NO_AUTHORIZATION", e.getMessage(), HttpStatus.BAD_REQUEST);
+        return new ModelAndView("redirect:/error");
+//        return ApiUtil.error("NO_AUTHORIZATION", e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler
-    @ResponseBody
-    public ApiResult<?> authenticationExHandler(NoAuthenticationException e) {
+//    @ResponseBody
+    public ModelAndView authenticationExHandler(NoAuthenticationException e) {
         log.error("[exceptionHandler] ex", e);
-        return ApiUtil.error("NO_AUTHENTICATION", e.getMessage(), HttpStatus.BAD_REQUEST);
+        return new ModelAndView("redirect:/error");
+//        return ApiUtil.error("NO_AUTHENTICATION", e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler
-    @ResponseBody
-    public ApiResult<?> validationExHandler(MethodArgumentNotValidException e) {
+//    @ResponseBody
+    public ModelAndView validationExHandler(MethodArgumentNotValidException e) {
         log.error("[exceptionHandler] ex", e);
-        return ApiUtil.error("FIELD_INVALID", e.getMessage(), HttpStatus.BAD_REQUEST);
+        return new ModelAndView("redirect:/error");
+//        return ApiUtil.error("FIELD_INVALID", e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler
-    @ResponseBody
-    public ApiResult<?> exHandler(Exception e) {
+//    @ResponseBody
+    public ModelAndView exHandler(Exception e) {
         log.error("[exceptionHandler] ex", e);
-        return ApiUtil.error("SERVER_ERROR", "내부 오류", HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ModelAndView("redirect:/error");
+//        return ApiUtil.error("SERVER_ERROR", "내부 오류", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }

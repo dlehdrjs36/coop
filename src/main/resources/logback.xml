@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+<!--    <springProperty name="local" source="spring.profiles.active" defaultValue="local" />-->
+
+    <timestamp key="BY_DATE" datePattern="yyyy-MM-dd" />
+    <property name="LOG_PATTERN"
+              value="[%d{yyyy-MM-dd HH:mm:ss}:%-4relative] %green([%thread]) %highlight(%-5level) %boldWhite([%C.%M:%yellow(%L)]) - %msg%n" />
+
+    <if condition='isDefined("spring.profiles.active")'>
+        <then>
+            <if condition='"${spring.profiles.active}".contains("local")'>
+                <then>
+                    <include resource="/console-appender.xml"/>
+                    <logger name="org.hibernate.SQL" level="DEBUG" />
+                    <!--    <logger name="org.hibernate.type" level="TRACE" />-->
+                    <root level="DEBUG">
+                        <appender-ref ref="CONSOLE"/>
+                    </root>
+                </then>
+            </if>
+            <if condition='"${spring.profiles.active}".contains("prod")'>
+                <then>
+                    <include resource="/file-info-appender.xml"/>
+                    <include resource="/file-warn-appender.xml"/>
+                    <include resource="/file-error-appender.xml"/>
+                    <root level="INFO">
+                        <appender-ref ref="FILE-INFO"/>
+                        <appender-ref ref="FILE-WARN"/>
+                        <appender-ref ref="FILE-ERROR"/>
+                    </root>
+                </then>
+            </if>
+        </then>
+    </if>
+</configuration>

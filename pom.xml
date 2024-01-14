@@ -227,6 +227,17 @@
             <artifactId>querydsl-jpa</artifactId>
             <version>${querydsl-version}</version>
         </dependency>
+        <!-- logback.xml 설정파일에서 자바 표현식을 사용할 수 있게 해주는 라이브러리-->
+        <dependency>
+            <groupId>org.codehaus.janino</groupId>
+            <artifactId>janino</artifactId>
+            <version>3.1.8</version>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.janino</groupId>
+            <artifactId>commons-compiler</artifactId>
+            <version>3.1.8</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

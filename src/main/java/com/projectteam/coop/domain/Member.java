@@ -73,6 +73,22 @@ public class Member extends BaseEntity{
         return member;
     }
 
+    //회원가입
+    public static Member createMember(String email, String name, String password, String salt, Boolean emailReceptionType) {
+        Member member = new Member();
+        member.email = email;
+        member.name = name;
+        member.password = password;
+        member.salt = salt;
+        member.type = MemberType.COMMON;
+        member.status = MemberStatus.ACTIVE;
+        member.point = 0;
+        member.emailReceptionType = emailReceptionType;
+
+        return member;
+    }
+
+
     public void changePassword(String password) {
         this.password = password;
     }

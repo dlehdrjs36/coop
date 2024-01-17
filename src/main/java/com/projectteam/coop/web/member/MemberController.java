@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import java.security.SecureRandom;
+import java.util.UUID;
 
 @Controller
 @RequiredArgsConstructor
@@ -29,7 +31,7 @@ public class MemberController {
     }
 
     @PostMapping("/members/new")
-    public String create(@Validated @ModelAttribute(name = "memberForm") MemberForm memberForm, BindingResult bindingResult) {
+    public String create(@Validated @ModelAttribute(name = "memberForm") MemberInsertForm memberForm, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             return "/templates/members/createMemberForm";
@@ -37,7 +39,8 @@ public class MemberController {
 
         String salt = SecurityUtil.getSalt();
         String password = SecurityUtil.encryptSHA256(memberForm.getPassword(), salt);
-        Member member = Member.createMember(memberForm.getMemberId() ,memberForm.getEmail(), memberForm.getName(), password, salt, Boolean.TRUE);
+        String memberId = memberForm.getEmail() + UUID.randomUUID();
+        Member member = Member.createMember(memberId, memberForm.getEmail(), memberForm.getName(), password, salt, Boolean.TRUE);
         if(memberService.isNotDuplicateMember(member)) {
             memberService.addMember(member);
             return "redirect:/";

@@ -11,7 +11,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "COMMENT")
+@Table(name = "comment", catalog = "coop")
 public class Comment extends BaseEntity {
 
     @Id

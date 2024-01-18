@@ -11,7 +11,7 @@ import static javax.persistence.FetchType.LAZY;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "ATTACHMENT")
+@Table(name = "attachment", catalog = "coop")
 public class Attachment extends BaseEntity {
 
     @Id

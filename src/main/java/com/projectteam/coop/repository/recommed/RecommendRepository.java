@@ -31,8 +31,7 @@ public class RecommendRepository {
 
     //추전 수 조회, 빠르게 클릭할 경우, 동일한 값을 읽게되어 잠금 처리하여 동기화
     public Recommend findMemberRecommend(Long memberId, Long postId) {
-        Recommend result = em.createQuery("select r from Recommend r where r.member.id = :memberId and r.post.postId = :postId", Recommend.class)
-                .setLockMode(LockModeType.PESSIMISTIC_WRITE) // 비관적 잠금
+        Recommend result = em.createQuery("select r from Recommend r where r.member.memberNo = :memberId and r.post.postId = :postId", Recommend.class)
                 .setParameter("memberId", memberId)
                 .setParameter("postId", postId)
                 .getResultList()

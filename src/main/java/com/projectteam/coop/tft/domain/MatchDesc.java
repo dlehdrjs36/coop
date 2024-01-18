@@ -7,6 +7,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @IdClass(MatchDescId.class)
+@Table(name = "matchdesc", catalog = "coop")
 public class MatchDesc {
 
     @Id

@@ -4,9 +4,11 @@ import lombok.Getter;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Getter
+@Table(name = "summoner", catalog = "coop")
 public class Summoner {
 
     private String accountId;

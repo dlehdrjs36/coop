@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "LOGIN_LOG")
+@Table(name = "login_log", catalog = "coop")
 public class LoginLog extends BaseEntity {
 
     @Id

@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "RECOMMEND")
+@Table(name = "recommend", catalog = "coop")
 public class Recommend extends BaseEntity {
 
     @Id

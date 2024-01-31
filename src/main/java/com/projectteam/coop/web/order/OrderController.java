@@ -33,6 +33,6 @@ public class OrderController {
         model.addAttribute("paging", paging);
         model.addAttribute("purchaseList", findPurchaseList);
 
-        return "/templates/orders/orderList";
+        return "orders/orderList";
     }
 }

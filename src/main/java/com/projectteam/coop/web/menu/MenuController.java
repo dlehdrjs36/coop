@@ -35,14 +35,14 @@ public class MenuController {
 
     @GetMapping(value = "/tft/augmentsList")
     public String getAugmentsListPage(Model model) {
-        return "/templates/tft/augmentsList";
+        return "tft/augmentsList";
     }
 
     @GetMapping(value = "/tft/championList")
     public String getChampionListPage(Model model) {
         model.addAttribute("championListData", champSynergyJsonConfig.getChampionListJsonObject());
         model.addAttribute("synergyListData", synergyJsonDataReader.getSynergyListJsonObject());
-        return "/templates/tft/championList";
+        return "tft/championList";
     }
 
     @GetMapping(value = "/tft/championList/{championName}")
@@ -52,7 +52,7 @@ public class MenuController {
         } else {
             model.addAttribute(championName, "");
         }
-        return "/templates/tft/championList";
+        return "tft/championList";
     }
 
     @GetMapping(value = "/tft/synergyList")
@@ -74,7 +74,7 @@ public class MenuController {
             model.addAttribute("augmentTier", augmentTier);
         }
 
-        return "/templates/tft/synergyList";
+        return "tft/synergyList";
     }
 
     @GetMapping("/tft/synergyList/{synergyName}")
@@ -91,12 +91,12 @@ public class MenuController {
 
     @GetMapping("/tft/combination")
     public String getCombinationPage(Model model){
-        return "/templates/tft/combination";
+        return "tft/combination";
     }
 
     @GetMapping("/tft/guide")
     public String getGuidePage(Model model){
-        return "/templates/tft/guide";
+        return "tft/guide";
     }
 
     @GetMapping("/tft/summoner/{summonerName}")
@@ -130,12 +130,12 @@ public class MenuController {
             }
         }catch (Exception e){
             model.addAttribute("searchName",summonerName);
-            return "/templates/tft/summonerSearchError";
+            return "tft/summonerSearchError";
         }
 
         model.addAttribute("summonerForm", summonerForm);
         model.addAttribute("sommonerMatchDescFormList", sommonerMatchDescFormList);
 
-        return "/templates/tft/summoner";
+        return "tft/summoner";
     }
 }

@@ -43,14 +43,14 @@ public class PostController {
     @GetMapping("/new")
     public String createForm(Model model) {
         model.addAttribute("postForm", new PostCreateForm());
-        return "/templates/posts/createPostForm";
+        return "posts/createPostForm";
     }
 
     @PostMapping("/new")
     public String create(@Login MemberSessionDto loginMember, @Validated @ModelAttribute("postForm") PostCreateForm postForm, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             log.info("bindingResult.hasErrors={}", bindingResult);
-            return "/templates/posts/createPostForm";
+            return "posts/createPostForm";
         }
 
         postService.addPost(postForm, loginMember);
@@ -64,14 +64,14 @@ public class PostController {
             return "redirect:/posts";
         }
 
-        return "/templates/posts/replyPostForm";
+        return "/posts/replyPostForm";
     }
 
     @PostMapping("/reply")
     public String reply(@Login MemberSessionDto loginMember, @Validated @ModelAttribute("postForm") PostCreateForm postForm, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             log.info("bindingResult.hasErrors={}", bindingResult);
-            return "/templates/posts/replyPostForm";
+            return "posts/replyPostForm";
         }
 
         postService.addReplyPost(postForm, loginMember);
@@ -89,7 +89,7 @@ public class PostController {
         model.addAttribute("paging", paging);
         model.addAttribute("posts", findPosts);
 
-        return "/templates/posts/postList";
+        return "posts/postList";
     }
 
     @GetMapping("/{postId}")
@@ -118,7 +118,7 @@ public class PostController {
             model.addAttribute("commentForm", new CommentCreateForm());
         }
 
-        return "/templates/posts/postInfo";
+        return "posts/postInfo";
     }
 
     private Map<String, Object> getMemberApplyIcon(List<Comment> findComments) {
@@ -145,7 +145,7 @@ public class PostController {
             if (postCreateMember == null) {
                 if (post.getPassword().equals(password)) {
                     model.addAttribute("postForm", createUpdateForm(post));
-                    return "/templates/posts/updatePostForm";
+                    return "posts/updatePostForm";
                 }
             }
         }else {
@@ -154,16 +154,16 @@ public class PostController {
                 updateForm.setCreateMember(postCreateMember);
                 if (loginMember.getId() == postCreateMember.getMemberNo()) {
                     model.addAttribute("postForm", updateForm);
-                    return "/templates/posts/updatePostForm";
+                    return "posts/updatePostForm";
                 }
             }else {
                 if (post.getPassword().equals(password)) {
                     model.addAttribute("postForm", createUpdateForm(post));
-                    return "/templates/posts/updatePostForm";
+                    return "posts/updatePostForm";
                 }
             }
         }
-        return "/templates/posts/passwordForm";
+        return "posts/passwordForm";
     }
 
     private PostUpdateForm createUpdateForm(Post post) {
@@ -183,7 +183,7 @@ public class PostController {
 
         if (bindingResult.hasErrors()) {
             log.info("bindingResult.hasErrors={}", bindingResult);
-            return "/posts/" + postForm.getPostId() + "/edit";
+            return "posts/" + postForm.getPostId() + "/edit";
         }
         Post post = postService.findPost(postForm.getPostId());
         Member postCreateMember = post.getCreateMember();
@@ -199,7 +199,7 @@ public class PostController {
                     postService.updatePost(postForm);
                 }else {
                     model.addAttribute("loginForm", new LoginForm());
-                    return "/templates/login/loginForm";
+                    return "login/loginForm";
                 }
             }else {
                 postService.updatePost(postForm);

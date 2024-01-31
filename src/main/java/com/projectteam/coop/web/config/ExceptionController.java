@@ -1,5 +1,6 @@
 package com.projectteam.coop.web.config;
 
+import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,13 +16,13 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/error")
-public class ErrorController {
+public class ExceptionController implements ErrorController {
 
 
     @RequestMapping
     public String errorPage(HttpServletRequest request, Model model) {
         model.addAttribute("status", request.getAttribute("javax.servlet.error.status_code"));
-        return "/templates/error-page/error";
+        return "error-page/error";
     }
 
 

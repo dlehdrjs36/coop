@@ -24,14 +24,14 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Slf4j
 public class EmailController {
-
+//TODO : mail 부분 종속성 , 오류 확인하기
     private final JavaMailSender mailSender;
     private final MemberService memberService;
 
     @GetMapping(value = "/mail")
     public String getMailAdd(Model model){
         model.addAttribute("emailForm", new EmailForm());
-        return "/templates/mail/forgotPassword";
+        return "mail/forgotPassword";
     }
 
     @PostMapping(value = "/mail")
@@ -39,13 +39,13 @@ public class EmailController {
                               BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
-            return "/templates/mail/forgotPassword";
+            return "mail/forgotPassword";
         }
 
         Optional<Member> findMember = memberService.findMemberForPassword(emailForm.getEmail());
         if(findMember.isEmpty()){
             bindingResult.reject("memberNotFound");
-            return "/templates/mail/forgotPassword";
+            return "mail/forgotPassword";
         }
 
         String tempPassword = RandomStringUtils.randomAlphanumeric(12);
@@ -57,7 +57,7 @@ public class EmailController {
             log.error("error", e);
         }
 
-        return "/templates/mail/mailResultPage";
+        return "mail/mailResultPage";
     }
 
     private void changeMemberPasswordToTemporaryPassword(Member findMember, String tempPassword) {

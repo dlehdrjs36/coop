@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html th:fragment="layout (title, content)" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{templates/fragments/admin/adminHeader :: adminHeader(${title})}">
+<head th:replace="~{fragments/admin/adminHeader :: adminHeader(${title})}">
     <title>관리자 레이아웃 타이틀</title>
 </head>
 <body class="app">
-    <header th:replace="~{templates/fragments/admin/adminBodyHeader :: adminBodyHeader}"></header>
+    <header th:replace="~{fragments/admin/adminBodyHeader :: adminBodyHeader}"></header>
     <div th:replace="${content}">
         <p>관리자 레이아웃 컨텐츠</p>
     </div>
-    <footer th:replace="~{templates/fragments/admin/adminFooter :: adminFooter}">
+    <footer th:replace="~{fragments/admin/adminFooter :: adminFooter}">
         관리자 레이아웃 푸터
     </footer>
 </body>

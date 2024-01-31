@@ -38,7 +38,7 @@ public class LoginController {
     public String loginForm(@Login MemberSessionDto loginMember, Model model) {
         if(loginMember == null) {
             model.addAttribute("loginForm", new LoginForm());
-            return "/templates/login/loginForm";
+            return "login/loginForm";
         }
 
         return "redirect:/";
@@ -51,20 +51,20 @@ public class LoginController {
                         @RequestParam(name = "redirectURL", defaultValue = "/") String redirectURL) {
 
         if (bindingResult.hasErrors()) {
-            return "/templates/login/loginForm";
+            return "login/loginForm";
         }
 
         Optional<Member> member = memberService.findMemberForPassword(loginForm.getEmail());
         if(member.isEmpty()) {
             bindingResult.reject("memberNotFound");
-            return "/templates/login/loginForm";
+            return "login/loginForm";
         }
         String salt = member.get().getSalt();
 
         Member findMember = memberService.findMember(loginForm.getEmail(), SecurityUtil.encryptSHA256(loginForm.getPassword(), salt));
         if(findMember == null) {
             bindingResult.reject("login");
-            return "/templates/login/loginForm";
+            return "login/loginForm";
         } else {
             addMemberLogAndPoints(findMember);
             addLoginInformationToSession(request, findMember);
@@ -87,7 +87,7 @@ public class LoginController {
     public String adminLoginForm(@AdminLogin MemberSessionDto adminSession, Model model) {
         if(adminSession == null) {
             model.addAttribute("loginForm", new LoginForm());
-            return "/templates/login/adminLoginForm";
+            return "login/adminLoginForm";
         }
         return "redirect:/admin";
     }
@@ -96,20 +96,20 @@ public class LoginController {
     public String adminLogin(@Validated @ModelAttribute("loginForm") LoginForm loginForm, BindingResult bindingResult, HttpServletRequest request) {
 
         if (bindingResult.hasErrors()) {
-            return "/templates/login/adminLoginForm";
+            return "login/adminLoginForm";
         }
 
         Optional<Member> member = memberService.findMemberForPassword(loginForm.getEmail());
         if(member.isEmpty()) {
             bindingResult.reject("memberNotFound");
-            return "/templates/login/adminLoginForm";
+            return "login/adminLoginForm";
         }
         String salt = member.get().getSalt();
 
         Member findMember = memberService.findMember(loginForm.getEmail(), SecurityUtil.encryptSHA256(loginForm.getPassword(), salt));
         if(findMember == null) {
             bindingResult.reject("login");
-            return "/templates/login/adminLoginForm";
+            return "login/adminLoginForm";
         }
 
         addAdminLoginInformationToSession(request, findMember);

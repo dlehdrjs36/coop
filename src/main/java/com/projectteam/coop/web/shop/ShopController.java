@@ -31,17 +31,19 @@ public class ShopController {
         paging.calculateTotalPage(productService.totalSize());
 
         List<Product> findProducts = productService.findProducts(Paging.calculateStartOffset(page), Paging.calculateLastOffset(page));
-        List<PurchaseList> purchaseLists = purchaseListService.memberPurchaseList(loginMember.getEmail());
-        Map<String, Object> purchaseProducts = purchaseLists.stream()
-                .collect(Collectors.toMap(
-                        purchaseList -> String.valueOf(purchaseList.getProduct().getId()),
-                        purchaseList -> purchaseList.getProduct(),
-                        (oldValue, newValue) -> oldValue)
-                );
+        if(loginMember != null) {
+            List<PurchaseList> purchaseLists = purchaseListService.memberPurchaseList(loginMember.getEmail());
+            Map<String, Object> purchaseProducts = purchaseLists.stream()
+                    .collect(Collectors.toMap(
+                            purchaseList -> String.valueOf(purchaseList.getProduct().getId()),
+                            purchaseList -> purchaseList.getProduct(),
+                            (oldValue, newValue) -> oldValue)
+                    );
+            model.addAttribute("purchaseProducts", purchaseProducts);
+        }
 
         model.addAttribute("paging", paging);
         model.addAttribute("products", findProducts);
-        model.addAttribute("purchaseProducts", purchaseProducts);
 
         return "products/shop";
     }

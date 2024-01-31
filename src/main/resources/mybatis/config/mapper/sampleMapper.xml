@@ -2,8 +2,8 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="sample">
-    <select id="findById" parameterType="sample" resultType="sample">
+<mapper namespace="com.projectteam.coop.sample.mybatis.repository.SampleMapper">
+    <select id="findById" parameterType="com.projectteam.coop.sample.mybatis.domain.SampleDTO" resultType="com.projectteam.coop.sample.mybatis.domain.SampleDTO">
         SELECT
                 SAMPLE_SEQ,
                 ID,
@@ -14,7 +14,7 @@
             ID = #{id}
     </select>
 
-    <select id="findByAll" resultType="sample">
+    <select id="findByAll" resultType="com.projectteam.coop.sample.mybatis.domain.SampleDTO">
         SELECT
                 SAMPLE_SEQ,
                 ID,
@@ -23,7 +23,7 @@
         FROM    SAMPLE
     </select>
 
-    <insert id="save" parameterType="sample">
+    <insert id="save" parameterType="com.projectteam.coop.sample.mybatis.domain.SampleDTO">
         INSERT INTO SAMPLE (
                             ID,
                             NAME,

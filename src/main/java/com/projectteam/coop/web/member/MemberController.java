@@ -27,14 +27,14 @@ public class MemberController {
     @GetMapping("/members/new")
     public String createForm(Model model) {
         model.addAttribute("memberForm", new MemberForm());
-        return "/templates/members/createMemberForm";
+        return "members/createMemberForm";
     }
 
     @PostMapping("/members/new")
     public String create(@Validated @ModelAttribute(name = "memberForm") MemberInsertForm memberForm, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
-            return "/templates/members/createMemberForm";
+            return "members/createMemberForm";
         }
 
         String salt = SecurityUtil.getSalt();
@@ -47,7 +47,7 @@ public class MemberController {
         }
 
         bindingResult.rejectValue("email", "memberDuplicate");
-        return "/templates/members/createMemberForm";
+        return "members/createMemberForm";
     }
 
     @GetMapping("/members/update")
@@ -67,7 +67,7 @@ public class MemberController {
             memberForm.setEmailReceptionType(member.getEmailReceptionType());
 
             model.addAttribute("memberForm", memberForm);
-            return "/templates/members/updateMemberForm";
+            return "members/updateMemberForm";
         }
         //회원 정보 없음
         return "redirect:/";
@@ -87,7 +87,7 @@ public class MemberController {
         if(isNotMatchedPassword(encryptedOldPassword, member.getPassword())) {
             model.addAttribute("memberForm", loginMember);
             model.addAttribute("errorMessage","입력한 현재 비밀번호가 일치하지 않습니다.");
-            return "/templates/members/updateMemberForm";
+            return "members/updateMemberForm";
         }
 
         String encryptedNewPassword = SecurityUtil.encryptSHA256(newPassword, member.getSalt());

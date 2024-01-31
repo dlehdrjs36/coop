@@ -38,19 +38,19 @@ public class ProductController {
         model.addAttribute("paging", paging);
         model.addAttribute("products", findProduct);
 
-        return "/templates/products/productList";
+        return "products/productList";
     }
 
     @GetMapping("/new")
     public String createForm(Model model) {
         model.addAttribute("productForm", new ProductForm());
-        return "/templates/products/createProductForm";
+        return "products/createProductForm";
     }
 
     @PostMapping("/new")
     public String create(@Validated @ModelAttribute("productForm") ProductForm productForm, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "/templates/products/createProductForm";
+            return "products/createProductForm";
         }
 
         productService.addProduct(productForm);
@@ -61,13 +61,13 @@ public class ProductController {
     public String updateForm(@PathVariable Long productId, Model model) {
         Product product = productService.findProduct(productId);
         model.addAttribute("productForm", product);
-        return "/templates/products/updateProductForm";
+        return "products/updateProductForm";
     }
 
     @PostMapping("/{productId}/edit")
     public String update(@PathVariable Long productId, @Validated @ModelAttribute("productForm") ProductForm productForm, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "/templates/products/updateProductForm";
+            return "products/updateProductForm";
         }
 
         System.out.println("productId = " + productId);

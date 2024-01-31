@@ -43,7 +43,7 @@ public class ShopController {
         model.addAttribute("products", findProducts);
         model.addAttribute("purchaseProducts", purchaseProducts);
 
-        return "/templates/products/shop";
+        return "products/shop";
     }
 
 }

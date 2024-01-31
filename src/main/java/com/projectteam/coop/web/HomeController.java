@@ -36,7 +36,7 @@ public class HomeController {
                     .findAny()
                     .ifPresent(memberPurchaseList -> model.addAttribute("memberPurchaseProduct", memberPurchaseList.getProduct()));
         }
-        return "/templates/index";
+        return "index";
     }
 
     private boolean isApply(PurchaseList purchaseList) {
@@ -50,6 +50,6 @@ public class HomeController {
     //TODO 관리자 페이지 구현 필요
     @GetMapping("/admin")
     public String adminHome(@AdminLogin MemberSessionDto loginMember, Model model) {
-        return "/templates/admin/main";
+        return "admin/main";
     }
 }

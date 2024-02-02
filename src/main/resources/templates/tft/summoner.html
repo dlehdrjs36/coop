@@ -90,7 +90,7 @@
                                     <h4 class="mb-0">경기 기록</h4>
                                 </div>
                                 <div id="matchTable" class="table text-nowrap mb-0">
-                                    <div th:id="|table${matchData.games.metadateMatchId}|" th:if="${sommonerMatchDescFormList.size() != 0}" th:each="matchData : ${sommonerMatchDescFormList}">
+                                    <div th:id="|table${matchData.games.matchId}|" th:if="${sommonerMatchDescFormList.size() != 0}" th:each="matchData : ${sommonerMatchDescFormList}">
                                         <div class="row">
                                             <span class="col-md-3 align-self-sm-center">
                                                 <div class="d-flex justify-content-sm-center">
@@ -122,10 +122,10 @@
                                                 </div>
                                             </span>
 <!--                                        <span class="col-md-1 align-self-sm-center text-dark">
-                                                <button class="btn btn-white" th:id="${matchData.games.metadateMatchId}" onclick="changeViewRecord(this.id)">상세</button>
+                                                <button class="btn btn-white" th:id="${matchData.games.matchId}" onclick="changeViewRecord(this.id)">상세</button>
                                             </span>-->
                                         </div>
-                                        <div th:id="|${matchData.games.metadateMatchId}Desc|"></div>
+                                        <div th:id="|${matchData.games.matchId}Desc|"></div>
                                     </div>
                                 </div>
                                 <div id="moreMatchSpin"></div>

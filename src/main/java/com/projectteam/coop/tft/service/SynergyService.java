@@ -1,6 +1,6 @@
 package com.projectteam.coop.tft.service;
 
-import com.projectteam.coop.tft.domain.MatchDesc;
+import com.projectteam.coop.tft.domain.Games;
 import com.projectteam.coop.tft.domain.Synergy;
 import com.projectteam.coop.tft.domain.UsedAugment;
 import com.projectteam.coop.tft.domain.UsedUnit;
@@ -24,7 +24,7 @@ public class SynergyService {
     private final SynergyRepository synergyRepository;
 
     public void initSynergyDesc() {
-        List<MatchDesc> matchDescData = matchDescRepository.searchTftPlacementData(1);
+        List<Games> gamesData = matchDescRepository.searchTftPlacementData(1);
         List<Synergy> synergyList = synergyRepository.findAll();
         double winPoint;
 
@@ -32,15 +32,15 @@ public class SynergyService {
             winPoint = 0;
             List<UsedUnit> usedUnitList = new ArrayList<>();
             List<UsedAugment> usedAugmentsList = new ArrayList<>();
-            for (MatchDesc matchDescDatum : matchDescData) {
-                if (matchDescDatum.getTraitsName().contains(synergy.getTraitsName())) {
-                    String[] TraitsName = matchDescDatum.getTraitsName().split("\\|");
-                    String[] TraitsStyle = matchDescDatum.getTraitsStyle().split("\\|");
+            for (Games gamesDatum : gamesData) {
+                if (gamesDatum.getTraitsName().contains(synergy.getTraitsName())) {
+                    String[] TraitsName = gamesDatum.getTraitsName().split("\\|");
+                    String[] TraitsStyle = gamesDatum.getTraitsStyle().split("\\|");
                     for (int k = 0; k < TraitsName.length; k++) {
                         if (synergy.getTraitsName().equals(TraitsName[k]) && !"0".equals(TraitsStyle[k])) {
                             winPoint++;
-                            usedUnitList = usedSynergyUnitCount(usedUnitList, matchDescDatum.getUnitsCharacterId());
-                            usedAugmentsList = usedAugmentCount(usedAugmentsList, matchDescDatum.getAugments());
+                            usedUnitList = usedSynergyUnitCount(usedUnitList, gamesDatum.getUnitsCharacterId());
+                            usedAugmentsList = usedAugmentCount(usedAugmentsList, gamesDatum.getAugments());
                         }
                     }
                 }
@@ -48,7 +48,7 @@ public class SynergyService {
 
             Collections.sort(usedUnitList);
             Collections.sort(usedAugmentsList);
-            winPoint = winPoint / matchDescData.size() * 100;
+            winPoint = winPoint / gamesData.size() * 100;
             StringBuilder usedUnits = new StringBuilder();
             StringBuilder usedAugments = new StringBuilder();
             if(usedUnitList.size() != 0) {

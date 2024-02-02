@@ -1,6 +1,6 @@
 package com.projectteam.coop.web.tft;
 
-import com.projectteam.coop.tft.domain.MatchDesc;
+import com.projectteam.coop.tft.domain.Games;
 import com.projectteam.coop.tft.service.MatchDescService;
 import com.projectteam.coop.util.TftUtil;
 import com.projectteam.coop.web.menu.summonerPageForm.MatchDescForm;
@@ -48,14 +48,14 @@ public class SummonerController {
     @ResponseBody
     public HashMap<String, Object> getMatchDataPage(@PathVariable int page, HttpServletRequest request){
         String puuid = request.getParameter("puuid");
-        List<MatchDesc> sommonerMatchDescs = matchDescService.getMatchDescDataPuuid(puuid);
+        List<Games> sommonerGames = matchDescService.getMatchDescDataPuuid(puuid);
         List<SommonerMatchDescForm> sommonerMatchDescFormList = new ArrayList<>();
         SommonerMatchDescForm sommonerMatchDescForm = new SommonerMatchDescForm();
         HashMap<String, Object> matchData = new HashMap<>();
 
-        if(sommonerMatchDescs.size() == 0){
+        if(sommonerGames.size() == 0){
         }else{
-            sommonerMatchDescFormList = sommonerMatchDescForm.createSommonerMatchDescForm(sommonerMatchDescs, page);
+            sommonerMatchDescFormList = sommonerMatchDescForm.createSommonerMatchDescForm(sommonerGames, page);
         }
         matchData.put("sommonerMatchData",sommonerMatchDescFormList);
 
@@ -68,13 +68,12 @@ public class SummonerController {
         HashMap<String, Object> matchDescData = new HashMap<>();
         MatchDescForm matchDescForm = new MatchDescForm();
         List<String> matchPlayerNameList = new ArrayList<>();
-        int i;
 
-        List<MatchDesc> matchDescs = matchDescService.getMatchDescDataMatchId(matchId);
-        for(i=0; i<matchDescs.size(); i++){
-            matchPlayerNameList.add(tftUtil.getTftPuiidToNameList(matchDescs.get(i).getPuuid(),apikey));
+        List<Games> games = matchDescService.getMatchDescDataMatchId(matchId);
+        for(int i = 0; i < games.size(); i++){
+            matchPlayerNameList.add(tftUtil.getTftPuiidToNameList(games.get(i).getPuuid(),apikey));
         }
-        matchDescForm = matchDescForm.createMatchDescForm(matchDescs, matchPlayerNameList);
+        matchDescForm = matchDescForm.createMatchDescForm(games, matchPlayerNameList);
         matchDescData.put("matchData", matchDescForm);
         return matchDescData;
     }

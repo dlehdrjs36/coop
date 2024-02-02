@@ -1,6 +1,6 @@
 package com.projectteam.coop.web.menu.summonerPageForm;
 
-import com.projectteam.coop.tft.domain.MatchDesc;
+import com.projectteam.coop.tft.domain.Games;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,12 +13,12 @@ public class MatchDescForm {
     private List<UserDesc> usersData;
 
 
-    public MatchDescForm createMatchDescForm(List<MatchDesc> matchDesc, List<String> playerNameList){
+    public MatchDescForm createMatchDescForm(List<Games> games, List<String> playerNameList){
         MatchDescForm matchDescForm = new MatchDescForm();
         UserDesc userDesc = new UserDesc();
-        matchDescForm.matchId = matchDesc.get(0).getMetadateMatchId();
-        matchDescForm.gameLength = matchDesc.get(0).getGameLength();
-        matchDescForm.usersData = userDesc.createUserDesc(matchDesc, playerNameList);
+        matchDescForm.matchId = games.get(0).getMatchId();
+        matchDescForm.gameLength = games.get(0).getGameLength();
+        matchDescForm.usersData = userDesc.createUserDesc(games, playerNameList);
 
         return matchDescForm;
     }

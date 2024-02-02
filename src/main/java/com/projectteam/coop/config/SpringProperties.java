@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 public class SpringProperties {
     private String url;
-    private String DriverClassName;
+    private String driverClassName;
     private String username;
     private String password;
 }

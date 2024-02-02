@@ -4,8 +4,11 @@ import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
-import java.util.Properties;
+import lombok.extern.slf4j.Slf4j;
 
+import java.util.Map;
+
+@Slf4j
 public class SSHConnection {
 
     private final String S_PATH_FILE_PRIVATE_KEY;
@@ -21,18 +24,18 @@ public class SSHConnection {
     private Session session; //represents each ssh session
     private Channel channel;
 
-    public SSHConnection(Properties properties) {
-        this.S_PATH_FILE_PRIVATE_KEY = properties.getProperty("ssh.privateKeyPath");
-        this.S_PATH_FILE_KNOWN_HOSTS = properties.getProperty("ssh.knownHostsPath");
-        this.S_PASS_PHRASE = properties.getProperty("ssh.privateKeyPassword");
-        this.SSH_USER = properties.getProperty("ssh.user");
-        this.SSH_REMOTE_SERVER = properties.getProperty("ssh.remoteServer");
-        this.SSH_REMOTE_PORT = Integer.parseInt(properties.getProperty("ssh.remotePort"));
+    public SSHConnection(Map<String, Object> sshMap) {
+        this.S_PATH_FILE_PRIVATE_KEY = (String)sshMap.get("privateKeyPath");
+        this.S_PATH_FILE_KNOWN_HOSTS = (String)sshMap.get("knownHostsPath");
+        this.S_PASS_PHRASE = (String)sshMap.get("privateKeyPassword");
+        this.SSH_USER = (String)sshMap.get("user");
+        this.SSH_REMOTE_SERVER = (String)sshMap.get("remoteServer");
+        this.SSH_REMOTE_PORT = (Integer)sshMap.get("remotePort");
         //SSH tunnel
-        this.BASTION_SERVER = properties.getProperty("ssh.bastionServer");
-        this.BASTION_PORT = Integer.parseInt(properties.getProperty("ssh.bastionPort"));
-        this.MYSQL_REMOTE_SERVER = properties.getProperty("ssh.mysqlRemoteServer");
-        this.MYSQL_REMOTE_PORT = Integer.parseInt(properties.getProperty("ssh.mysqlRemotePort"));
+        this.BASTION_SERVER = (String)sshMap.get("bastionServer");
+        this.BASTION_PORT = (Integer)sshMap.get("bastionPort");
+        this.MYSQL_REMOTE_SERVER = (String)sshMap.get("mysqlRemoteServer");
+        this.MYSQL_REMOTE_PORT = (Integer)sshMap.get("mysqlRemotePort");
 
         JSch jsch;
         jsch = new JSch();
@@ -52,7 +55,7 @@ public class SSHConnection {
             //by security policy, you must connect through a fowarded port, 리눅스 SSH 터널링
             session.setPortForwardingL(BASTION_SERVER, BASTION_PORT, MYSQL_REMOTE_SERVER, MYSQL_REMOTE_PORT);
         } catch (JSchException e) {
-            e.printStackTrace();
+            log.error("{errorMsg}", e);
         }
     }
 

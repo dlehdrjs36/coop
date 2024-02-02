@@ -1,5 +1,6 @@
 package com.projectteam.coop.config;
 
+import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -9,17 +10,18 @@ import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.core.env.Environment;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
+import java.util.Objects;
 
 @Configuration
 @Slf4j
 public class JpaConfiguration {
-
     @Bean
     @ConfigurationProperties(prefix = "spring.datasource")
     public SpringProperties springProperties() {
@@ -30,15 +32,16 @@ public class JpaConfiguration {
     @Bean(name = "mysqlDataSource")
     public DataSource mysqlDataSource(SpringProperties springProperties) {
         log.info("{} ", springProperties.toString());
-        HikariDataSource dataSource = new HikariDataSource();
-        dataSource.setDriverClassName(springProperties.getDriverClassName());
-        dataSource.setJdbcUrl(springProperties.getUrl());
-        dataSource.setUsername(springProperties.getUsername());
-        dataSource.setPassword(springProperties.getPassword());
-        dataSource.setConnectionTimeout(150000);
-        dataSource.setMaximumPoolSize(5);
-        dataSource.setPoolName("coop-mysql-pool");
-        return dataSource;
+        HikariConfig hikariConfig = new HikariConfig();
+        hikariConfig.setDriverClassName(springProperties.getDriverClassName());
+        hikariConfig.setJdbcUrl(springProperties.getUrl());
+        hikariConfig.setUsername(springProperties.getUsername());
+        hikariConfig.setPassword(springProperties.getPassword());
+        hikariConfig.setConnectionTimeout(150000);
+        hikariConfig.setMaximumPoolSize(5);
+        hikariConfig.setPoolName("coop-mysql-pool");
+
+        return new HikariDataSource(hikariConfig);
     }
 
     @Bean(name = "mysqlEntityManager")

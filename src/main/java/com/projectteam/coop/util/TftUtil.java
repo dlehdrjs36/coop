@@ -31,7 +31,6 @@ public class TftUtil {
      * getTftSummoner 닉네임으로 아이디 정보 확인 함수
      * */
     public Summoner getTftSummoner(String summonerId, String apikey) {
-
         String uri = "https://kr.api.riotgames.com/tft/summoner/v1/summoners/by-name/" + summonerId;
         UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(uri)
                 .queryParam("api_key", apikey)
@@ -168,7 +167,6 @@ public class TftUtil {
     * 
     * */
     public String getTftPuiidToNameList(String puuid, String apikey){
-
         String uri = "https://kr.api.riotgames.com/tft/summoner/v1/summoners/by-puuid/" + puuid;
         UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(uri)
                 .queryParam("api_key", apikey)

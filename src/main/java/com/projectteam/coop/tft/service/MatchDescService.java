@@ -1,6 +1,6 @@
 package com.projectteam.coop.tft.service;
 
-import com.projectteam.coop.tft.domain.MatchDesc;
+import com.projectteam.coop.tft.domain.Games;
 import com.projectteam.coop.tft.domain.MatchDescDTO.MatchDescDTO;
 import com.projectteam.coop.tft.repository.MatchDescRepository;
 import com.projectteam.coop.util.TftUtil;
@@ -14,7 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-@Transactional(transactionManager = "mysqlTxManager")
+@Transactional
 @RequiredArgsConstructor
 public class MatchDescService {
 
@@ -23,7 +23,7 @@ public class MatchDescService {
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     public void addMatchDesc(String puuid, String apikey) {
-        List<MatchDesc> matchDesc;
+        List<Games> games;
         List<String> matchId = tftUtil.getTftMatchId(puuid, 20,apikey);
         String gameDateString = "";
         Date gameDate;
@@ -36,8 +36,8 @@ public class MatchDescService {
                 gameDate = dateFormat.parse(gameDateString);
                 if (comparisonDate.before(gameDate)) {
                     if (matchDescRepository.isTftMatchIdData(matchDescDTO.getMetadata().getMatchId())) {
-                        matchDesc = makeMatchDesc(matchDescDTO);
-                        for (MatchDesc desc : matchDesc) {
+                        games = makeMatchDesc(matchDescDTO);
+                        for (Games desc : games) {
                             matchDescRepository.addTftDescData(desc);
                         }
                     }
@@ -48,22 +48,22 @@ public class MatchDescService {
         }
     }
 
-    public List<MatchDesc> getMatchDescDataPuuid(String puuid){
+    public List<Games> getMatchDescDataPuuid(String puuid){
         return matchDescRepository.searchTftPuuidData(puuid);
     }
 
-    public List<MatchDesc> getMatchDescDataMatchId(String matchid){
+    public List<Games> getMatchDescDataMatchId(String matchid){
         return matchDescRepository.searchTftMatchIdData(matchid);
     }
 
-    public List<MatchDesc> makeMatchDesc(MatchDescDTO matchData){
-        List<MatchDesc> matchDescList = new ArrayList<>();
+    public List<Games> makeMatchDesc(MatchDescDTO matchData){
+        List<Games> gamesList = new ArrayList<>();
         int i, j, k;
         String augments, traitsName, traitsUnits, traitsStyle, tierCurrent, tierTotal;
         String characterId, itemNames, itemNames2, name, rarity, tier;
 
         for(i=0; i<matchData.getMetadata().getParticipants().size(); i++){
-            MatchDesc matchDesc = new MatchDesc();
+            Games games = new Games();
             augments="";
             for(j=0; j<matchData.getInfo().getParticipants().get(i).getAugments().size(); j++) {
                 augments += matchData.getInfo().getParticipants().get(i).getAugments().get(j) + "|";
@@ -115,8 +115,8 @@ public class MatchDescService {
             rarity = rarity.substring(0,rarity.length()-1);
             tier = tier.substring(0,tier.length()-1);
 
-            matchDescList.add(
-                    matchDesc.createMatchDesc(
+            gamesList.add(
+                    games.createMatchDesc(
                             matchData.getMetadata().getParticipants().get(i),
                             matchData.getMetadata().getMatchId(),
                             matchData.getInfo().getGameDatetime(),
@@ -144,6 +144,6 @@ public class MatchDescService {
                     )
             );
         }
-        return matchDescList;
+        return gamesList;
     }
 }

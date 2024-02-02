@@ -1,6 +1,6 @@
 package com.projectteam.coop.web.menu.summonerPageForm;
 
-import com.projectteam.coop.tft.domain.MatchDesc;
+import com.projectteam.coop.tft.domain.Games;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,13 +19,13 @@ public class SummonerForm {
     private int losses;
     private int rankDefense;
 
-    public int getRankDefense(List<MatchDesc> matchDescs){
+    public int getRankDefense(List<Games> games){
         int rankDefense = 0;
         int i;
 
-        for(i=0; i<matchDescs.size(); i++){
+        for(i=0; i< games.size(); i++){
             if(i < 20){
-                if(matchDescs.get(i).getPlacement() < 5){
+                if(games.get(i).getPlacement() < 5){
                     rankDefense++;
                 }
             }

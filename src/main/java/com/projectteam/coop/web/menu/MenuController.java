@@ -1,7 +1,7 @@
 package com.projectteam.coop.web.menu;
 
 import com.projectteam.coop.tft.domain.LeagueEntry;
-import com.projectteam.coop.tft.domain.MatchDesc;
+import com.projectteam.coop.tft.domain.Games;
 import com.projectteam.coop.tft.domain.Summoner;
 import com.projectteam.coop.tft.domain.Synergy;
 import com.projectteam.coop.tft.service.MatchDescService;
@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -104,8 +103,8 @@ public class MenuController {
         Summoner summoner;
         List<LeagueEntry> leagueEntry;
         SummonerForm summonerForm = new SummonerForm();
-        List<MatchDesc> sommonerMatchDescs;
-        List<SommonerMatchDescForm> sommonerMatchDescFormList = new ArrayList<>();
+        List<Games> summonerGames;
+        List<SommonerMatchDescForm> summonerMatchDescFormList = new ArrayList<>();
         SommonerMatchDescForm sommonerMatchDescForm = new SommonerMatchDescForm();
 
         try {
@@ -123,10 +122,10 @@ public class MenuController {
             summonerForm.setWins(leagueEntry.get(0).getWins());
             summonerForm.setLosses(leagueEntry.get(0).getLosses());
 
-            sommonerMatchDescs = matchDescService.getMatchDescDataPuuid(summoner.getPuuid());
-            if(sommonerMatchDescs.size() != 0){
-                sommonerMatchDescFormList = sommonerMatchDescForm.createSommonerMatchDescForm(sommonerMatchDescs, 1);
-                summonerForm.setRankDefense(summonerForm.getRankDefense(sommonerMatchDescs));
+            summonerGames = matchDescService.getMatchDescDataPuuid(summoner.getPuuid());
+            if(summonerGames.size() != 0){
+                summonerMatchDescFormList = sommonerMatchDescForm.createSommonerMatchDescForm(summonerGames, 1);
+                summonerForm.setRankDefense(summonerForm.getRankDefense(summonerGames));
             }
         }catch (Exception e){
             model.addAttribute("searchName",summonerName);
@@ -134,7 +133,7 @@ public class MenuController {
         }
 
         model.addAttribute("summonerForm", summonerForm);
-        model.addAttribute("sommonerMatchDescFormList", sommonerMatchDescFormList);
+        model.addAttribute("sommonerMatchDescFormList", summonerMatchDescFormList);
 
         return "tft/summoner";
     }

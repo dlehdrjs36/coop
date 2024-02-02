@@ -2,6 +2,7 @@ package com.projectteam.coop.web.menu;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
@@ -9,21 +10,21 @@ import org.springframework.core.io.ResourceLoader;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
+@Slf4j
 @Configuration
 public class SynergyJsonDataReader {
 
-    private final ResourceLoader resourceLoader = new DefaultResourceLoader();
-    private final Resource resource = resourceLoader.getResource("classpath:/static/json/tft/");
     private final ObjectMapper mapper = new ObjectMapper();
     private JsonNode synergyListJsonObject = null;
 
     public JsonNode setSynergyListJsonObject(){
         // JSON 파일 읽기
-        try {
-            synergyListJsonObject = mapper.readTree(new File(resource.getURL().getPath()+"synergyList.json"));
+        try (InputStream is = getClass().getClassLoader().getResourceAsStream("static/json/tft/synergyList.json")) {
+            synergyListJsonObject = mapper.readTree(is);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("{errorMsg}", e);
         }
         return synergyListJsonObject;
     }

@@ -26,7 +26,7 @@ public class Units {
 
         for(i=0; i<unitsCharacterId.length; i++){
             Units units = new Units();
-            units.setCharacterId(unitsCharacterId[i].substring(5));
+            units.setCharacterId(unitsCharacterId[i]);
             units.itemNames = Arrays.asList(itemNames[i].split("\\$"));
             for(j=0; j<units.itemNames.size(); j++) {
                 if(!units.itemNames.get(j).equals("")){

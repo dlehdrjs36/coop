@@ -191,7 +191,7 @@ function setMatchGame(matchData){
         innerHtml += '</div></div></span>';
         innerHtml += '<span class="col-md-1 align-self-sm-center"><span>' + matchData[i].matchDesc.placement + '등</span></span>';
         innerHtml += '<span class="col-md-1 align-self-sm-center"><span>'+ gameTimeMinute +':'+ gameTimeSecond +'</span></span>';
-        innerHtml += '<span class="col-md-5 align-self-sm-center">';
+        innerHtml += '<span class="col-md-7 align-self-sm-center">';
         innerHtml += '<div class="row avatar-group">';
         for(j=0; j<matchData[i].units.length; j++) {
             innerHtml += '<div class="col-sm-1 text-center">';

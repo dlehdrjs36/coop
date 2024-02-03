@@ -30,7 +30,7 @@
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between align-items-center mb-3">
                                         <div>
-                                            <h4 class="mb-0" th:text="|*{tier} *{ranks}( *{leaguePoints}pt )|"></h4>
+                                            <h4 class="mb-0" th:text="|*{tier} *{#strings.defaultString(ranks, '')} ( *{leaguePoints}pt )|"></h4>
                                         </div>
                                     </div>
                                     <div>
@@ -109,15 +109,17 @@
                                             <span class="col-md-1 align-self-sm-center">
                                                 <span th:text="|${matchData.games.timeEliminated/60}:${matchData.games.timeEliminated%60}|"></span>
                                             </span>
-                                            <span class="col-md-5 align-self-sm-center">
+                                            <span class="col-md-7 align-self-sm-center">
                                                 <div class="row avatar-group">
-                                                    <div class="col-sm-1 text-center" th:each="units : ${matchData.units}">
+                                                    <div class="col-sm-1 text-center imgBox" th:each="units : ${matchData.units}">
                                                         <div class="tierHeight" th:if="${units.tier} == @{'1'}">*</div>
                                                         <div class="tierHeight" th:if="${units.tier} == @{'2'}">**</div>
                                                         <div class="tierHeight" th:if="${units.tier} == @{'3'}">***</div>
-                                                        <div>
-                                                            <img class="descImg" th:src="@{/img/tft/champion/} + ${units.characterId} + @{.png}" alt="">
-                                                        </div>
+                                                        <img class="descImg" th:classappend="${units.characterId}">
+<!--                                                        <div>-->
+<!--                                                            <img class="descImg" th:src="@{/img/tft/champion/} + ${units.characterId} + @{.png}" alt="">-->
+<!--                                                            <img class="descImg" th:classappend="${units.characterId}" alt="">-->
+                                                        </img>
                                                     </div>
                                                 </div>
                                             </span>

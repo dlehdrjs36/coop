@@ -13,9 +13,13 @@
 .gameIndex{
     height: 60px;
 }
+.imgBox{
+    height: 65px;
+    width: 55px;
+}
 .descImg{
-    height: 40px;
-    width: 40px;
+    height: 48px;
+    width: 48px;
     background-position: center;
     display: inline-block;
     padding: 0px 0px 0px 0px;
@@ -30,6 +34,232 @@
     height: 15px;
 }
 
+/* TFT10 img champion0 */
+.TFT10_Ahri, .TFT10_Akali, .TFT10_Amumu, .TFT10_Annie, .TFT10_Aphelios, .TFT10_Bard, .TFT10_Blitzcrank, .TFT10_Caitlyn
+, .TFT10_Corki, .TFT10_Ekko, .TFT10_Evelynn, .TFT10_Ezreal, .TFT10_Gnar, .TFT10_Gragas, .TFT10_Illaoi, .TFT10_Jax, .TFT10_Jhin
+, .TFT10_Jinx, .TFT10_Karthus, .TFT10_Katarina, .TFT10_Kayle, .TFT10_Kayn, .TFT10_Kennen, .TFT10_Lillia, .TFT10_Lucian, .TFT10_Lulu, .TFT10_Lux, .TFT10_Mordekaiser, .TFT10_Nami, .TFT10_Neeko {
+    background: url("../../img/tft/champion/tft10-champion0.png");
+}
+
+.TFT10_Ahri {
+    background-position: 0px 0px;
+}
+
+.TFT10_Akali {
+    background-position: -48px 0px;
+}
+
+.TFT10_Amumu {
+    background-position: -96px 0px;
+}
+
+.TFT10_Annie {
+    background-position: -144px 0px;
+}
+
+.TFT10_Aphelios {
+    background-position: -192px 0px;
+}
+
+.TFT10_Bard {
+    background-position: -240px 0px;
+}
+
+.TFT10_Blitzcrank {
+    background-position: -288px 0px;
+}
+
+.TFT10_Caitlyn {
+    background-position: -336px 0px;
+}
+
+.TFT10_Corki {
+    background-position: -384px 0px;
+}
+
+.TFT10_Ekko {
+    background-position: -432px 0px;
+}
+.TFT10_Evelynn {
+    background-position: 0px -48px;
+}
+
+.TFT10_Ezreal {
+    background-position: -48px -48px;
+}
+
+.TFT10_Gnar {
+    background-position: -96px -48px;
+}
+
+.TFT10_Gragas {
+    background-position: -144px -48px;
+}
+
+.TFT10_Illaoi {
+    background-position: -192px -48px;
+}
+
+.TFT10_Jax {
+    background-position: -240px -48px;
+}
+
+.TFT10_Jhin {
+    background-position: -288px -48px;
+}
+
+.TFT10_Jinx {
+    background-position: -336px -48px;
+}
+
+.TFT10_Karthus {
+    background-position: -384px -48px;
+}
+
+.TFT10_Katarina {
+    background-position: -432px -48px;
+}
+
+.TFT10_Kayle {
+    background-position: 0px -96px;
+}
+
+.TFT10_Kayn {
+    background-position: -48px -96px;
+}
+
+.TFT10_Kennen {
+    background-position: -96px -96px;
+}
+
+.TFT10_Lillia {
+    background-position: -144px -96px;
+}
+
+.TFT10_Lucian {
+    background-position: -192px -96px;
+}
+
+.TFT10_Lulu {
+    background-position: -240px -96px;
+}
+
+.TFT10_Lux {
+    background-position: -288px -96px;
+}
+
+.TFT10_Mordekaiser {
+    background-position: -336px -96px;
+}
+
+.TFT10_Nami {
+    background-position: -384px -96px;
+}
+
+.TFT10_Neeko {
+    background-position: -432px -96px;
+}
+
+/* TFT10 img champion1 */
+.TFT10_Pantheon, .TFT10_Poppy, .TFT10_Qiyana, .TFT10_Riven, .TFT10_Samira, .TFT10_Senna, .TFT10_Seraphine
+, .TFT10_Sett, .TFT10_Sona, .TFT10_Taric, .TFT10_Thresh, .TFT10_Twitch, .TFT10_Urgot, .TFT10_Vex, .TFT10_Vi
+, .TFT10_Viego, .TFT10_Yasuo, .TFT10_Yone, .TFT10_Yorick, .TFT10_Zac, .TFT10_Zed, .TFT10_Ziggs, .TFT10_MissFortune
+, .TFT10_Olaf, .TFT10_TahmKench, .TFT10_TwistedFate, .TFT10_KSante, .TFT10_Kaisa, .TFT10_Akali_TrueDamage, .TFT10_Garen {
+    background: url("../../img/tft/champion/tft10-champion1.png");
+}
+
+.TFT10_Pantheon {
+    background-position: 0px 0px;
+}
+.TFT10_Poppy {
+    background-position: -48px 0px;
+}
+.TFT10_Qiyana {
+    background-position: -96px 0px;
+}
+.TFT10_Riven {
+    background-position: -144px 0px;
+}
+.TFT10_Samira {
+    background-position: -192px 0px;
+}
+.TFT10_Senna {
+    background-position: -240px 0px;
+}
+.TFT10_Seraphine {
+    background-position: -288px 0px;
+}
+.TFT10_Sett {
+    background-position: -336px 0px;
+}
+.TFT10_Sona {
+    background-position: -384px 0px;
+}
+.TFT10_Taric {
+    background-position: -432px 0px;
+}
+.TFT10_Thresh {
+    background-position: 0px -48px;
+}
+.TFT10_Twitch {
+    background-position: -48px -48px;
+}
+.TFT10_Urgot {
+    background-position: -96px -48px;
+}
+.TFT10_Vex {
+    background-position: -144px -48px;
+}
+.TFT10_Vi {
+    background-position: -192px -48px;
+}
+.TFT10_Viego {
+    background-position: -240px -48px;
+}
+.TFT10_Yasuo {
+    background-position: -288px -48px;
+}
+.TFT10_Yone {
+    background-position: -336px -48px;
+}
+.TFT10_Yorick {
+    background-position: -384px -48px;
+}
+.TFT10_Zac {
+    background-position: -432px -48px;
+}
+.TFT10_Zed {
+    background-position: 0px -96px;
+}
+.TFT10_Ziggs {
+    background-position: -48px -96px;
+}
+.TFT10_MissFortune {
+    background-position: -96px -96px;
+}
+.TFT10_Olaf {
+    background-position: -144px -96px;
+}
+.TFT10_TahmKench {
+    background-position: -192px -96px;
+}
+.TFT10_TwistedFate {
+    background-position: -240px -96px;
+}
+.TFT10_KSante {
+    background-position: -288px -96px;
+}
+.TFT10_Kaisa {
+    background-position: -336px -96px;
+}
+.TFT10_Akali_TrueDamage {
+    background-position: -384px -96px;
+}
+.TFT10_Garen {
+    background-position: -432px -96px;
+}
+
+
 .loader {
     margin-left: 40%;
     z-index: 1;
@@ -40,6 +270,10 @@
     height: 120px;
     animation: spin 1s linear infinite;
 }
+
+
+
+
 
 @-webkit-keyframes spin {
     0% { -webkit-transform: rotate(0deg); }

@@ -2,7 +2,6 @@ package com.projectteam.coop.config;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -10,14 +9,12 @@ import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
-import org.springframework.core.env.Environment;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
-import java.util.Objects;
 
 @Configuration
 @Slf4j
@@ -38,6 +35,7 @@ public class JpaConfiguration {
         hikariConfig.setUsername(springProperties.getUsername());
         hikariConfig.setPassword(springProperties.getPassword());
         hikariConfig.setConnectionTimeout(150000);
+        hikariConfig.setMaxLifetime((60000 * 60 * 8) - 5000);
         hikariConfig.setMaximumPoolSize(5);
         hikariConfig.setPoolName("coop-mysql-pool");
 

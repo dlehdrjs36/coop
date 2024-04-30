@@ -1,20 +1,26 @@
 package com.projectteam.coop.service.purchaselist;
 
-import com.projectteam.coop.domain.*;
+import com.projectteam.coop.domain.purchaselist.enums.PurchaseListStatus;
+import com.projectteam.coop.domain.purchaselist.model.entity.PurchaseList;
 import com.projectteam.coop.domain.log.LoginLog;
+import com.projectteam.coop.domain.member.model.entity.Member;
+import com.projectteam.coop.domain.product.enums.ProductType;
+import com.projectteam.coop.domain.product.model.entity.Product;
+import com.projectteam.coop.domain.purchaselist.service.PurchaseListService;
 import com.projectteam.coop.exception.DuplicatePurchaseProductException;
 import com.projectteam.coop.exception.NoPointException;
 import com.projectteam.coop.repository.purchaselist.PurchaseListRepository;
-import com.projectteam.coop.service.login.LoginService;
-import com.projectteam.coop.service.member.MemberService;
+import com.projectteam.coop.domain.login.service.LoginService;
+import com.projectteam.coop.domain.member.service.MemberService;
 import com.projectteam.coop.util.SecurityUtil;
 import com.projectteam.coop.web.session.MemberSessionDto;
-import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,8 +30,13 @@ import javax.persistence.PersistenceContext;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(locations = "file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml")
+@ActiveProfiles("local")
+@SpringBootTest(
+        properties =
+                "spring.config.import="
+                        + "optional:../properties/local_security/coop_server_local.yml,"
+                        + "optional:../properties/coop_server.yml",
+        webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Transactional(transactionManager = "mysqlTxManager")
 class PurchaseListServiceTest {
 
@@ -209,9 +220,9 @@ class PurchaseListServiceTest {
         Member member = Member.createMember("ffff","test@gmail.com", "test", SecurityUtil.encryptSHA256("1234", salt), salt, Boolean.TRUE);
         Long memberId = memberService.addMember(member);
         em.flush();
+        em.clear();
         Member findMember = memberService.findMember(memberId);
         MemberSessionDto loginMember = MemberSessionDto.createSession(findMember);
-
         loginService.addLoginLog(LoginLog.createLoginLog(member.getEmail()));
         loginService.addPoint(member);
 

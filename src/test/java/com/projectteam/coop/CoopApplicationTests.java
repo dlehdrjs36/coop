@@ -1,7 +1,7 @@
 package com.projectteam.coop;
 
-import com.projectteam.coop.domain.Board;
-import com.projectteam.coop.domain.QBoard;
+import com.projectteam.coop.domain.board.model.entity.Board;
+import com.projectteam.coop.domain.board.model.entity.QBoard;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;

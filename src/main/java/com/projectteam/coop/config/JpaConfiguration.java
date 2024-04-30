@@ -42,7 +42,7 @@ public class JpaConfiguration {
         return new HikariDataSource(hikariConfig);
     }
 
-    @Bean(name = "mysqlEntityManager")
+    @Bean(name = "entityManagerFactory")
     public LocalContainerEntityManagerFactoryBean mysqlEntityManager(EntityManagerFactoryBuilder entityManagerFactoryBuilder
             , @Qualifier("mysqlDataSource") DataSource mysqlDataSource) {
         return entityManagerFactoryBuilder
@@ -53,7 +53,7 @@ public class JpaConfiguration {
     }
 
     @Bean(name = "mysqlTxManager")
-    public PlatformTransactionManager mainTransactionManager(@Qualifier("mysqlEntityManager") EntityManagerFactory mysqlEntityManager) {
+    public PlatformTransactionManager mainTransactionManager(@Qualifier("entityManagerFactory") EntityManagerFactory mysqlEntityManager) {
         return new JpaTransactionManager(mysqlEntityManager);
     }
 }

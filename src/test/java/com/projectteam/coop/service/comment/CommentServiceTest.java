@@ -1,13 +1,14 @@
 package com.projectteam.coop.service.comment;
 
-import com.projectteam.coop.domain.Board;
-import com.projectteam.coop.domain.Comment;
-import com.projectteam.coop.domain.Member;
+import com.projectteam.coop.domain.board.model.entity.Board;
+import com.projectteam.coop.domain.comment.model.entity.Comment;
+import com.projectteam.coop.domain.member.model.entity.Member;
+import com.projectteam.coop.domain.comment.service.CommentService;
 import com.projectteam.coop.exception.CommentNotFoundException;
 import com.projectteam.coop.exception.MisMatchedPasswordException;
-import com.projectteam.coop.service.board.BoardService;
-import com.projectteam.coop.service.member.MemberService;
-import com.projectteam.coop.service.post.PostService;
+import com.projectteam.coop.domain.board.service.BoardService;
+import com.projectteam.coop.domain.member.service.MemberService;
+import com.projectteam.coop.domain.post.service.PostService;
 import com.projectteam.coop.util.SecurityUtil;
 import com.projectteam.coop.web.post.CommentCreateForm;
 import com.projectteam.coop.web.post.PostCreateForm;
@@ -16,6 +17,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,8 +28,13 @@ import javax.persistence.PersistenceContext;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(locations = "file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml")
+@ActiveProfiles("local")
+@SpringBootTest(
+        properties =
+                "spring.config.import="
+                        + "optional:../properties/local_security/coop_server_local.yml,"
+                        + "optional:../properties/coop_server.yml",
+        webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Transactional(transactionManager = "mysqlTxManager")
 class CommentServiceTest {
 

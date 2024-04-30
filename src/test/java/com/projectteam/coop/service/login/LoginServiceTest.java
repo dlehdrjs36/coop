@@ -1,17 +1,17 @@
 package com.projectteam.coop.service.login;
 
-import com.projectteam.coop.domain.Member;
+import com.projectteam.coop.domain.member.model.entity.Member;
 import com.projectteam.coop.domain.log.LoginLog;
+import com.projectteam.coop.domain.login.service.LoginService;
 import com.projectteam.coop.repository.log.LoginRepository;
-import com.projectteam.coop.service.member.MemberService;
+import com.projectteam.coop.domain.member.service.MemberService;
 import com.projectteam.coop.util.SecurityUtil;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.Rollback;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,8 +23,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(locations = "file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml")
+@ActiveProfiles("local")
+@SpringBootTest(
+        properties =
+                "spring.config.import="
+                        + "optional:../properties/local_security/coop_server_local.yml,"
+                        + "optional:../properties/coop_server.yml",
+        webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Transactional(transactionManager = "mysqlTxManager")
 class LoginServiceTest {
 

@@ -1,13 +1,13 @@
 package com.projectteam.coop.web.post;
 
-import com.projectteam.coop.domain.Comment;
-import com.projectteam.coop.domain.Member;
-import com.projectteam.coop.domain.Post;
-import com.projectteam.coop.domain.PurchaseList;
-import com.projectteam.coop.service.comment.CommentService;
-import com.projectteam.coop.service.post.PostService;
-import com.projectteam.coop.service.purchaselist.PurchaseListService;
-import com.projectteam.coop.service.recommed.RecommendService;
+import com.projectteam.coop.domain.comment.model.entity.Comment;
+import com.projectteam.coop.domain.member.model.entity.Member;
+import com.projectteam.coop.domain.post.model.entity.Post;
+import com.projectteam.coop.domain.purchaselist.model.entity.PurchaseList;
+import com.projectteam.coop.domain.comment.service.CommentService;
+import com.projectteam.coop.domain.post.service.PostService;
+import com.projectteam.coop.domain.purchaselist.service.PurchaseListService;
+import com.projectteam.coop.domain.post.service.RecommendService;
 import com.projectteam.coop.util.Paging;
 import com.projectteam.coop.web.argumentresolver.Login;
 import com.projectteam.coop.web.login.LoginForm;

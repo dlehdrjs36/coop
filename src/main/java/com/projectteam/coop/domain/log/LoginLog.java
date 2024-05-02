@@ -1,11 +1,10 @@
 package com.projectteam.coop.domain.log;
 
-import com.projectteam.coop.domain.BaseEntity;
+import com.projectteam.coop.global.model.entity.BaseEntity;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
 
 @Entity
 @Getter

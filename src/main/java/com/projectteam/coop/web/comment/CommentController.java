@@ -1,6 +1,6 @@
 package com.projectteam.coop.web.comment;
 
-import com.projectteam.coop.service.comment.CommentService;
+import com.projectteam.coop.domain.comment.service.CommentService;
 import com.projectteam.coop.web.argumentresolver.Login;
 import com.projectteam.coop.web.post.CommentCreateForm;
 import com.projectteam.coop.web.session.MemberSessionDto;

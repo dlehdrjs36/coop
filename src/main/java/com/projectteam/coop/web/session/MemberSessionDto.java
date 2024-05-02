@@ -1,7 +1,7 @@
 package com.projectteam.coop.web.session;
 
-import com.projectteam.coop.domain.Member;
-import com.projectteam.coop.domain.MemberType;
+import com.projectteam.coop.domain.member.model.entity.Member;
+import com.projectteam.coop.domain.member.enums.MemberType;
 import lombok.Getter;
 import lombok.Setter;
 

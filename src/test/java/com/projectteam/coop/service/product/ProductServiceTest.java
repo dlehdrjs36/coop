@@ -1,22 +1,18 @@
 package com.projectteam.coop.service.product;
 
-import com.projectteam.coop.domain.product.model.entity.Product;
 import com.projectteam.coop.domain.product.enums.ProductType;
+import com.projectteam.coop.domain.product.model.entity.Product;
 import com.projectteam.coop.domain.product.service.ProductService;
 import com.projectteam.coop.web.product.ProductForm;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 @ActiveProfiles("local")
 @SpringBootTest(

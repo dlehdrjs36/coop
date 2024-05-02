@@ -1,9 +1,9 @@
 package com.projectteam.coop.web.shop;
 
-import com.projectteam.coop.domain.Product;
-import com.projectteam.coop.domain.PurchaseList;
-import com.projectteam.coop.service.product.ProductService;
-import com.projectteam.coop.service.purchaselist.PurchaseListService;
+import com.projectteam.coop.domain.product.model.entity.Product;
+import com.projectteam.coop.domain.purchaselist.model.entity.PurchaseList;
+import com.projectteam.coop.domain.product.service.ProductService;
+import com.projectteam.coop.domain.purchaselist.service.PurchaseListService;
 import com.projectteam.coop.util.Paging;
 import com.projectteam.coop.web.argumentresolver.Login;
 import com.projectteam.coop.web.session.MemberSessionDto;

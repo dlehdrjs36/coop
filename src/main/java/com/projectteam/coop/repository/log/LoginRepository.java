@@ -1,11 +1,11 @@
 package com.projectteam.coop.repository.log;
 
-import com.projectteam.coop.domain.Member;
 import com.projectteam.coop.domain.log.LoginLog;
+import com.projectteam.coop.domain.member.model.entity.Member;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.time.LocalDate;
 
 @Repository
@@ -22,7 +22,7 @@ public class LoginRepository {
 
     //로그인 이력 조회
     public Long findLoginLog(Member member) {
-        Long findLoginLog = em.createQuery("SELECT count(l) FROM LoginLog l WHERE substring(l.createDate, 0, 10) = :date AND l.email = :email", Long.class)
+        Long findLoginLog = em.createQuery("SELECT count(l) FROM LoginLog l WHERE substring(function('DATE_FORMAT', l.createDate, '%Y-%m-%d') , 1, 10) = :date AND l.email = :email", Long.class)
                 .setParameter("date", LocalDate.now().toString())
                 .setParameter("email", member.getEmail())
                 .getResultList()

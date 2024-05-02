@@ -1,11 +1,11 @@
 package com.projectteam.coop.api;
 
-import com.projectteam.coop.domain.Member;
-import com.projectteam.coop.domain.Product;
-import com.projectteam.coop.domain.ProductType;
-import com.projectteam.coop.service.member.MemberService;
-import com.projectteam.coop.service.product.ProductService;
-import com.projectteam.coop.service.purchaselist.PurchaseListService;
+import com.projectteam.coop.domain.member.model.entity.Member;
+import com.projectteam.coop.domain.product.model.entity.Product;
+import com.projectteam.coop.domain.product.enums.ProductType;
+import com.projectteam.coop.domain.member.service.MemberService;
+import com.projectteam.coop.domain.product.service.ProductService;
+import com.projectteam.coop.domain.purchaselist.service.PurchaseListService;
 import com.projectteam.coop.util.ApiUtil;
 import com.projectteam.coop.web.argumentresolver.Login;
 import com.projectteam.coop.web.product.ProductForm;

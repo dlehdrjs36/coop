@@ -1,6 +1,6 @@
 package com.projectteam.coop.tft.service;
 
-import com.projectteam.coop.tft.domain.LeagueEntry;
+import com.projectteam.coop.tft.domain.model.entity.LeagueEntry;
 import com.projectteam.coop.tft.repository.LeagueEntryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

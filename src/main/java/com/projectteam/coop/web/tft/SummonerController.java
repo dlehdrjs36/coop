@@ -1,10 +1,11 @@
 package com.projectteam.coop.web.tft;
 
-import com.projectteam.coop.tft.domain.Games;
+import com.projectteam.coop.tft.domain.model.entity.Games;
 import com.projectteam.coop.tft.service.MatchDescService;
 import com.projectteam.coop.util.TftUtil;
 import com.projectteam.coop.web.menu.summonerPageForm.MatchDescForm;
 import com.projectteam.coop.web.menu.summonerPageForm.SommonerMatchDescForm;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;

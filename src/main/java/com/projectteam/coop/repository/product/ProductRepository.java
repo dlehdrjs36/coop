@@ -1,11 +1,11 @@
 package com.projectteam.coop.repository.product;
 
-import com.projectteam.coop.domain.Product;
+import com.projectteam.coop.domain.product.model.entity.Product;
 import com.projectteam.coop.web.product.ProductForm;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository

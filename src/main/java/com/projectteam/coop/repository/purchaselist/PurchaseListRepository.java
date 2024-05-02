@@ -1,12 +1,11 @@
 package com.projectteam.coop.repository.purchaselist;
 
-import com.projectteam.coop.domain.PurchaseList;
-import com.projectteam.coop.exception.NoAuthorizationException;
+import com.projectteam.coop.domain.purchaselist.model.entity.PurchaseList;
 import com.projectteam.coop.web.session.MemberSessionDto;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository

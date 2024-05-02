@@ -1,11 +1,10 @@
 package com.projectteam.coop.web.post;
 
-import com.projectteam.coop.domain.Member;
+import com.projectteam.coop.domain.member.model.entity.Member;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
-
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 
 @Getter
 @Setter

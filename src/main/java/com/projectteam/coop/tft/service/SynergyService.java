@@ -1,9 +1,9 @@
 package com.projectteam.coop.tft.service;
 
-import com.projectteam.coop.tft.domain.Games;
-import com.projectteam.coop.tft.domain.Synergy;
 import com.projectteam.coop.tft.domain.UsedAugment;
 import com.projectteam.coop.tft.domain.UsedUnit;
+import com.projectteam.coop.tft.domain.model.entity.Games;
+import com.projectteam.coop.tft.domain.model.entity.Synergy;
 import com.projectteam.coop.tft.repository.MatchDescRepository;
 import com.projectteam.coop.tft.repository.SynergyRepository;
 import com.projectteam.coop.web.menu.SynergyNameForm;

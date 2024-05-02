@@ -1,30 +1,26 @@
 package com.projectteam.coop.service.comment;
 
 import com.projectteam.coop.domain.board.model.entity.Board;
-import com.projectteam.coop.domain.comment.model.entity.Comment;
-import com.projectteam.coop.domain.member.model.entity.Member;
-import com.projectteam.coop.domain.comment.service.CommentService;
-import com.projectteam.coop.exception.CommentNotFoundException;
-import com.projectteam.coop.exception.MisMatchedPasswordException;
 import com.projectteam.coop.domain.board.service.BoardService;
+import com.projectteam.coop.domain.comment.model.entity.Comment;
+import com.projectteam.coop.domain.comment.service.CommentService;
+import com.projectteam.coop.domain.member.model.entity.Member;
 import com.projectteam.coop.domain.member.service.MemberService;
 import com.projectteam.coop.domain.post.service.PostService;
+import com.projectteam.coop.exception.CommentNotFoundException;
+import com.projectteam.coop.exception.MisMatchedPasswordException;
 import com.projectteam.coop.util.SecurityUtil;
 import com.projectteam.coop.web.post.CommentCreateForm;
 import com.projectteam.coop.web.post.PostCreateForm;
 import com.projectteam.coop.web.session.MemberSessionDto;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 import static org.junit.jupiter.api.Assertions.*;
 

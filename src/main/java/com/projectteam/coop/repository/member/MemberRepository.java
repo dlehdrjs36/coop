@@ -1,11 +1,11 @@
 package com.projectteam.coop.repository.member;
 
-import com.projectteam.coop.domain.Member;
+import com.projectteam.coop.domain.member.model.entity.Member;
 import com.projectteam.coop.web.member.MemberForm;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository

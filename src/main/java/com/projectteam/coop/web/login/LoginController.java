@@ -1,13 +1,15 @@
 package com.projectteam.coop.web.login;
 
-import com.projectteam.coop.domain.Member;
 import com.projectteam.coop.domain.log.LoginLog;
-import com.projectteam.coop.service.login.LoginService;
-import com.projectteam.coop.service.member.MemberService;
+import com.projectteam.coop.domain.login.service.LoginService;
+import com.projectteam.coop.domain.member.model.entity.Member;
+import com.projectteam.coop.domain.member.service.MemberService;
 import com.projectteam.coop.util.SecurityUtil;
 import com.projectteam.coop.web.argumentresolver.AdminLogin;
 import com.projectteam.coop.web.argumentresolver.Login;
 import com.projectteam.coop.web.session.MemberSessionDto;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,9 +19,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import java.util.Optional;
 

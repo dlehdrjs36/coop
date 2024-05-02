@@ -1,7 +1,7 @@
 package com.projectteam.coop.api;
 
-import com.projectteam.coop.service.post.PostService;
-import com.projectteam.coop.service.recommed.RecommendService;
+import com.projectteam.coop.domain.post.service.PostService;
+import com.projectteam.coop.domain.post.service.RecommendService;
 import com.projectteam.coop.web.argumentresolver.Login;
 import com.projectteam.coop.web.session.MemberSessionDto;
 import lombok.RequiredArgsConstructor;

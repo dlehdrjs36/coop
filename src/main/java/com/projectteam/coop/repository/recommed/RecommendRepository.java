@@ -1,11 +1,9 @@
 package com.projectteam.coop.repository.recommed;
 
-import com.projectteam.coop.domain.Recommend;
+import com.projectteam.coop.domain.comment.model.entity.Recommend;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
-
-import javax.persistence.EntityManager;
-import javax.persistence.LockModeType;
-import javax.persistence.PersistenceContext;
 
 @Repository
 public class RecommendRepository {

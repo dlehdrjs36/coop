@@ -1,7 +1,7 @@
 package com.projectteam.coop.web.order;
 
-import com.projectteam.coop.domain.PurchaseList;
-import com.projectteam.coop.service.purchaselist.PurchaseListService;
+import com.projectteam.coop.domain.purchaselist.model.entity.PurchaseList;
+import com.projectteam.coop.domain.purchaselist.service.PurchaseListService;
 import com.projectteam.coop.util.Paging;
 import com.projectteam.coop.web.argumentresolver.Login;
 import com.projectteam.coop.web.session.MemberSessionDto;

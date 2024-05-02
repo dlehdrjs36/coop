@@ -1,9 +1,9 @@
 package com.projectteam.coop.web.menu;
 
-import com.projectteam.coop.tft.domain.LeagueEntry;
-import com.projectteam.coop.tft.domain.Games;
-import com.projectteam.coop.tft.domain.Summoner;
-import com.projectteam.coop.tft.domain.Synergy;
+import com.projectteam.coop.tft.domain.model.entity.Games;
+import com.projectteam.coop.tft.domain.model.entity.LeagueEntry;
+import com.projectteam.coop.tft.domain.model.entity.Summoner;
+import com.projectteam.coop.tft.domain.model.entity.Synergy;
 import com.projectteam.coop.tft.service.MatchDescService;
 import com.projectteam.coop.tft.service.SynergyService;
 import com.projectteam.coop.util.TftUtil;
@@ -26,8 +26,9 @@ import java.util.List;
 public class MenuController {
     private final SynergyService synergyService;
     private final MatchDescService matchDescService;
-    private final ChampionJsonDataReader champSynergyJsonConfig;
-    private final SynergyJsonDataReader synergyJsonDataReader;
+    private final ChampionTftJsonDataReader champSynergyJsonConfig;
+    private final SynergyTftJsonDataReader synergyTftJsonDataReader;
+    private final Tft10JsonDataReader tft10JsonDataReader;
     private final TftUtil tftUtil = new TftUtil();
     @Value("${coop.riot.apiKey}")
     private String apikey;
@@ -39,8 +40,10 @@ public class MenuController {
 
     @GetMapping(value = "/tft/championList")
     public String getChampionListPage(Model model) {
-        model.addAttribute("championListData", champSynergyJsonConfig.getChampionListJsonObject());
-        model.addAttribute("synergyListData", synergyJsonDataReader.getSynergyListJsonObject());
+        model.addAttribute("championListData", champSynergyJsonConfig.getTftJsonData());
+        model.addAttribute("synergyListData", synergyTftJsonDataReader.getTftJsonData());
+        model.addAttribute("tft10Data", tft10JsonDataReader.getTftJsonData());
+
         return "tft/championList";
     }
 

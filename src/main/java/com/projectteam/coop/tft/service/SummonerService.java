@@ -1,6 +1,6 @@
 package com.projectteam.coop.tft.service;
 
-import com.projectteam.coop.tft.domain.Summoner;
+import com.projectteam.coop.tft.domain.model.entity.Summoner;
 import com.projectteam.coop.tft.repository.SummonerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

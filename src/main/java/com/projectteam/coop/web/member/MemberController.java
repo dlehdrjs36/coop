@@ -1,10 +1,11 @@
 package com.projectteam.coop.web.member;
 
-import com.projectteam.coop.domain.Member;
-import com.projectteam.coop.service.member.MemberService;
+import com.projectteam.coop.domain.member.model.entity.Member;
+import com.projectteam.coop.domain.member.service.MemberService;
 import com.projectteam.coop.util.SecurityUtil;
 import com.projectteam.coop.web.argumentresolver.Login;
 import com.projectteam.coop.web.session.MemberSessionDto;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,8 +15,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import javax.servlet.http.HttpServletRequest;
-import java.security.SecureRandom;
 import java.util.UUID;
 
 @Controller

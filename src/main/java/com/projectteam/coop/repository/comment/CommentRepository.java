@@ -1,10 +1,10 @@
 package com.projectteam.coop.repository.comment;
 
-import com.projectteam.coop.domain.Comment;
+import com.projectteam.coop.domain.comment.model.entity.Comment;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository

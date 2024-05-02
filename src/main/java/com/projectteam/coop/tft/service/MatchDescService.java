@@ -1,7 +1,7 @@
 package com.projectteam.coop.tft.service;
 
-import com.projectteam.coop.tft.domain.Games;
 import com.projectteam.coop.tft.domain.MatchDescDTO.MatchDescDTO;
+import com.projectteam.coop.tft.domain.model.entity.Games;
 import com.projectteam.coop.tft.repository.MatchDescRepository;
 import com.projectteam.coop.util.TftUtil;
 import lombok.RequiredArgsConstructor;

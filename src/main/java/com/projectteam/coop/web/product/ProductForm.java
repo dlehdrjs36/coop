@@ -1,11 +1,10 @@
 package com.projectteam.coop.web.product;
 
-import com.projectteam.coop.domain.ProductType;
+import com.projectteam.coop.domain.product.enums.ProductType;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Range;
-
-import javax.validation.constraints.NotBlank;
 
 @Getter
 @Setter

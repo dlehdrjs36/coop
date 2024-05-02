@@ -1,12 +1,11 @@
 package com.projectteam.coop.repository.board;
 
-import com.projectteam.coop.domain.Board;
-import com.projectteam.coop.domain.QBoard;
+import com.projectteam.coop.domain.board.model.entity.Board;
+import com.projectteam.coop.domain.board.model.entity.QBoard;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 @Repository
 public class BoardRepository {

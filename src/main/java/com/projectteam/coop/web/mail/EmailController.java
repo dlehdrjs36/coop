@@ -1,8 +1,10 @@
 package com.projectteam.coop.web.mail;
 
-import com.projectteam.coop.domain.Member;
-import com.projectteam.coop.service.member.MemberService;
+import com.projectteam.coop.domain.member.model.entity.Member;
+import com.projectteam.coop.domain.member.service.MemberService;
 import com.projectteam.coop.util.SecurityUtil;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -16,8 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
+
 import java.util.Optional;
 
 @Controller

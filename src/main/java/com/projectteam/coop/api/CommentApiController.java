@@ -1,6 +1,6 @@
 package com.projectteam.coop.api;
 
-import com.projectteam.coop.service.comment.CommentService;
+import com.projectteam.coop.domain.comment.service.CommentService;
 import com.projectteam.coop.web.post.CommentCreateForm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,6 +1,6 @@
 package com.projectteam.coop.web.menu.summonerPageForm;
 
-import com.projectteam.coop.tft.domain.Games;
+import com.projectteam.coop.tft.domain.model.entity.Games;
 import lombok.Getter;
 import lombok.Setter;
 

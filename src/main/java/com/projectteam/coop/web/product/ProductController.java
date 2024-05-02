@@ -1,9 +1,9 @@
 package com.projectteam.coop.web.product;
 
-import com.projectteam.coop.domain.Product;
-import com.projectteam.coop.domain.ProductType;
-import com.projectteam.coop.service.member.MemberService;
-import com.projectteam.coop.service.product.ProductService;
+import com.projectteam.coop.domain.product.model.entity.Product;
+import com.projectteam.coop.domain.product.enums.ProductType;
+import com.projectteam.coop.domain.member.service.MemberService;
+import com.projectteam.coop.domain.product.service.ProductService;
 import com.projectteam.coop.util.Paging;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;

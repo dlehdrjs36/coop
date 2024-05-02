@@ -1,14 +1,17 @@
 package com.projectteam.coop.web;
 
-import com.projectteam.coop.domain.*;
+import com.projectteam.coop.domain.board.model.entity.Board;
+import com.projectteam.coop.domain.member.model.entity.Member;
+import com.projectteam.coop.domain.post.model.entity.Post;
+import com.projectteam.coop.domain.product.enums.ProductType;
+import com.projectteam.coop.domain.product.model.entity.Product;
 import com.projectteam.coop.util.SecurityUtil;
+import jakarta.annotation.PostConstruct;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.annotation.PostConstruct;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 
 @Component

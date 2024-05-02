@@ -1,17 +1,17 @@
 package com.projectteam.coop.repository.post;
 
-import com.projectteam.coop.domain.Post;
+import com.projectteam.coop.domain.post.model.entity.Post;
 import com.projectteam.coop.web.post.PostSearch;
 import com.projectteam.coop.web.post.PostSearchType;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.List;
 
-import static com.projectteam.coop.domain.QPost.post;
+import static com.projectteam.coop.domain.post.model.entity.QPost.post;
 
 @Repository
 public class PostRepository {

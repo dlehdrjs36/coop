@@ -1,9 +1,9 @@
 package com.projectteam.coop.tft.repository;
 
-import com.projectteam.coop.tft.domain.Games;
+import com.projectteam.coop.tft.domain.model.entity.Games;
+import jakarta.persistence.EntityManager;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
 import java.util.List;
 
 @Repository

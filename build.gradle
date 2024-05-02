@@ -1,12 +1,6 @@
-buildscript {
-    ext {
-        queryDslVersion = "5.0.0"
-    }
-}
-
 plugins {
-    id 'org.springframework.boot' version '2.7.18'
-    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+    id 'org.springframework.boot' version '3.2.4'
+    id 'io.spring.dependency-management' version '1.1.0'
     id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
 }
 
@@ -19,43 +13,36 @@ repositories {
 }
 
 dependencies {
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter', version: '2.7.18'
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.7.18'
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.7.18'
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '2.7.18'
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-jdbc', version: '2.7.18'
-    //mybatis
-    implementation group: 'org.mybatis.spring.boot', name: 'mybatis-spring-boot-starter', version: '2.3.2'
-    // spring-boot-starter-data-jpa
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.7.18'
-    //thymeleaf
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: '2.7.18'
-    //db connection pool
-    implementation group: 'com.zaxxer', name: 'HikariCP', version: '5.1.0'
-    //mysql
-    implementation group: 'com.mysql', name: 'mysql-connector-j', version: '8.3.0'
-    //jsch
-    implementation group: 'com.github.mwiede', name: 'jsch', version: '0.2.16'
-    // mail
-    implementation group: 'javax.mail', name: 'mail', version: '1.4.7'
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa' // spring-boot-starter-data-jpa
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'//thymeleaf
+    implementation 'org.springframework.boot:spring-boot-starter-security' //스프링 시큐리티
+    implementation group: 'org.mybatis.spring.boot', name: 'mybatis-spring-boot-starter', version: '3.0.3' //mybatis
+    implementation group: 'com.zaxxer', name: 'HikariCP', version: '5.1.0'//db connection pool
+    implementation group: 'com.mysql', name: 'mysql-connector-j', version: '8.3.0'//mysql
+    implementation group: 'com.github.mwiede', name: 'jsch', version: '0.2.16'//jsch
+    implementation group: 'javax.mail', name: 'mail', version: '1.4.7'// mail
     implementation group: 'org.codehaus.janino', name: 'janino', version: '3.1.11'
-    // 랜덤 문자열 생성관련
-    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.14.0'
-    // querydsl-jpa
-    implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
-    annotationProcessor "com.querydsl:querydsl-apt:${queryDslVersion}"
-
+    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.14.0'// 랜덤 문자열 생성관련
+    // querydsl-jpa 설정 시작
+    implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
+    annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jakarta"
+    annotationProcessor "jakarta.annotation:jakarta.annotation-api"
+    annotationProcessor "jakarta.persistence:jakarta.persistence-api"
+    // querydsl-jpa 설정 끝
+    implementation group: 'org.jsoup', name: 'jsoup', version: '1.17.2'// jsoup
     // h2
     testImplementation group: 'com.h2database', name: 'h2', version: '2.2.224'
     // test
-    testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.7.18'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
     // lombok 설정 시작
-    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.30'
+    compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
-
-    testCompileOnly 'org.projectlombok:lombok'
-    testAnnotationProcessor 'org.projectlombok:lombok'
     // lombok 설정 끝
 
     //Configuration 메타데이터
@@ -70,32 +57,22 @@ dependencies {
 group = 'com.projectteam'
 version = '1.0-SNAPSHOT'
 description = 'coop'
-sourceCompatibility = JavaVersion.VERSION_11
+sourceCompatibility = JavaVersion.VERSION_17
 
-//QueryDSL 추가시작
-def querydslDir = "$buildDir/generated/querydsl"
-
-querydsl {
-    jpa = true
-    querydslSourcesDir = querydslDir
+tasks.named('test') {
+    useJUnitPlatform()
 }
 
-sourceSets {
-    main.java.srcDir querydslDir
+clean {
+    delete file('src/main/generated')
 }
 
 configurations {
-    querydsl.extendsFrom compileClasspath
     compileOnly {
         extendsFrom annotationProcessor
     }
 }
-
-compileQuerydsl {
-    options.annotationProcessorPath = configurations.querydsl
-}
 //QueryDSL 추가 끝
-
 tasks.withType(JavaCompile) {
 //    options.generatedSourceOutputDirectory = file(querydslDir)
     options.encoding = 'utf-8'

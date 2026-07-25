@@ -1,6 +1,24 @@
 const championsJson = JSON.parse(document.getElementById("championListData").value).championList;
 const synergyListJson = JSON.parse(document.getElementById("synergyListData").value).synergyList;
 
+
+const championMapArray = [];
+const championsList = JSON.parse(document.getElementById("tft10Data").value)[0].champions;
+console.log(championsList);
+for(let i=0; i<championsList.length; i++) {
+    let champion = championsList[i];
+    const traitsLength = champion.traits.length;
+    console.log(traitsLength);
+    if(traitsLength != 0) {
+        let championMap = new Map();
+        championMap.set("characterName", champion.characterName);
+        championMap.set("name", champion.name);
+        championMapArray.push(championMap);
+    }
+}
+
+
+
 function championListInit(){
     let innerHtml = "";
     for( let i=0; i<championNameList.length; i++ ){

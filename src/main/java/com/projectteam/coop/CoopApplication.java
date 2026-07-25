@@ -3,8 +3,10 @@ package com.projectteam.coop;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.ServletComponentScan;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 //@EnableFeignClients
+@EnableScheduling
 @SpringBootApplication
 @ServletComponentScan(basePackages = "com.projectteam.coop.util") // @WebListener 스캔을 가능하도록
 public class CoopApplication {

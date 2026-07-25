@@ -140,4 +140,9 @@ public class MenuController {
 
         return "tft/summoner";
     }
+
+    @GetMapping("/tft/maimai")
+    public void getMaiMai(Model model){
+        tft10JsonDataReader.maimai();
+    }
 }

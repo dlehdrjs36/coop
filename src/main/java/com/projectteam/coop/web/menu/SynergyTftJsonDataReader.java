@@ -14,24 +14,20 @@ import java.io.InputStream;
 
 @Slf4j
 @Configuration
-public class SynergyJsonDataReader {
+public class SynergyTftJsonDataReader implements TftJsonDataReader{
 
     private final ObjectMapper mapper = new ObjectMapper();
-    private JsonNode synergyListJsonObject = null;
+    private static JsonNode synergyListJsonObject = null;
 
-    public JsonNode setSynergyListJsonObject(){
-        // JSON 파일 읽기
-        try (InputStream is = getClass().getClassLoader().getResourceAsStream("static/json/tft/synergyList.json")) {
-            synergyListJsonObject = mapper.readTree(is);
-        } catch (IOException e) {
-            log.error("{errorMsg}", e);
-        }
-        return synergyListJsonObject;
-    }
-
-    public JsonNode getSynergyListJsonObject(){
+    @Override
+    public JsonNode getTftJsonData() {
         if (synergyListJsonObject == null) {
-            synergyListJsonObject = setSynergyListJsonObject();
+            // JSON 파일 읽기
+            try (InputStream is = getClass().getClassLoader().getResourceAsStream("static/json/tft/synergyList.json")) {
+                synergyListJsonObject = mapper.readTree(is);
+            } catch (IOException e) {
+                log.error("{errorMsg}", e);
+            }
         }
         return synergyListJsonObject;
     }

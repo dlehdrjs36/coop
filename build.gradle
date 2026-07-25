@@ -39,6 +39,7 @@ dependencies {
     testImplementation group: 'com.h2database', name: 'h2', version: '2.2.224'
     // test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
     // 셀레니움 크롤링
     implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '4.22.0'
     // 셀레니움 크롬 드라이버
@@ -51,9 +52,6 @@ dependencies {
     implementation group: 'org.seleniumhq.selenium', name: 'selenium-manager', version: '4.22.0'
     // https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-http
     implementation group: 'org.seleniumhq.selenium', name: 'selenium-http', version: '4.22.0'
-
-
-
 
 
     // lombok 설정 시작

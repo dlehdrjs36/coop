@@ -1,8 +1,8 @@
 package com.projectteam.coop.util;
 
-import com.projectteam.coop.tft.domain.LeagueEntry;
 import com.projectteam.coop.tft.domain.MatchDescDTO.MatchDescDTO;
-import com.projectteam.coop.tft.domain.Summoner;
+import com.projectteam.coop.tft.domain.model.entity.LeagueEntry;
+import com.projectteam.coop.tft.domain.model.entity.Summoner;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
@@ -17,19 +17,19 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 public class TftUtil {
 
     /*
      * getTftSummoner 닉네임으로 아이디 정보 확인 함수
+     * - Riot에서 지원 중단된 API임으로 Deprecated
      * */
+    @Deprecated
     public Summoner getTftSummoner(String summonerId, String apikey) {
         String uri = "https://kr.api.riotgames.com/tft/summoner/v1/summoners/by-name/" + summonerId;
         UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(uri)
@@ -42,7 +42,32 @@ public class TftUtil {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.setErrorHandler(new DefaultResponseErrorHandler() {
             public boolean hasError(ClientHttpResponse response) throws IOException {
-                HttpStatus code = response.getStatusCode();
+                HttpStatusCode code = response.getStatusCode();
+                if (code == HttpStatus.UNAUTHORIZED) {
+                    throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED);
+                }
+                return false;
+            }
+        });
+
+        ResponseEntity<Summoner> SummonerData = restTemplate.exchange(uriComponents.toUriString(), HttpMethod.GET, new HttpEntity<>(headers), Summoner.class);
+
+        return SummonerData.getBody();
+    }
+
+    public Summoner getTftSummoner(String gameName, String tagLine, String apikey) {
+        String uri = "https://kr.api.riotgames.com/riot/account/v1/by-riot-id/" + gameName + "/" + tagLine ;
+        UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(uri)
+                .queryParam("api_key", apikey)
+                .build(false);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(new MediaType("application", "json", Charset.forName("utf-8")));
+
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.setErrorHandler(new DefaultResponseErrorHandler() {
+            public boolean hasError(ClientHttpResponse response) throws IOException {
+                HttpStatusCode code = response.getStatusCode();
                 if (code == HttpStatus.UNAUTHORIZED) {
                     throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED);
                 }
@@ -70,7 +95,7 @@ public class TftUtil {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.setErrorHandler(new DefaultResponseErrorHandler() {
             public boolean hasError(ClientHttpResponse response) throws IOException {
-                HttpStatus code = response.getStatusCode();
+                HttpStatusCode code = response.getStatusCode();
                 if (code == HttpStatus.UNAUTHORIZED) {
                     throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED);
                 }
@@ -98,7 +123,7 @@ public class TftUtil {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.setErrorHandler(new DefaultResponseErrorHandler() {
             public boolean hasError(ClientHttpResponse response) throws IOException {
-                HttpStatus code = response.getStatusCode();
+                HttpStatusCode code = response.getStatusCode();
                 if (code == HttpStatus.UNAUTHORIZED) {
                     throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED);
                 }
@@ -123,7 +148,7 @@ public class TftUtil {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.setErrorHandler(new DefaultResponseErrorHandler() {
             public boolean hasError(ClientHttpResponse response) throws IOException {
-                HttpStatus code = response.getStatusCode();
+                HttpStatusCode code = response.getStatusCode();
                 if (code == HttpStatus.UNAUTHORIZED) {
                     throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED);
                 }
@@ -148,7 +173,7 @@ public class TftUtil {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.setErrorHandler(new DefaultResponseErrorHandler() {
             public boolean hasError(ClientHttpResponse response) throws IOException {
-                HttpStatus code = response.getStatusCode();
+                HttpStatusCode code = response.getStatusCode();
                 if (code == HttpStatus.UNAUTHORIZED) {
                     throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED);
                 }
@@ -178,7 +203,7 @@ public class TftUtil {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.setErrorHandler(new DefaultResponseErrorHandler() {
             public boolean hasError(ClientHttpResponse response) throws IOException {
-                HttpStatus code = response.getStatusCode();
+                HttpStatusCode code = response.getStatusCode();
                 if (code == HttpStatus.UNAUTHORIZED) {
                     throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED);
                 }
